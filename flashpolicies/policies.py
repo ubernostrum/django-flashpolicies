@@ -23,7 +23,7 @@ def new_policy():
                                              systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
     return minidom.createDocument(None, 'cross-domain-policy', policy_type)
 
-def allow_access_from(policy, domain, to_ports=None, secure=None):
+def allow_access_from(policy, domain):
     """
     Insert a new ``allow-access-from`` element into ``policy``,
     allowing access from ``domain``.
