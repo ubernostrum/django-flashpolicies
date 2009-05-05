@@ -1,0 +1,118 @@
+============================================
+Cross-domain Flash policies for Django sites
+============================================
+
+
+Ordinarily, SWF (Flash) files executing in a browser are restricted by
+a "same-origin" policy similar to that which is applied to JavaScript:
+by default, Flash may only issue requests to the domain from which the
+SWF itself was requested. Unlike JavaScript, however, Flash permits
+"cross-domain" requests, provided that the domain to which requests
+will be directed provides a policy detailing whether and in what
+manner these requests may be issued. This policy consists of `an XML
+document`_, served from the URL ``/crossdomain.xml``.
+
+This application provides a simple implementation of Flash
+cross-domain policies for Django-powered sites, suitable for many
+common cases, and may expand in the future to support more advanced
+uses.
+
+.. _an XML document: http://www.adobe.com/devnet/articles/crossdomain_policy_file_spec.html
+
+
+Basic use
+=========
+
+To enable a cross-domain policy, ensure that this application is
+installed somewhere on your Python path (consult the file
+``INSTALL.txt``) for details). You do not need to list it in
+``INSTALLED_APPS``. Then set up a URL pattern, matching the URL
+``/crossdomain.xml``, pointing to the view
+``flashpolicies.views.simple`` and passing one keyword argument,
+``domains``. This should be a list of domains from which to allow
+access.
+
+For example, if you wanted to allow access from the domains
+``media.example.com`` and ``api.example.com``, you might use the
+following URL pattern::
+
+    url(r'^crossdomain.xml$',
+        'flashpolicies.views.simple',
+        { 'domains': ['media.example.com', 'api.example.com'] }),
+
+This view will generate the appropriate XML and return it with the
+appropriate HTTP ``Content-Type``.
+
+You can also use wildcard values in the domain list. For example, to
+allow access from any subdomain of ``example.com``::
+
+    url(r'^crossdomain.xml$',
+        'flashpolicies.views.simple',
+        { 'domains': ['*.example.com'] }),
+
+However, due to serious potential security issues, it is strongly
+recommended that you not use wildcard domain values.
+
+For recommendations concerning security issues and best practices for
+cross-domain access policies, consult `Adobe's recommendations`_. It
+is also recommended that you read `Google's article on cross-domain
+Flash policies`_.
+
+.. _Adobe's recommendations: http://www.adobe.com/devnet/flashplayer/articles/cross_domain_policy.html
+.. _Google's article on cross-domain Flash policies: http://code.google.com/p/doctype/wiki/ArticleFlashSecurityCrossDomain
+
+
+Views provided by this application
+==================================
+
+At present, two views are defined, both in ``flashpolicies.views``:
+
+
+``flashpolicies.views.simple``
+------------------------------
+
+A simple Flash cross-domain access policy.
+
+**Required arguments:**
+
+``domains``
+    A list of domains from which to allow access. Each value may be
+    either a domain name (e.g., ``example.com``) or a wildcard (e.g.,
+    ``*.example.com``). Due to serious potential security issues, it
+    is strongly recommended that you not use wildcard domain values.
+
+**Optional arguments:**
+
+None.
+
+``flashpolicies.views.no_access``
+---------------------------------
+
+A Flash cross-domain policy which permits no access of any kind.
+
+**Required arguments:**
+
+None.
+
+**Optional arguments:**
+
+None.
+
+
+Additional functionality
+========================
+
+A very simple policy-file generator, supporting a minimal set of
+features, is in ``flashpolicies.policies``. For the present moment it
+is undocumented, as its API is likely to change significantly as this
+application's functionality is fleshed out and stabilized. If you're
+interested in generating policy files beyond what the two provided
+views can handle, however, you might want to have a look at it.
+
+
+Bug reports
+===========
+
+Bugs should be reported in `the bug tracker at Bitbucket`_.
+
+.. _the bug tracker at Bitbucket: http://bitbucket.org/ubernostrum/django-flashpolicies/issues/
