@@ -8,16 +8,15 @@ import xml.dom
 
 minidom = xml.dom.getDOMImplementation('minidom')
 
-policy_type = minidom.createDocumentType(qualifiedName='cross-domain-policy',
-                                         publicId=None,
-                                         systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
-
 def new_policy_file():
     """
     Create and return a new policy file, as a ``minidom.Document``
     object.
     
     """
+    policy_type = minidom.createDocumentType(qualifiedName='cross-domain-policy',
+                                             publicId=None,
+                                             systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
     return minidom.createDocument(None, 'cross-domain-policy', policy_type)
 
 def allow_access_from(policy, domain, to_ports=None, secure=None):
