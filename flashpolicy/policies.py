@@ -8,7 +8,7 @@ import xml.dom
 
 minidom = xml.dom.getDOMImplementation('minidom')
 
-def new_policy_file():
+def new_policy():
     """
     Create and return a new policy file, as a ``minidom.Document``
     object.
@@ -44,24 +44,24 @@ def site_control(policy, permitted):
     control_element.setAttribute('permitted-cross-domain-policies', permitted)
     policy.documentElement.appendChild(control_element)
 
-def simple_policy_file(domains):
+def simple_policy(domains):
     """
     Given a list of valid domain values, create a simple policy file
     allowing access from those domains and return the resulting XML as
     a ``minidom.Document`` object.
     
     """
-    policy = new_policy_file()
+    policy = new_policy()
     for domain in domains:
         allow_access_from(policy, domain)
     return policy
 
-def no_access_policy_file():
+def no_access_policy():
     """
     Create a policy file which permits no access of any sort and
     return the resulting XML as a ``minidom.Document`` object.
     
     """
-    policy = new_policy_file()
+    policy = new_policy()
     site_control(policy, permitted='none')
     return policy
