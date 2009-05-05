@@ -1,0 +1,8 @@
+syntax: glob
+*.pyc
+dist
+MANIFEST
+TAGS
+.svn*
+*.svn*
+*.DS_Store*
