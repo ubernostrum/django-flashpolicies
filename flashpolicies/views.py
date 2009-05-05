@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from flashpolicy import policies
+from flashpolicies import policies
 
 
 def simple(request, domains):
