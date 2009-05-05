@@ -40,3 +40,19 @@ class PolicyGeneratorTestCase(TestCase):
         access_elem = policy.documentElement.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 1)
         self.assertEqual(access_elem.getAttribute('domain'), 'media.example.com')
+
+    def test_site_control(self):
+        """
+        Test that adding meta-policy information inserts the proper
+        element and attributes.
+        
+        """
+        for permitted in ('none', 'master-only', 'by-content-type',
+                          'by-ftp-filename', 'all'):
+            policy = utils.new_policy_file()
+            utils.site_control(policy, permitted)
+            self.assertEqual(len(policy.documentElement.childNodes), 1)
+            self.assertEqual(len(policy.documentElement.getElementsByTagName('site-control')), 1)
+            control_elem = policy.documentElement.getElementsByTagName('site-control')[0]
+            self.assertEqual(len(control_elem.attributes), 1)
+            self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
