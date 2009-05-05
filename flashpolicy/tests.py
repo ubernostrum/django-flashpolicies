@@ -27,3 +27,16 @@ class PolicyGeneratorTestCase(TestCase):
         self.assertEqual(policy.documentElement.tagName, 'cross-domain-policy')
         self.assertEqual(len(policy.documentElement.childNodes), 0)
 
+    def test_allow_access_domain(self):
+        """
+        Test that adding access for a domain inserts the proper
+        element and attributes.
+        
+        """
+        policy = utils.new_policy_file()
+        utils.allow_access_from(policy, 'media.example.com')
+        self.assertEqual(len(policy.documentElement.childNodes), 1)
+        self.assertEqual(len(policy.documentElement.getElementsByTagName('allow-access-from')), 1)
+        access_elem = policy.documentElement.getElementsByTagName('allow-access-from')[0]
+        self.assertEqual(len(access_elem.attributes), 1)
+        self.assertEqual(access_elem.getAttribute('domain'), 'media.example.com')
