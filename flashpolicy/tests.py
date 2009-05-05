@@ -65,6 +65,7 @@ class PolicyGeneratorTestCase(TestCase):
         """
         domains = ['media.example.com', 'api.example.com']
         policy = policies.simple_policy(domains)
+        self.assertEqual(len(policy.documentElement.childNodes), 2)
         self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 2)
         domain_elems = policy.getElementsByTagName('allow-access-from')
         for i, domain in enumerate(domains):
