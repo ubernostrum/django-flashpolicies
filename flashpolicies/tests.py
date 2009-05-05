@@ -88,7 +88,7 @@ class PolicyGeneratorTests(TestCase):
 
 
 class PolicyViewTests(TestCase):
-    urls = 'flashpolicy.test_urls'
+    urls = 'flashpolicies.test_urls'
 
     def test_simple(self):
         response = self.client.get('/crossdomain1.xml')
