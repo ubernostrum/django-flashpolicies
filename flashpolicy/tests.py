@@ -16,6 +16,7 @@ class PolicyGeneratorTestCase(TestCase):
         policy = utils.new_policy_file()
         self.assertEqual(policy.doctype.systemId, 'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
         self.assertEqual(policy.doctype.name, 'cross-domain-policy')
+        self.assertEqual(len(policy.childNodes), 2)
 
     def test_policy_root_element(self):
         """
@@ -24,3 +25,5 @@ class PolicyGeneratorTestCase(TestCase):
         """
         policy = utils.new_policy_file()
         self.assertEqual(policy.documentElement.tagName, 'cross-domain-policy')
+        self.assertEqual(len(policy.documentElement.childNodes), 0)
+
