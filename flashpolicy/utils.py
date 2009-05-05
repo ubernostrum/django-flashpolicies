@@ -28,23 +28,9 @@ def allow_access_from(policy, domain, to_ports=None, secure=None):
     concerns it is strongly recommended that wildcard domains be
     avoided.
 
-    If supplied, ``to_ports`` must be a list of valid port numbers or
-    port ranges, and will be inserted as the ``to-ports`` attribute of
-    the ``allow-access-from`` element.
-
-    If supplied, ``secure`` must be a boolean value, and will be
-    inserted as the value of the ``secure`` attribute of the
-    ``allow-access-from`` element. Due to security concerns it is
-    strongly recommended that you never set this attribute to
-    ``False``.
-    
     """
     domain_element = policy.createElement('allow-access-from')
     domain_element.setAttribute('domain', domain)
-    if to_ports is not None:
-        domain_element.setAttribute('to-ports', ','.join(to_ports))
-    if secure is not None:
-        domain_element.setAttribute('secure', str(secure).lower())
     policy.documentElement.appendChild(domain_element)
 
 def site_control(policy, permitted):
