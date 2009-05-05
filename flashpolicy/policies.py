@@ -48,20 +48,20 @@ def simple_policy_file(domains):
     """
     Given a list of valid domain values, create a simple policy file
     allowing access from those domains and return the resulting XML as
-    a string.
+    a ``minidom.Document`` object.
     
     """
     policy = new_policy_file()
     for domain in domains:
         allow_access_from(policy, domain)
-    return policy.toprettyxml()
+    return policy
 
 def no_access_policy_file():
     """
     Create a policy file which permits no access of any sort and
-    return the resulting XML as a string.
+    return the resulting XML as a ``minidom.Document`` object.
     
     """
     policy = new_policy_file()
     site_control(policy, permitted='none')
-    return policy.toprettyxml()
+    return policy
