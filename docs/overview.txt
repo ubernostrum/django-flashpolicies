@@ -25,7 +25,7 @@ Basic use
 
 To enable a cross-domain policy, ensure that this application is
 installed somewhere on your Python path (consult the file
-``INSTALL.txt``) for details). You do not need to list it in
+``INSTALL.txt`` for details). You do not need to list it in
 ``INSTALLED_APPS``. Then set up a URL pattern, matching the URL
 ``/crossdomain.xml``, pointing to the view
 ``flashpolicies.views.simple`` and passing one keyword argument,
