@@ -71,3 +71,15 @@ class PolicyGeneratorTestCase(TestCase):
         for i, domain in enumerate(domains):
             self.assertEqual(domain,
                              policy.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
+
+    def test_no_access_policy(self):
+        """
+        Test that creating a policy which permits no access returns a
+        correct policy document.
+        
+        """
+        policy = policies.no_access_policy()
+        self.assertEqual(len(policy.documentElement.childNodes), 1)
+        self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
+        control_elem = policy.getElementsByTagName('site-control')[0]
+        self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), 'none')
