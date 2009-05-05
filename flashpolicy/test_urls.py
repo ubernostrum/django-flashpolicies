@@ -12,4 +12,6 @@ urlpatterns = patterns('',
                        url(r'^crossdomain1.xml$',
                            'flashpolicy.views.simple',
                            { 'domains': ['media.example.com', 'api.example.com'] }),
+                       url(r'^crossdomain2.xml$',
+                           'flashpolicy.views.no_access'),
                        )

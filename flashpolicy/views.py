@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from flashpolicy.policies import simple_policy
+from flashpolicy import policies
 
 
 def simple(request, domains):
@@ -18,5 +18,14 @@ def simple(request, domains):
     any domain are not supported.
     
     """
-    return HttpResponse(simple_policy(domains).toprettyxml(encoding='utf-8'),
+    return HttpResponse(policies.simple_policy(domains).toprettyxml(encoding='utf-8'),
+                        content_type='text/x-cross-domain-policy')
+
+def no_access(request):
+    """
+    A Flash cross-domain access policy which permits no access of any
+    kind.
+    
+    """
+    return HttpResponse(policies.no_access_policy().toprettyxml(encoding='utf-8'),
                         content_type='text/x-cross-domain-policy')
