@@ -12,6 +12,25 @@ import xml.dom
 
 minidom = xml.dom.getDOMImplementation('minidom')
 
+
+#
+# Acceptable values for the "permitted-cross-domain-policies"
+# attribute of "site-control" elements. See section 3(b)(i) of the
+# Adobe crossdomain.xml spec.
+#
+
+SITE_CONTROL_ALL = "all"
+SITE_CONTROL_BY_CONTENT_TYPE = "by-content-type"
+SITE_CONTROL_BY_FTP_FILENAME = "by-ftp-filename"
+SITE_CONTROL_MASTER_ONLY = "master-only"
+SITE_CONTROL_NONE = "none"
+
+VALID_SITE_CONTROL = (SITE_CONTROL_ALL,
+                      SITE_CONTROL_BY_CONTENT_TYPE,
+                      SITE_CONTROL_BY_FTP_FILENAME,
+                      SITE_CONTROL_MASTER_ONLY,
+                      SITE_CONTROL_NONE)
+
 def new_policy():
     """
     Create and return a new policy file, as a ``minidom.Document``
@@ -44,6 +63,8 @@ def site_control(policy, permitted):
     ``permitted-cross-domain-policies`` attribute.
     
     """
+    if permitted not in VALID_SITE_CONTROL:
+        raise TypeError('"%s" is not a valid value for the "permitted-cross-domain-policies" attribute of a site-control element' % permitted)
     control_element = policy.createElement('site-control')
     control_element.setAttribute('permitted-cross-domain-policies', permitted)
     policy.documentElement.appendChild(control_element)

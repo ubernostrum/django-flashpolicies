@@ -59,6 +59,15 @@ class PolicyGeneratorTests(TestCase):
             self.assertEqual(len(control_elem.attributes), 1)
             self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
 
+    def test_bad_site_control(self):
+        """
+        Test that meta-policies are restricted to the values permitted
+        by the specification.
+        
+        """
+        policy = policies.new_policy()
+        self.assertRaises(TypeError, policies.site_control, policy, 'not-valid')
+
     def test_simple_policy(self):
         """
         Test that creating a simple policy with a list of domains
