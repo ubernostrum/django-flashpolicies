@@ -42,7 +42,7 @@ def new_policy():
                                              systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
     return minidom.createDocument(None, 'cross-domain-policy', policy_type)
 
-def allow_access_from(policy, domain, to_ports=None):
+def allow_access_from(policy, domain, to_ports=None, secure=True):
     """
     Insert a new ``allow-access-from`` element into ``policy``,
     allowing access from ``domain``.
@@ -54,11 +54,17 @@ def allow_access_from(policy, domain, to_ports=None):
     If supplied, ``to_ports`` should be a comma-separated list of port
     numbers or port ranges.
 
+    If ``False``, ``secure`` will set the value of the ``secure``
+    attribute to ``false``. Due to security concerns it is strongly
+    recommended that you not do so.
+
     """
     domain_element = policy.createElement('allow-access-from')
     domain_element.setAttribute('domain', domain)
     if to_ports is not None:
         domain_element.setAttribute('to-ports', to_ports)
+    if not secure:
+        domain_element.setAttribute('secure', 'false')
     policy.documentElement.appendChild(domain_element)
 
 def site_control(policy, permitted):
