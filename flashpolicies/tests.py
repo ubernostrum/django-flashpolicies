@@ -32,7 +32,7 @@ class PolicyGeneratorTests(TestCase):
     def test_allow_access_domain(self):
         """
         Test that adding access for a domain inserts the proper
-        element and attributes.
+        element and attribute.
         
         """
         policy = policies.new_policy()
@@ -42,6 +42,19 @@ class PolicyGeneratorTests(TestCase):
         access_elem = policy.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 1)
         self.assertEqual(access_elem.getAttribute('domain'), 'media.example.com')
+
+    def test_allow_access_ports(self):
+        """
+        Test that adding port access for socket connections insters
+        the proper attribute.
+        
+        """
+        policy = policies.new_policy()
+        ports='80,8080,9000-10000'
+        policies.allow_access_from(policy, 'media.example.com', to_ports=ports)
+        access_elem = policy.getElementsByTagName('allow-access-from')[0]
+        self.assertEqual(len(access_elem.attributes), 2)
+        self.assertEqual(access_elem.getAttribute('to-ports'), ports)
 
     def test_site_control(self):
         """
