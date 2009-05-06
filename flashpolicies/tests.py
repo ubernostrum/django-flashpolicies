@@ -49,8 +49,7 @@ class PolicyGeneratorTests(TestCase):
         element and attributes.
         
         """
-        for permitted in ('none', 'master-only', 'by-content-type',
-                          'by-ftp-filename', 'all'):
+        for permitted in policies.VALID_SITE_CONTROL:
             policy = policies.new_policy()
             policies.site_control(policy, permitted)
             self.assertEqual(len(policy.documentElement.childNodes), 1)
