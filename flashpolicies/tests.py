@@ -184,6 +184,11 @@ class PolicyViewTests(TestCase):
     urls = 'flashpolicies.test_urls'
 
     def test_simple(self):
+        """
+        Test the view which generates a simple (i.e., list of domains)
+        policy.
+        
+        """
         response = self.client.get('/crossdomain1.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy')
@@ -196,10 +201,29 @@ class PolicyViewTests(TestCase):
                              policy.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
 
     def test_no_access(self):
+        """
+        Test the view which generates a policy that forbids all
+        access.
+        
+        """
         response = self.client.get('/crossdomain2.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy')
         policy = xml.dom.minidom.parseString(response.content)
         self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
         self.assertEqual(policy.getElementsByTagName('site-control')[0].getAttribute('permitted-cross-domain-policies'),
-                         'none')
+                         policies.SITE_CONTROL_NONE)
+        
+    def test_metapolicy(self):
+        """
+        Test the view which sets a meta-policy for allowing other
+        policies on the same domain.
+        
+        """
+        response = self.client.get('/crossdomain3.xml')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy')
+        policy = xml.dom.minidom.parseString(response.content)
+        self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
+        self.assertEqual(policy.getElementsByTagName('site-control')[0].getAttribute('permitted-cross-domain-policies'),
+                         policies.SITE_CONTROL_ALL)
