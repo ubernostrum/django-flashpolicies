@@ -50,7 +50,7 @@ def simple(request, domains):
 def no_access(request):
     """
     A Flash cross-domain access policy which permits no access of any
-    kind, via a meta-policy disallowing all policy files.
+    kind, via a meta-policy declaration disallowing all policy files.
     
     Note that this view, if used, must become the master policy for
     the domain, and so must be served from the URL
