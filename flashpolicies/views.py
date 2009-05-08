@@ -19,7 +19,7 @@ def serve(request, policy):
     
     """
     return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
-                        content_type='text/x-cross-domain-policy')
+                        content_type='text/x-cross-domain-policy; charset=utf-8')
 
 def simple(request, domains):
     """
