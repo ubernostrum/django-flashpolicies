@@ -67,8 +67,8 @@ Views provided by this application
 ==================================
 
 At present, four views are defined, all in
-``flashpolicies.views``. Internally, ``flashpolicies.policies.serve``
-is used by each of the other three; once they have generated an object
+``flashpolicies.views``. Internally, ``flashpolicies.views.serve`` is
+used by each of the other three; once they have generated an object
 representing the policy, the call the ``serve`` view to serve it.
 
 As such, if you wish to create a custom policy with options not
