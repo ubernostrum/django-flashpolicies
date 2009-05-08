@@ -82,6 +82,7 @@ By default, Flash assumes a value of ``master-only``, so if this is
 desired (and, for security, it typically is), this method does not
 need to be called.
 
+
 ``allow_headers(domain, headers, secure=True)``
 -----------------------------------------------
 
@@ -99,3 +100,27 @@ a policy via HTTPS will require that SWFs also be retrieved via
 HTTPS), pass ``secure=False``. Due to security concerns, it is
 strongly recommended that you not disable this.
 
+
+Available constants
+===================
+
+The following constants are defined in ``flashpolicies.policies``, for
+use in setting meta-policy information. These constants represent the
+range of acceptable values for meta-policies:
+
+``SITE_CONTROL_ALL``
+    Allow all policy files on this domain.
+
+``SITE_CONTROL_BY_CONTENT_TYPE``
+    Allow only policy files served as ``text/x-cross-domainpolicy``.
+
+``SITE_CONTROL_BY_FTP_FILENAME``
+    Allow only policy files which are actually named
+    ``crossdomain.xml``.
+
+``SITE_CONTROL_MASTER_ONLY``
+    Allow only the master policy file. This is the default for all
+    types of policy files except socket policies.
+
+``SITE_CONTROL_NONE``
+    Allow no policies whatsoever.
