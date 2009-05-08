@@ -102,7 +102,22 @@ class PolicyGeneratorTests(TestCase):
         self.assertEqual(header_elem.getAttribute('domain'), domain)
         self.assertEqual(header_elem.getAttribute('headers'), ','.join(headers))
         self.assertEqual(header_elem.getAttribute('secure'), 'false')
+
+    def test_allow_http_headers_secure(self):
+        """
+        Test that setting non-secure access for HTTP headers from a
+        domain inserts the proper attribute.
         
+        """
+        domain = 'media.example.com'
+        headers = ['SomeHeader', 'SomeOtherHeader']
+        policy = policies.Policy()
+        policy.allow_headers(domain, headers, secure=False)
+        xml_dom = policy.xml_dom
+        header_elem = xml_dom.getElementsByTagName('allow-http-request-headers-from')[0]
+        self.assertEqual(len(header_elem.attributes), 3)
+        self.assertEqual(header_elem.getAttribute('secure'), 'false')
+
     def test_bad_site_control(self):
         """
         Test that meta-policies are restricted to the values permitted
