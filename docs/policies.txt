@@ -113,7 +113,7 @@ range of acceptable values for meta-policies:
     Allow all policy files on this domain.
 
 ``SITE_CONTROL_BY_CONTENT_TYPE``
-    Allow only policy files served as ``text/x-cross-domainpolicy``.
+    Allow only policy files served as ``text/x-cross-domain-policy``.
 
 ``SITE_CONTROL_BY_FTP_FILENAME``
     Allow only policy files which are actually named
