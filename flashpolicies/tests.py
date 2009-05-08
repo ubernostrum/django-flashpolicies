@@ -85,6 +85,24 @@ class PolicyGeneratorTests(TestCase):
             self.assertEqual(len(control_elem.attributes), 1)
             self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
 
+    def test_allow_http_headers(self):
+        """
+        Test that allowing HTTP headers inserts the proper element and
+        attributes.
+        
+        """
+        domain = 'media.example.com'
+        headers = ['SomeHeader', 'SomeOtherHeader']
+        policy = policies.Policy()
+        policy.allow_headers(domain, headers, secure=False)
+        xml_dom = policy.xml_dom
+        self.assertEqual(len(xml_dom.getElementsByTagName('allow-http-request-headers-from')), 1)
+        header_elem = xml_dom.getElementsByTagName('allow-http-request-headers-from')[0]
+        self.assertEqual(len(header_elem.attributes), 3)
+        self.assertEqual(header_elem.getAttribute('domain'), domain)
+        self.assertEqual(header_elem.getAttribute('headers'), ','.join(headers))
+        self.assertEqual(header_elem.getAttribute('secure'), 'false')
+        
     def test_bad_site_control(self):
         """
         Test that meta-policies are restricted to the values permitted
@@ -93,6 +111,42 @@ class PolicyGeneratorTests(TestCase):
         """
         policy = policies.Policy()
         self.assertRaises(TypeError, policy.site_control, 'not-valid')
+
+    def test_element_order(self):
+        """
+        Test that when multiple types of elements are present in the
+        XML, they occur in the order mandated by the DTD, regardless
+        of the order in which the relevant options were applied.
+        
+        """
+        domain = 'media.example.com'
+        header_elem = { 'domain': 'media.example.com', 'headers': ['SomeHeader', 'SomeOtherHeader'] }
+        site_control = policies.SITE_CONTROL_ALL
+
+        # This policy has methods called in the proper order for the DTD.
+        policy1 = policies.Policy()
+        policy1.metapolicy(site_control)
+        policy1.allow_domain(domain)
+        policy1.allow_headers(**header_elem)
+
+        # This policy has methods called in reverse order.
+        policy2 = policies.Policy()
+        policy2.allow_headers(**header_elem)
+        policy2.allow_domain(domain)
+        policy2.metapolicy(site_control)
+
+        # This policy has methods called in no particular order.
+        policy3 = policies.Policy()
+        policy3.allow_domain(domain)
+        policy3.allow_headers(**header_elem)
+        policy3.metapolicy(site_control)
+
+        for policy in (policy1, policy2, policy3):
+            root = policy.xml_dom.documentElement
+            self.assertEqual(len(root.childNodes), 3)
+            self.assertEqual(root.childNodes[0].tagName, 'site-control')
+            self.assertEqual(root.childNodes[1].tagName, 'allow-access-from')
+            self.assertEqual(root.childNodes[2].tagName, 'allow-http-request-headers-from')
 
     def test_simple_policy(self):
         """
@@ -109,6 +163,7 @@ class PolicyGeneratorTests(TestCase):
         for i, domain in enumerate(domains):
             self.assertEqual(domain,
                              xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
+
 
 
 class PolicyViewTests(TestCase):

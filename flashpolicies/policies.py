@@ -120,6 +120,10 @@ class Policy(object):
         Collect all options set so far, and produce and return an
         ``xml.dom.minidom.Document`` representing the corresponding
         XML.
+
+        Note that the various elements appear inside the XML document
+        in a specific order to ensure validity, so use caution when
+        manipulating the returned ``Document``.
         
         """
         policy_type = minidom.createDocumentType(qualifiedName='cross-domain-policy',
