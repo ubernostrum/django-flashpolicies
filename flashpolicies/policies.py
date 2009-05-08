@@ -80,9 +80,10 @@ class Policy(object):
         Section 3(b)(i) of the crossdomain.xml specification, and are
         also available as a set of constants defined in this module.
 
-        By default, Flash assumes a value of ``master-only``, so if
-        this is desired (and, for security, it typically is), this
-        method does not need to be called.
+        By default, Flash assumes a value of ``master-only`` for all
+        policies except socket policies, (which assume a default of
+        ``all``) so if this is desired (and, for security, it
+        typically is), this method does not need to be called.
         
         """
         if permitted not in VALID_SITE_CONTROL:
