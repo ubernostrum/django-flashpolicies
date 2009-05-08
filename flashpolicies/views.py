@@ -3,6 +3,24 @@ from django.http import HttpResponse
 from flashpolicies import policies
 
 
+def serve(request, policy):
+    """
+    Given a ``flashpolicies.policies.Policy``, serialize it to XML and
+    serve it.
+
+    **Required arguments:**
+
+    ``policy``
+        A ``flashpolicies.policies.Policy`` instance.
+
+    **Optional arguments:**
+
+    None.
+    
+    """
+    return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
+                        content_type='text/x-cross-domain-policy')
+
 def simple(request, domains):
     """
     A simple Flash cross-domain access policy.
@@ -27,8 +45,7 @@ def simple(request, domains):
     None.
     
     """
-    return HttpResponse(policies.Policy(*domains).xml_dom.toprettyxml(encoding='utf-8'),
-                        content_type='text/x-cross-domain-policy')
+    return serve(request, policies.Policy(*domains))
 
 def no_access(request):
     """
@@ -52,8 +69,7 @@ def no_access(request):
     """
     policy = policies.Policy()
     policy.metapolicy(policies.SITE_CONTROL_NONE)
-    return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
-                        content_type='text/x-cross-domain-policy')
+    return serve(request, policy)
 
 def metapolicy(request, site_control, domains=None):
     """
@@ -87,5 +103,4 @@ def metapolicy(request, site_control, domains=None):
         domains = []
     policy = policies.Policy(*domains)
     policy.metapolicy(site_control)
-    return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
-                        content_type='text/x-cross-domain-policy')
+    return serve(request, policy)

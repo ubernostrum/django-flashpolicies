@@ -227,3 +227,18 @@ class PolicyViewTests(TestCase):
         self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
         self.assertEqual(policy.getElementsByTagName('site-control')[0].getAttribute('permitted-cross-domain-policies'),
                          policies.SITE_CONTROL_ALL)
+
+    def test_serve_policy(self):
+        """
+        Test the view which simply serves a policy.
+        
+        """
+        response = self.client.get('/crossdomain4.xml')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy')
+
+        # Parse the returned policy and make sure it matches what was
+        # passed in.
+        policy = xml.dom.minidom.parseString(response.content)
+        self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 1)
+        self.assertEqual(len(policy.getElementsByTagName('allow-http-request-headers-from')), 1)

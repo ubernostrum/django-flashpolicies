@@ -7,8 +7,14 @@ situation.
 
 from django.conf.urls.defaults import *
 
-from flashpolicies.policies import SITE_CONTROL_ALL
+from flashpolicies import policies
 
+
+def make_test_policy():
+    policy = policies.Policy()
+    policy.allow_domain('media.example.com')
+    policy.allow_headers('media.example.com', ['SomeHeader'])
+    return policy
 
 urlpatterns = patterns('',
                        url(r'^crossdomain1.xml$',
@@ -18,5 +24,8 @@ urlpatterns = patterns('',
                            'flashpolicies.views.no_access'),
                        url(r'^crossdomain3.xml$',
                            'flashpolicies.views.metapolicy',
-                           { 'site_control': SITE_CONTROL_ALL }),
+                           { 'site_control': policies.SITE_CONTROL_ALL }),
+                       url(r'^crossdomain4.xml$',
+                           'flashpolicies.views.serve',
+                           { 'policy': make_test_policy() }),
                        )
