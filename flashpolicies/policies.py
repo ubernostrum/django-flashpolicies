@@ -1,10 +1,6 @@
 """
 Utilities for generating Flash cross-domain policy files.
 
-Note that the API of this module is not stable and may change
-significantly and without warning in future releases of this
-application.
-
 """
 
 import xml.dom
