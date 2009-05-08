@@ -180,7 +180,6 @@ class PolicyGeneratorTests(TestCase):
                              xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
 
 
-
 class PolicyViewTests(TestCase):
     urls = 'flashpolicies.test_urls'
 
