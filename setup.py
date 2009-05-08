@@ -24,7 +24,7 @@ for dirpath, dirnames, filenames in os.walk('flashpolicies'):
 
 
 setup(name='django-flashpolicies',
-      version='1.0',
+      version='1.1',
       description='Flash cross-domain policies for Django sites',
       author='James Bennett',
       author_email='james@b-list.org',
