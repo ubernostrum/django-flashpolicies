@@ -21,7 +21,7 @@ def simple(request, domains):
     None.
     
     """
-    return HttpResponse(policies.simple_policy(domains).toprettyxml(encoding='utf-8'),
+    return HttpResponse(policies.Policy(*domains).xml_dom.toprettyxml(encoding='utf-8'),
                         content_type='text/x-cross-domain-policy')
 
 def no_access(request):
@@ -38,5 +38,7 @@ def no_access(request):
     None.
     
     """
-    return HttpResponse(policies.no_access_policy().toprettyxml(encoding='utf-8'),
+    policy = policies.Policy()
+    policy.metapolicy(policies.SITE_CONTROL_NONE)
+    return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
                         content_type='text/x-cross-domain-policy')

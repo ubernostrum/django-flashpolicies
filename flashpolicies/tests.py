@@ -15,7 +15,7 @@ class PolicyGeneratorTests(TestCase):
         Test that the correct ``DOCTYPE`` declaration is generated.
         
         """
-        policy = policies.new_policy()
+        policy = policies.Policy().xml_dom
         self.assertEqual(policy.doctype.systemId, 'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
         self.assertEqual(policy.doctype.name, 'cross-domain-policy')
         self.assertEqual(len(policy.childNodes), 2)
@@ -25,7 +25,7 @@ class PolicyGeneratorTests(TestCase):
         Test that the correct root element is inserted.
         
         """
-        policy = policies.new_policy()
+        policy = policies.Policy().xml_dom
         self.assertEqual(policy.documentElement.tagName, 'cross-domain-policy')
         self.assertEqual(len(policy.documentElement.childNodes), 0)
 
@@ -35,11 +35,12 @@ class PolicyGeneratorTests(TestCase):
         element and attribute.
         
         """
-        policy = policies.new_policy()
-        policies.allow_access_from(policy, 'media.example.com')
-        self.assertEqual(len(policy.documentElement.childNodes), 1)
-        self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 1)
-        access_elem = policy.getElementsByTagName('allow-access-from')[0]
+        policy = policies.Policy()
+        policy.allow_domain('media.example.com')
+        xml_dom = policy.xml_dom
+        self.assertEqual(len(xml_dom.documentElement.childNodes), 1)
+        self.assertEqual(len(xml_dom.getElementsByTagName('allow-access-from')), 1)
+        access_elem = xml_dom.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 1)
         self.assertEqual(access_elem.getAttribute('domain'), 'media.example.com')
 
@@ -49,12 +50,12 @@ class PolicyGeneratorTests(TestCase):
         the proper attribute.
         
         """
-        policy = policies.new_policy()
-        ports='80,8080,9000-10000'
-        policies.allow_access_from(policy, 'media.example.com', to_ports=ports)
-        access_elem = policy.getElementsByTagName('allow-access-from')[0]
+        policy = policies.Policy()
+        ports = ['80', '8080', '9000-1000']
+        policy.allow_domain('media.example.com', to_ports=ports)
+        access_elem = policy.xml_dom.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 2)
-        self.assertEqual(access_elem.getAttribute('to-ports'), ports)
+        self.assertEqual(access_elem.getAttribute('to-ports'), ','.join(ports))
 
     def test_allow_access_secure(self):
         """
@@ -62,9 +63,9 @@ class PolicyGeneratorTests(TestCase):
         proper attribute.
         
         """
-        policy = policies.new_policy()
-        policies.allow_access_from(policy, 'media.example.com', secure=False);
-        access_elem = policy.getElementsByTagName('allow-access-from')[0]
+        policy = policies.Policy()
+        policy.allow_domain('media.example.com', secure=False)
+        access_elem = policy.xml_dom.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 2)
         self.assertEqual(access_elem.getAttribute('secure'), 'false')
 
@@ -75,11 +76,12 @@ class PolicyGeneratorTests(TestCase):
         
         """
         for permitted in policies.VALID_SITE_CONTROL:
-            policy = policies.new_policy()
-            policies.site_control(policy, permitted)
-            self.assertEqual(len(policy.documentElement.childNodes), 1)
-            self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
-            control_elem = policy.getElementsByTagName('site-control')[0]
+            policy = policies.Policy()
+            policy.metapolicy(permitted)
+            xml_dom = policy.xml_dom
+            self.assertEqual(len(xml_dom.documentElement.childNodes), 1)
+            self.assertEqual(len(xml_dom.getElementsByTagName('site-control')), 1)
+            control_elem = xml_dom.getElementsByTagName('site-control')[0]
             self.assertEqual(len(control_elem.attributes), 1)
             self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
 
@@ -89,8 +91,8 @@ class PolicyGeneratorTests(TestCase):
         by the specification.
         
         """
-        policy = policies.new_policy()
-        self.assertRaises(TypeError, policies.site_control, policy, 'not-valid')
+        policy = policies.Policy()
+        self.assertRaises(TypeError, policy.site_control, 'not-valid')
 
     def test_simple_policy(self):
         """
@@ -99,25 +101,14 @@ class PolicyGeneratorTests(TestCase):
         
         """
         domains = ['media.example.com', 'api.example.com']
-        policy = policies.simple_policy(domains)
-        self.assertEqual(len(policy.documentElement.childNodes), 2)
-        self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 2)
-        domain_elems = policy.getElementsByTagName('allow-access-from')
+        policy = policies.Policy(*domains)
+        xml_dom = policy.xml_dom
+        self.assertEqual(len(xml_dom.documentElement.childNodes), 2)
+        self.assertEqual(len(xml_dom.getElementsByTagName('allow-access-from')), 2)
+        domain_elems = xml_dom.getElementsByTagName('allow-access-from')
         for i, domain in enumerate(domains):
             self.assertEqual(domain,
-                             policy.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
-
-    def test_no_access_policy(self):
-        """
-        Test that creating a policy which permits no access returns a
-        correct policy document.
-        
-        """
-        policy = policies.no_access_policy()
-        self.assertEqual(len(policy.documentElement.childNodes), 1)
-        self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
-        control_elem = policy.getElementsByTagName('site-control')[0]
-        self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), 'none')
+                             xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
 
 
 class PolicyViewTests(TestCase):
