@@ -33,8 +33,14 @@ def simple(request, domains):
 def no_access(request):
     """
     A Flash cross-domain access policy which permits no access of any
-    kind.
+    kind, via a meta-policy disallowing all policy files.
     
+    Note that this view, if used, must become the master policy for
+    the domain, and so must be served from the URL
+    ``/crossdomain.xml`` on the domain -- setting meta-policy
+    information in other policy files is forbidden by the
+    specification.
+
     **Required arguments:**
 
     None.
@@ -54,14 +60,13 @@ def metapolicy(request, site_control, domains=None):
     A Flash cross-domain policy which allows other policies to exist
     on the same domain.
 
-    **Required arguments:**
+    Note that this view, if used, must become the master policy for
+    the domain, and so must be served from the URL
+    ``/crossdomain.xml`` on the domain -- setting meta-policy
+    information in other policy files is forbidden by the
+    specification.
 
-    ``domains``
-        A list of domains from which to allow access. Each value may
-        be either a domain name (e.g., ``example.com``) or a wildcard
-        (e.g., ``*.example.com``). Due to serious potential security
-        issues, it is strongly recommended that you not use wildcard
-        domain values.
+    **Required arguments:**
 
     ``site_control``
         A string indicating the extent to which other policies are
@@ -70,7 +75,12 @@ def metapolicy(request, site_control, domains=None):
 
     **Optional arguments:**
 
-    None.
+    ``domains``
+        A list of domains from which to allow access. Each value may
+        be either a domain name (e.g., ``example.com``) or a wildcard
+        (e.g., ``*.example.com``). Due to serious potential security
+        issues, it is strongly recommended that you not use wildcard
+        domain values.
     
     """
     if domains is None:
