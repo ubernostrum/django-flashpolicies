@@ -7,4 +7,10 @@ server::
         'flashpolicies.views.simple',
         { 'domains': ['media.yoursite.com'] }),
 
-For details, see the file ``docs/overview.txt``.
+Various other views are included, handling other common and
+not-so-common cases, as well as a utility class for generating and
+manipulating cross-domain policies in a straightforward way and
+serializing them to the correct XML.
+
+Full documentation for all functionality is also included, as well as
+an ever-growing test suite.
