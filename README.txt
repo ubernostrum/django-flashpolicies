@@ -8,9 +8,14 @@ server::
         { 'domains': ['media.yoursite.com'] }),
 
 Various other views are included, handling other common and
-not-so-common cases, as well as a utility class for generating and
-manipulating cross-domain policies in a straightforward way and
-serializing them to the correct XML.
+not-so-common cases.
+
+Also present is a class -- ``flashpolicies.policies.Policy`` -- which
+provides a simple Python API for creating and manipulating
+cross-domain policies, as well as serializing them to the correct
+XML. This class is designed to be useful regardless of whether Django
+is present or used, and depends only on modules available in the
+Python standard library.
 
 Full documentation for all functionality is also included, as well as
 an ever-growing test suite.
