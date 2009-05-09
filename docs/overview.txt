@@ -74,7 +74,7 @@ representing the policy, the call the ``serve`` view to serve it.
 As such, if you wish to create a custom policy with options not
 supported by the other views, you should feel free to create a
 ``flashpolicies.policies.Policy`` object representing the desired
-policy, and use ``serve`` to serve it. For details on the api of
+policy, and use ``serve`` to serve it. For details on the API of
 ``Policy`` objects, see the file ``policies.txt`` in this directory.
 
 Several of these views apply meta-policy information and must be used
