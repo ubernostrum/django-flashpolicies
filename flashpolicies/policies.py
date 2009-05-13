@@ -75,8 +75,8 @@ class Policy(object):
 
     def metapolicy(self, permitted):
         """
-        Set meta-policy information (only applicable to master policy
-        files). Acceptable values correspond to those listed in
+        Set meta-policy to ``permitted``. (only applicable to master
+        policy files). Acceptable values correspond to those listed in
         Section 3(b)(i) of the crossdomain.xml specification, and are
         also available as a set of constants defined in this module.
 
@@ -108,7 +108,6 @@ class Policy(object):
         this.
         
         """
-        
         self.header_domains[domain] = { 'headers': headers,
                                         'secure': secure }
 

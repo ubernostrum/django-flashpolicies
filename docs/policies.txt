@@ -82,7 +82,7 @@ strongly recommended that you not disable this.
 ``metapolicy(permitted)``
 -------------------------
 
-Set meta-policy information (only applicable to master policy
+Set meta-policy to ``permitted`` (only applicable to master policy
 files). Acceptable values correspond to those listed in Section
 3(b)(i) of the crossdomain.xml specification, and are also available
 as a set of constants defined in this module.
