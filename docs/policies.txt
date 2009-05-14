@@ -79,6 +79,7 @@ a policy via HTTPS will require that SWFs also be retrieved via
 HTTPS), pass ``secure=False``. Due to security concerns, it is
 strongly recommended that you not disable this.
 
+
 ``metapolicy(permitted)``
 -------------------------
 
