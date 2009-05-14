@@ -16,10 +16,10 @@ Although the primary focus of this application is to provide
 cross-domain policy support for Django-powered sites, please note that
 the ``Policy`` class, and the module ``flashpolicies.policies`` in
 which it is defined, are designed to be reasonably standalone; neither
-Django nor any other third-party library is required (only ``xml.dom``
-and ``xml.dom.minidom`` modules from the Python standard library). As
-such, ``Policy`` objects can be created and used by any Python code,
-regardless of whether Django is available or being used.
+Django nor any other third-party library is required (only the
+``xml.dom`` and ``xml.dom.minidom`` modules from the Python standard
+library). As such, ``Policy`` objects can be created and used by any
+Python code, regardless of whether Django is available or being used.
 
 .. _Adobe's cross-domain policy specification: http://www.adobe.com/devnet/articles/crossdomain_policy_file_spec.html
 
