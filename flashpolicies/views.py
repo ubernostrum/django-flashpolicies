@@ -29,7 +29,7 @@ def simple(request, domains):
     a domain, it will act as a master policy and will not permit other
     policies to exist on that domain. If you need to set meta-policy
     information and allow other policies, use the view
-    ``flashpolicies.views.metapolicy`` for the master policy instead.
+    :view:`flashpolicies.views.metapolicy` for the master policy instead.
 
     **Required arguments:**
 
