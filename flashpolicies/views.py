@@ -86,7 +86,7 @@ def metapolicy(request, site_control, domains=None):
 
     ``site_control``
         A string indicating the extent to which other policies are
-        permitted. Value values are defined as constants in
+        permitted. Acceptable values are defined as constants in
         ``flashpolicies.policies``.
 
     **Optional arguments:**
