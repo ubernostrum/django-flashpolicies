@@ -1,3 +1,8 @@
+"""
+Views for generating and serving policy files.
+
+"""
+
 from django.http import HttpResponse
 
 from flashpolicies import policies
@@ -16,10 +21,11 @@ def serve(request, policy):
     **Optional arguments:**
 
     None.
-    
+
     """
     return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
                         content_type='text/x-cross-domain-policy; charset=utf-8')
+
 
 def simple(request, domains):
     """
@@ -43,15 +49,16 @@ def simple(request, domains):
     **Optional arguments:**
 
     None.
-    
+
     """
     return serve(request, policies.Policy(*domains))
+
 
 def no_access(request):
     """
     A Flash cross-domain access policy which permits no access of any
     kind, via a meta-policy declaration disallowing all policy files.
-    
+
     Note that this view, if used, must become the master policy for
     the domain, and so must be served from the URL
     ``/crossdomain.xml`` on the domain -- setting meta-policy
@@ -65,11 +72,12 @@ def no_access(request):
     **Optional arguments:**
 
     None.
-    
+
     """
     policy = policies.Policy()
     policy.metapolicy(policies.SITE_CONTROL_NONE)
     return serve(request, policy)
+
 
 def metapolicy(request, site_control, domains=None):
     """
@@ -97,7 +105,7 @@ def metapolicy(request, site_control, domains=None):
         (e.g., ``*.example.com``). Due to serious potential security
         issues, it is strongly recommended that you not use wildcard
         domain values.
-    
+
     """
     if domains is None:
         domains = []

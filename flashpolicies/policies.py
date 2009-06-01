@@ -26,6 +26,7 @@ VALID_SITE_CONTROL = (SITE_CONTROL_ALL,
                       SITE_CONTROL_MASTER_ONLY,
                       SITE_CONTROL_NONE)
 
+
 class Policy(object):
     """
     Wrapper object for creating and manipulating a Flash cross-domain
@@ -43,7 +44,7 @@ class Policy(object):
 
     Consult the documentation for the various methods of this class
     for more advanced uses.
-    
+
     """
     def __init__(self, *domains):
         self.site_control = None
@@ -68,10 +69,10 @@ class Policy(object):
         retrieved via HTTPS), pass ``secure=False``. Due to security
         concerns, it is strongly recommended that you not disable
         this.
-        
+
         """
-        self.domains[domain] = { 'to_ports': to_ports,
-                                 'secure': secure }
+        self.domains[domain] = {'to_ports': to_ports,
+                                'secure': secure}
 
     def metapolicy(self, permitted):
         """
@@ -84,7 +85,7 @@ class Policy(object):
         policies except socket policies, (which assume a default of
         ``all``) so if this is desired (and, for security, it
         typically is), this method does not need to be called.
-        
+
         """
         if permitted not in VALID_SITE_CONTROL:
             raise TypeError('"%s" is not a valid value for the "permitted-cross-domain-policies" attribute of a site-control element' % permitted)
@@ -100,16 +101,16 @@ class Policy(object):
         discouraged for security reasons.
 
         The value for ``headers`` should be a list of header names.
-        
+
         To disable Flash's requirement of security matching (e.g.,
         retrieving a policy via HTTPS will require that SWFs also be
         retrieved via HTTPS), pass ``secure=False``. Due to security
         concerns, it is strongly recommended that you not disable
         this.
-        
+
         """
-        self.header_domains[domain] = { 'headers': headers,
-                                        'secure': secure }
+        self.header_domains[domain] = {'headers': headers,
+                                       'secure': secure}
 
     def _get_xml_dom(self):
         """
@@ -120,7 +121,7 @@ class Policy(object):
         Note that the various elements appear inside the XML document
         in a specific order to ensure validity, so use caution when
         manipulating the returned ``Document``.
-        
+
         """
         policy_type = minidom.createDocumentType(qualifiedName='cross-domain-policy',
                                                  publicId=None,
