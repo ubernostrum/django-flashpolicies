@@ -1,3 +1,5 @@
+.. -*-restructuredtext-*-
+
 This application enables simple Flash cross-domain access policies for
 Django sites. For example, the following URL pattern is all you'd need
 to set up cross-domain access for Flash files served from your media
