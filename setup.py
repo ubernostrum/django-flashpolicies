@@ -5,7 +5,7 @@ import os
 setup(name='django-flashpolicies',
       version='1.2',
       description='Flash cross-domain policies for Django sites',
-      long_description=open(os.path.join(os.path.dirname(__file__), 'README.txt')).read(),
+      long_description=open(os.path.join(os.path.dirname(__file__), 'README')).read(),
       author='James Bennett',
       author_email='james@b-list.org',
       url='http://bitbucket.org/ubernostrum/django-flashpolicies/overview/',
