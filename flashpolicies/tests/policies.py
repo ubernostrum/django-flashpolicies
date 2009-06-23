@@ -124,7 +124,7 @@ class PolicyGeneratorTests(TestCase):
 
         """
         policy = policies.Policy()
-        self.assertRaises(TypeError, policy.site_control, 'not-valid')
+        self.assertRaises(TypeError, policy.metapolicy, 'not-valid')
 
     def test_element_order(self):
         """
