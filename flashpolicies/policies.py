@@ -71,6 +71,8 @@ class Policy(object):
         this.
 
         """
+        if self.site_control == SITE_CONTROL_NONE:
+            raise TypeError("Metapolicy currently forbids all access; to allow a domain, change the metapolicy.")
         self.domains[domain] = {'to_ports': to_ports,
                                 'secure': secure}
 
@@ -89,6 +91,10 @@ class Policy(object):
         """
         if permitted not in VALID_SITE_CONTROL:
             raise TypeError('"%s" is not a valid value for the "permitted-cross-domain-policies" attribute of a site-control element' % permitted)
+        if permitted == SITE_CONTROL_NONE:
+            # Metapolicy 'none' means no access is permitted.
+            self.domains = {}
+            self.header_domains = {}
         self.site_control = permitted
 
     def allow_headers(self, domain, headers, secure=True):
@@ -109,6 +115,8 @@ class Policy(object):
         this.
 
         """
+        if self.site_control == SITE_CONTROL_NONE:
+            raise TypeError("Metapolicy currently forbids all access; to allow headers from a domain, change the metapolicy.")
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
 
