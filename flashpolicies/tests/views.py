@@ -19,7 +19,8 @@ class PolicyViewTests(TestCase):
         """
         response = self.client.get('/crossdomain4.xml')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy; charset=utf-8')
+        self.assertEqual(response['Content-Type'],
+                         'text/x-cross-domain-policy; charset=utf-8')
 
         # Parse the returned policy and make sure it matches what was
         # passed in.

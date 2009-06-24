@@ -68,9 +68,9 @@ class PolicyGeneratorTests(TestCase):
         self.assertEqual(len(access_elem.attributes), 2)
         self.assertEqual(access_elem.getAttribute('secure'), 'false')
 
-    def test_site_control(self):
+    def test_metapolicy(self):
         """
-        Test that adding meta-policy information inserts the proper
+        Test that adding metapolicy information inserts the proper
         element and attributes.
 
         """
@@ -83,6 +83,58 @@ class PolicyGeneratorTests(TestCase):
             control_elem = xml_dom.getElementsByTagName('site-control')[0]
             self.assertEqual(len(control_elem.attributes), 1)
             self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
+
+    def test_bad_metapolicy(self):
+        """
+        Test that metapolicies are restricted to the values permitted
+        by the specification.
+
+        """
+        policy = policies.Policy()
+        self.assertRaises(TypeError, policy.metapolicy, 'not-valid')
+
+
+    def test_metapolicy_none_empty_domains(self):
+        """
+        Test that setting the metapolicy to ``none`` clears the list
+        of permitted domains.
+
+        """
+        policy = policies.Policy('media.example.com', 'api.example.com')
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-access-from')), 0)
+
+    def test_metapolicy_none_empty_headers(self):
+        """
+        Test that setting the metapolicy to ``non`` clears the list of
+        domains from which headers are permitted.
+
+        """
+        policy = policies.Policy()
+        policy.allow_headers('media.example.com', ['SomeHeader'])
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-http-request-headers-from')), 0)
+
+    def test_metapolicy_none_disallow_domains(self):
+        """
+        Test that attempting to allow access from a domain, when the
+        metapolicy is ``none``, raises an exception.
+
+        """
+        policy = policies.Policy()
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertRaises(TypeError, policy.allow_domain, 'media.example.com')
+
+    def test_metapolicy_none_disallow_headers(self):
+        """
+        Test that attempting to allow headers from a domain, when the
+        metapolicy is ``none``, raises an exception.
+
+        """
+        policy = policies.Policy()
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertRaises(TypeError, policy.allow_headers,
+                          'media.example.com', ['SomeHeader'])
 
     def test_allow_http_headers(self):
         """
@@ -116,15 +168,6 @@ class PolicyGeneratorTests(TestCase):
         header_elem = xml_dom.getElementsByTagName('allow-http-request-headers-from')[0]
         self.assertEqual(len(header_elem.attributes), 3)
         self.assertEqual(header_elem.getAttribute('secure'), 'false')
-
-    def test_bad_site_control(self):
-        """
-        Test that meta-policies are restricted to the values permitted
-        by the specification.
-
-        """
-        policy = policies.Policy()
-        self.assertRaises(TypeError, policy.metapolicy, 'not-valid')
 
     def test_element_order(self):
         """
@@ -178,45 +221,3 @@ class PolicyGeneratorTests(TestCase):
         for i, domain in enumerate(domains):
             self.assertEqual(domain,
                              xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
-
-    def test_metapolicy_none_empty_domains(self):
-        """
-        Test that setting the metapolicy to ``none`` clears the list
-        of permitted domains.
-
-        """
-        policy = policies.Policy('media.example.com', 'api.example.com')
-        policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-access-from')), 0)
-
-    def test_metapolicy_none_empty_headers(self):
-        """
-        Test that setting the metapolicy to ``non`` clears the list of
-        domains from which headers are permitted.
-
-        """
-        policy = policies.Policy()
-        policy.allow_headers('media.example.com', ['SomeHeader'])
-        policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-http-request-headers-from')), 0)
-
-    def test_metapolicy_none_disallow_domains(self):
-        """
-        Test that attempting to allow access from a domain, when the
-        metapolicy is ``none``, raises an exception.
-
-        """
-        policy = policies.Policy()
-        policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertRaises(TypeError, policy.allow_domain, 'media.example.com')
-
-    def test_metapolicy_none_disallow_headers(self):
-        """
-        Test that attempting to allow headers from a domain, when the
-        metapolicy is ``none``, raises an exception.
-
-        """
-        policy = policies.Policy()
-        policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertRaises(TypeError, policy.allow_headers,
-                          'media.example.com', ['SomeHeader'])
