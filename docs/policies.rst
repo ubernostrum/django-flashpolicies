@@ -20,7 +20,7 @@ Simple interaction with :class:`Policy` objects
 
 For most cases, simply instantiating a :class:`Policy` object with one or
 more domains will accomplish the desired effect. The property
-``xml_dom`` will yield an ``xml.dom.minidom.Document`` object
+:attr:`~Policy.xml_dom` will yield an ``xml.dom.minidom.Document`` object
 representing the policy's XML; for information on working with these
 objects, consult the documentation for `the xml.dom.minidom module in
 the Python standard library
@@ -61,6 +61,11 @@ API reference
    .. code-block:: python
 
       my_policy = Policy('media.example.com', 'api.example.com')
+
+   .. attribute:: xml_dom
+
+      A read-only property which returns an XML representation of this
+      policy, as an ``xml.dom.minidom.Document`` object.
 
    .. method:: allow_domain(domain, to_ports=None, secure=True)
 
