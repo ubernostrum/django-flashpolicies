@@ -66,3 +66,7 @@ needed. Most sites will need no more than the
    domain, and so must be served from the URL ``/crossdomain.xml`` on
    the domain: setting metapolicy information in other policy files is
    forbidden by the cross-domain policy specification.
+
+   Internally, this view simply calls the :func:`metapolicy` view,
+   passing :const:`~flashpolicies.policies.SITE_CONTROL_NONE` as the
+   metapolicy.
