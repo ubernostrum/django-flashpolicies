@@ -120,3 +120,39 @@ would suffice::
     url(r^'crossdomain.xml$',
         'flashpolicies.views.simple',
         {'domains': ['media.example.com', 'api.example.com']}),
+
+
+URL configuration and interaction with ``APPEND_SLASH``
+-------------------------------------------------------
+
+Your master policy file -- the only policy file on your domain, in
+most cases -- **must** be served from exactly the URL
+``/crossdomain.xml``. So if your site is at ``example.com``, the
+master policy file must be served from
+``http://example.com/crossdomain.xml``.
+
+As such, the Django instance in which django-flashpolicies is used
+must be serving from the root of the domain. If this is not possible,
+you will need to find an alternate method of serving your domain's
+cross-domain policy; one option is to manually create a
+:class:`~flashpolicies.policies.Policy` instance, and serialize it
+(via its :attr:`~flashpolicies.policies.Policy.xml_dom` attribute),
+writing the result to a file which can be handled normally by your web
+server.
+
+If you are using Django with the `CommonMiddleware
+<http://docs.djangoproject.com/en/dev/ref/middleware/#module-django.middleware.common>`_
+enabled and the ``APPEND_SLASH`` setting set to ``True`` (by default,
+this is the case for any newly-created Django project), you will need
+to be careful in defining the URL patterns used for serving
+cross-domain policies. In particular, you'll want to use the regular
+expression ``^crossdomain.xml$`` -- *without* trailing slash -- for
+the URL. Django's ``CommonMiddleware`` (as of Django 1.0) will not
+attempt to append a slash when an existing URL pattern matches without
+the trailing slash.
+
+Note that the current behavior of ``APPEND_SLASH`` was new in Django
+1.0; previous releases of Django will always attempt to append a
+slash, regardless of whether an existing pattern matches without
+it. If you are using an older release of Django, this may pose
+problems when attempting to serve a master policy file.
