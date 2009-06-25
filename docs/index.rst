@@ -19,7 +19,9 @@ the URL ``/crossdomain.xml`` to the view
 :func:`flashpolicies.views.simple` and passing a list of domains from
 which you want to allow access. For example, to allow access from
 Flash content served from ``media.example.com``, you could place the
-following in the root URLConf of your Django site::
+following in the root URLConf of your Django site:
+
+.. code-block:: python
 
     url(r^'crossdomain.xml$',
         'flashpolicies.views.simple',

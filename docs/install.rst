@@ -115,7 +115,9 @@ for a cross-domain policy) to the view
 which you'd like to allow access. For example, to enable access for
 Flash content served from the domains ``media.example.com`` and
 ``api.example.com``, the following URL pattern in your root URLConf
-would suffice::
+would suffice:
+
+.. code-block:: python
 
     url(r^'crossdomain.xml$',
         'flashpolicies.views.simple',
