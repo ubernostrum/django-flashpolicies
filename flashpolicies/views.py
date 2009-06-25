@@ -98,7 +98,7 @@ def no_access(request):
     Note that this view, if used, must be the master policy for the
     domain, and so must be served from the URL ``/crossdomain.xml`` on
     the domain: setting metapolicy information in other policy files
-    is forbidden by the corss-domain policy specification.
+    is forbidden by the cross-domain policy specification.
 
     **Required arguments:**
 
