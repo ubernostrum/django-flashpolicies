@@ -88,6 +88,14 @@ class Policy(object):
         ``all``) so if this is desired (and, for security, it
         typically is), this method does not need to be called.
 
+        Note that a metapolicy of ``none`` forbids **all** access,
+        even if one or more domains have previously been specified as
+        allowed. As such, setting the metapolicy to ``none`` will
+        remove all access previously granted by ``allow_domain`` or
+        ``allow_headers``. Additionally, attempting to grant access
+        via ``allow_domain`` or ``allow_headers`` will, when the
+        metapolicy is ``none``, raise ``TypeError``.
+
         """
         if permitted not in VALID_SITE_CONTROL:
             raise TypeError('"%s" is not a valid value for the "permitted-cross-domain-policies" attribute of a site-control element' % permitted)
