@@ -37,16 +37,6 @@ needed. Most sites will need no more than the
       security issues, it is strongly recommended that you not use
       wildcard domain values.
 
-.. function:: no_access(request)
-
-   A Flash cross-domain policy which permits no access of any kind,
-   via a metapolicy declaration disallowing all policy files.
-
-   Note that this view, if used, must be the master policy for the
-   domain, and so must be served from the URL ``/crossdomain.xml`` on
-   the domain: setting metapolicy information in other policy files is
-   forbidden by the cross-domain policy specification.
-
 .. function:: metapolicy(request, site_control, domains=None)
 
    A Flash cross-domain policy which allows other policies to exist on
@@ -57,7 +47,7 @@ needed. Most sites will need no more than the
    the domain: setting meta-policy information in other policy files
    is forbidden by the cross-domain policy specification.
 
-   :param site_control: A string indicating the extent to which other
+   :param permitted: A string indicating the extent to which other
       policies are permitted. :ref:`A set of constants is available,
       defining acceptable values for this argument
       <metapolicy-constants>`.
@@ -66,3 +56,13 @@ needed. Most sites will need no more than the
       wildcard (e.g., ``*.example.com``). Due to serious potential
       security issues, it is strongly recommended that you not use
       wildcard domain values.
+
+.. function:: no_access(request)
+
+   A Flash cross-domain policy which permits no access of any kind,
+   via a metapolicy declaration disallowing all policy files.
+
+   Note that this view, if used, must be the master policy for the
+   domain, and so must be served from the URL ``/crossdomain.xml`` on
+   the domain: setting metapolicy information in other policy files is
+   forbidden by the cross-domain policy specification.

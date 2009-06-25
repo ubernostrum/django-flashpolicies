@@ -55,7 +55,7 @@ def simple(request, domains):
     return serve(request, policies.Policy(*domains))
 
 
-def metapolicy(request, site_control, domains=None):
+def metapolicy(request, permitted, domains=None):
     """
     A Flash cross-domain policy which allows other policies to exist
     on the same domain.
@@ -67,7 +67,7 @@ def metapolicy(request, site_control, domains=None):
 
     **Required arguments:**
 
-    ``site_control``
+    ``permitted``
         A string indicating the extent to which other policies are
         permitted. A set of constants is available in
         ``flashpolicies.policies``, defining acceptable values for
@@ -86,7 +86,7 @@ def metapolicy(request, site_control, domains=None):
     if domains is None:
         domains = []
     policy = policies.Policy(*domains)
-    policy.metapolicy(site_control)
+    policy.metapolicy(permitted)
     return serve(request, policy)
 
 
@@ -110,4 +110,4 @@ def no_access(request):
 
     """
     return metapolicy(request,
-                      site_control=policies.SITE_CONTROL_NONE)
+                      permitted=policies.SITE_CONTROL_NONE)
