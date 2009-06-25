@@ -110,11 +110,12 @@ cross-domain policy (or policies).
 
 For most cases, you'll simply need a single pattern, in your root
 URLConf, pointing the URL ``/crossdomain.xml`` (the standard location
-for a cross-domain policy) to the view ``flashpolicies.views.simple``,
-passing a list of domains from which you'd like to allow access. For
-example, to enable access for Flash content served from the domains
-``media.example.com`` and ``api.example.com``, the following URL
-pattern in your root URLConf would suffice::
+for a cross-domain policy) to the view
+:func:`flashpolicies.views.simple`, passing a list of domains from
+which you'd like to allow access. For example, to enable access for
+Flash content served from the domains ``media.example.com`` and
+``api.example.com``, the following URL pattern in your root URLConf
+would suffice::
 
     url(r^'crossdomain.xml$',
         'flashpolicies.views.simple',

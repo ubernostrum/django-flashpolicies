@@ -16,7 +16,7 @@ and this application generates and serves the appropriate XML.
 
 In the simplest case, you'll simply set up one URL pattern, pointing
 the URL ``/crossdomain.xml`` to the view
-``flashpolicies.views.simple`` and passing a list of domains from
+:func:`flashpolicies.views.simple` and passing a list of domains from
 which you want to allow access. For example, to allow access from
 Flash content served from ``media.example.com``, you could place the
 following in the root URLConf of your Django site::
@@ -32,7 +32,8 @@ Documentation contents
    :maxdepth: 1
 
    install
-
+   views
+   policies
 
 Further reading
 ---------------
