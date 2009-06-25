@@ -55,30 +55,6 @@ def simple(request, domains):
     return serve(request, policies.Policy(*domains))
 
 
-def no_access(request):
-    """
-    A Flash cross-domain access policy which permits no access of any
-    kind, via a metapolicy declaration disallowing all policy files.
-
-    Note that this view, if used, must be the master policy for the
-    domain, and so must be served from the URL ``/crossdomain.xml`` on
-    the domain: setting metapolicy information in other policy files
-    is forbidden by the corss-domain policy specification.
-
-    **Required arguments:**
-
-    None.
-
-    **Optional arguments:**
-
-    None.
-
-    """
-    policy = policies.Policy()
-    policy.metapolicy(policies.SITE_CONTROL_NONE)
-    return serve(request, policy)
-
-
 def metapolicy(request, site_control, domains=None):
     """
     A Flash cross-domain policy which allows other policies to exist
@@ -112,3 +88,26 @@ def metapolicy(request, site_control, domains=None):
     policy = policies.Policy(*domains)
     policy.metapolicy(site_control)
     return serve(request, policy)
+
+
+def no_access(request):
+    """
+    A Flash cross-domain access policy which permits no access of any
+    kind, via a metapolicy declaration disallowing all policy files.
+
+    Note that this view, if used, must be the master policy for the
+    domain, and so must be served from the URL ``/crossdomain.xml`` on
+    the domain: setting metapolicy information in other policy files
+    is forbidden by the corss-domain policy specification.
+
+    **Required arguments:**
+
+    None.
+
+    **Optional arguments:**
+
+    None.
+
+    """
+    return metapolicy(request,
+                      site_control=policies.SITE_CONTROL_NONE)
