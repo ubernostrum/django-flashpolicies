@@ -10,13 +10,14 @@ from flashpolicies import policies
 
 def serve(request, policy):
     """
-    Given a ``flashpolicies.policies.Policy``, serialize it to XML and
-    serve it.
+    Given a ``flashpolicies.policies.Policy`` instance, serialize it
+    to XML and serve it. Internall, this is used by all other views as
+    the mechanism which actually serves the policy file.
 
     **Required arguments:**
 
     ``policy``
-        A ``flashpolicies.policies.Policy`` instance.
+        The ``flashpolicies.policies.Policy`` instance to serve.
 
     **Optional arguments:**
 
@@ -57,13 +58,12 @@ def simple(request, domains):
 def no_access(request):
     """
     A Flash cross-domain access policy which permits no access of any
-    kind, via a meta-policy declaration disallowing all policy files.
+    kind, via a metapolicy declaration disallowing all policy files.
 
-    Note that this view, if used, must become the master policy for
-    the domain, and so must be served from the URL
-    ``/crossdomain.xml`` on the domain -- setting meta-policy
-    information in other policy files is forbidden by the
-    specification.
+    Note that this view, if used, must be the master policy for the
+    domain, and so must be served from the URL ``/crossdomain.xml`` on
+    the domain: setting metapolicy information in other policy files
+    is forbidden by the corss-domain policy specification.
 
     **Required arguments:**
 
@@ -84,18 +84,18 @@ def metapolicy(request, site_control, domains=None):
     A Flash cross-domain policy which allows other policies to exist
     on the same domain.
 
-    Note that this view, if used, must become the master policy for
-    the domain, and so must be served from the URL
-    ``/crossdomain.xml`` on the domain -- setting meta-policy
-    information in other policy files is forbidden by the
-    specification.
+    Note that this view, if used, must be the master policy for the
+    domain, and so must be served from the URL ``/crossdomain.xml`` on
+    the domain: setting metapolicy information in other policy files
+    is forbidden by the cross-domain policy specification.
 
     **Required arguments:**
 
     ``site_control``
         A string indicating the extent to which other policies are
-        permitted. Acceptable values are defined as constants in
-        ``flashpolicies.policies``.
+        permitted. A set of constants is available in
+        ``flashpolicies.policies``, defining acceptable values for
+        this argument.
 
     **Optional arguments:**
 
