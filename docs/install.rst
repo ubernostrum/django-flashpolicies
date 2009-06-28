@@ -70,9 +70,9 @@ listing on the Python Package Index
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-flashpolicies-1.3.tar.gz`` at a command line on Linux, Mac OS X
-or other Unix-like systems). This will create the directory
-``django-flashpolicies-1.3``, which contains the ``setup.py``
+django-flashpolicies-1.3.1.tar.gz`` at a command line on Linux, Mac OS
+X or other Unix-like systems). This will create the directory
+``django-flashpolicies-1.3.1``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
