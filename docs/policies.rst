@@ -18,17 +18,16 @@ is the canonical source for that information.
 Simple interaction with :class:`Policy` objects
 -----------------------------------------------
 
-For most cases, simply instantiating a :class:`Policy` object with one or
-more domains will accomplish the desired effect. The property
-:attr:`~Policy.xml_dom` will yield an ``xml.dom.minidom.Document`` object
-representing the policy's XML; for information on working with these
-objects, consult the documentation for `the xml.dom.minidom module in
-the Python standard library
+For most cases, simply instantiating a :class:`Policy` object with one
+or more domains will accomplish the desired effect. The property
+:attr:`~Policy.xml_dom` will yield an ``xml.dom.minidom.Document``
+object representing the policy's XML; for information on working with
+these objects, consult the documentation for `the xml.dom.minidom
+module in the Python standard library
 <http://docs.python.org/library/xml.dom.minidom.html>`_. In general,
-however, the ``toprettyxml()`` method of the ``Document`` will be all
-that's required; this serializes the ``Document`` to a string in a
-particular encoding, suitable for writing to a file or serving over
-HTTP.
+however, calling ``str()`` with a ``Policy`` instance will be all
+that's required; this will serialize the XML to a UTF-8-encoded
+bytestring, suitable for writing to a file or serving over HTTP.
 
 For example:
 
@@ -36,7 +35,7 @@ For example:
 
    >>> from flashpolicies import policies
    >>> my_policy = policies.Policy('media.example.com', 'api.example.com')
-   >>> print my_policy.xml_dom.toprettyxml(encoding='utf-8')
+   >>> print str(my_policy)
    <?xml version="1.0" encoding="utf-8"?>
    <!DOCTYPE cross-domain-policy
      SYSTEM 'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd'>

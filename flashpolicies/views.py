@@ -24,7 +24,7 @@ def serve(request, policy):
     None.
 
     """
-    return HttpResponse(policy.xml_dom.toprettyxml(encoding='utf-8'),
+    return HttpResponse(str(policy),
                         content_type='text/x-cross-domain-policy; charset=utf-8')
 
 

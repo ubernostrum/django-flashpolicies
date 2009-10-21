@@ -40,7 +40,9 @@ class Policy(object):
 
     The property ``xml_dom`` of the returned ``Policy`` object will be
     an ``xml.dom.minidom.Document`` representing the resulting policy,
-    and can be serialized for writing to a file or returning via HTTP.
+    and can be serialized for writing to a file or returning via
+    HTTP. For ease of use, ``__str__()`` is defined here and returns
+    the policy serialized to a UTF-8 bytestring.
 
     Consult the documentation for the various methods of this class
     for more advanced uses.
@@ -169,3 +171,6 @@ class Policy(object):
         return policy
 
     xml_dom = property(_get_xml_dom)
+
+    def __str__(self):
+        return self.xml_dom.toprettyxml(encoding="utf-8")

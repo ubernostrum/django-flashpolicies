@@ -184,3 +184,15 @@ class PolicyGeneratorTests(TestCase):
         for i, domain in enumerate(domains):
             self.assertEqual(domain,
                              xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
+
+    def test_policy_str(self):
+        """
+        Test that ``str()`` on a policy returns the proper serialized
+        XML.
+        
+        """
+        xml_string = """<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE cross-domain-policy\n  SYSTEM 'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd'>\n<cross-domain-policy>\n\t<allow-access-from domain="media.example.com"/>\n\t<allow-access-from domain="api.example.com"/>\n</cross-domain-policy>\n"""
+        
+        domains = ['media.example.com', 'api.example.com']
+        policy = policies.Policy(*domains)
+        self.assertEqual(str(policy), xml_string)
