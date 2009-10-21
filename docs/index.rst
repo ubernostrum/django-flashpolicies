@@ -23,7 +23,7 @@ following in the root URLConf of your Django site:
 
 .. code-block:: python
 
-    url(r^'crossdomain.xml$',
+    url(r'^crossdomain.xml$',
         'flashpolicies.views.simple',
         {'domains': ['media.example.com']}),
 

@@ -119,7 +119,7 @@ would suffice:
 
 .. code-block:: python
 
-    url(r^'crossdomain.xml$',
+    url(r'^crossdomain.xml$',
         'flashpolicies.views.simple',
         {'domains': ['media.example.com', 'api.example.com']}),
 
