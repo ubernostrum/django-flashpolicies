@@ -11,7 +11,7 @@ from flashpolicies import policies
 def serve(request, policy):
     """
     Given a ``flashpolicies.policies.Policy`` instance, serialize it
-    to XML and serve it. Internall, this is used by all other views as
+    to XML and serve it. Internally, this is used by all other views as
     the mechanism which actually serves the policy file.
 
     **Required arguments:**
