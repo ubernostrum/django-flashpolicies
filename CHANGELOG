@@ -8,6 +8,21 @@ numbers/changeset IDs in the repository (online at
 listed as well.
 
 
+Version 1.4, released January 9, 2010
+-------------------------------------
+
+* Packaged from repository tag 'v1.4'.
+
+* Added a ``__str__`` method to ``flashpolicies.policies.Policy``
+  which serializes the document to (UTF-8-encoded) XML
+  (r118/ba7a370f91c2).
+
+* Corrected a typo in the example URLconf in the documentation
+  (119/24565cd80386).
+
+* Minor documentation tweaks for style consistency.
+
+
 Version 1.3.1, released June 28, 2009
 -------------------------------------
 
