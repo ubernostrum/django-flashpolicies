@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-django-flashpolicies 1.3.1
-==========================
+django-flashpolicies |version|
+==============================
 
 This application enables simple Flash `cross-domain policies
 <http://kb2.adobe.com/cps/142/tn_14213.html>`_ (which are required for
@@ -37,8 +37,7 @@ Documentation contents
    views
    policies
 
-Further reading
----------------
+.. seealso::
 
-* `Adobe's recommendations for use of Flash cross-domain policies <http://www.adobe.com/devnet/flashplayer/articles/cross_domain_policy.html>`_
-* `Google doctype article on Flash cross-domain policies <http://code.google.com/p/doctype/wiki/ArticleFlashSecurityCrossDomain>`_
+   * `Adobe's recommendations for use of Flash cross-domain policies <http://www.adobe.com/devnet/flashplayer/articles/cross_domain_policy.html>`_
+   * `Google doctype article on Flash cross-domain policies <http://code.google.com/p/doctype/wiki/ArticleFlashSecurityCrossDomain>`_
