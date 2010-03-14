@@ -37,7 +37,7 @@ needed. Most sites will need no more than the
       security issues, it is strongly recommended that you not use
       wildcard domain values.
 
-.. function:: metapolicy(request, site_control, domains=None)
+.. function:: metapolicy(request, permitted, domains=None)
 
    A Flash cross-domain policy which allows other policies to exist on
    the same domain.
