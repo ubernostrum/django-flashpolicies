@@ -138,9 +138,10 @@ must be serving from the root of the domain. If this is not possible,
 you will need to find an alternate method of serving your domain's
 cross-domain policy; one option is to manually create a
 :class:`~flashpolicies.policies.Policy` instance, and serialize it
-(via its :attr:`~flashpolicies.policies.Policy.xml_dom` attribute),
-writing the result to a file which can be handled normally by your web
-server.
+(the simplest way is via ``str()``, though for more fine-grained
+control see the :attr:`~flashpolicies.policies.Policy.xml_dom`
+attribute), writing the result to a file which can be handled normally
+by your web server.
 
 If you are using Django with the `CommonMiddleware
 <http://docs.djangoproject.com/en/dev/ref/middleware/#module-django.middleware.common>`_
