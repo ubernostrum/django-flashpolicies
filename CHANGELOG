@@ -8,6 +8,21 @@ numbers/changeset IDs in the repository (online at
 listed as well.
 
 
+Version 1.4.1, released March 14, 2010
+--------------------------------------
+
+* Packaged from repository tag 'v1.4.1'.
+
+* Updated LICENSE file to reflect development taking place in 2010
+  (r133/e221457af0f7).
+
+* Corrected a mis-named view argument in the documentation
+  (r134/180096f58e51).
+
+* Minor update to install guide in light of the ``__str__`` method
+  added to ``Policy`` in the 1.4 release (r135/16f0ac1832c9).
+
+
 Version 1.4, released January 9, 2010
 -------------------------------------
 
