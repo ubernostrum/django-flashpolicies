@@ -8,6 +8,16 @@ numbers/changeset IDs in the repository (online at
 listed as well.
 
 
+Version 1.5, released July 31, 2013
+-----------------------------------
+
+* Packaged from repository tag 'v1.5'.
+
+* Python 3 compatibility (only available when using Django 1.5).
+
+* Updated documentation.
+
+	
 Version 1.4.1, released March 14, 2010
 --------------------------------------
 

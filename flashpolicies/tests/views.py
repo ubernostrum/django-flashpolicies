@@ -39,11 +39,12 @@ class PolicyViewTests(TestCase):
         self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy; charset=utf-8')
         policy = xml.dom.minidom.parseString(response.content)
         self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 2)
-        domain_elems = policy.getElementsByTagName('allow-access-from')
+        
         domains = ['media.example.com', 'api.example.com']
-        for i, domain in enumerate(domains):
-            self.assertEqual(domain,
-                             policy.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
+        domains_in_xml = [elem.getAttribute('domain') for elem in \
+                          policy.getElementsByTagName('allow-access-from')]
+        for domain in domains_in_xml:
+            domains.remove(domain)
 
     def test_no_access(self):
         """

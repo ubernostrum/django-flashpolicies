@@ -93,7 +93,6 @@ class PolicyGeneratorTests(TestCase):
         policy = policies.Policy()
         self.assertRaises(TypeError, policy.metapolicy, 'not-valid')
 
-
     def test_metapolicy_none_empty_domains(self):
         """
         Test that setting the metapolicy to ``none`` clears the list
@@ -178,21 +177,11 @@ class PolicyGeneratorTests(TestCase):
         domains = ['media.example.com', 'api.example.com']
         policy = policies.Policy(*domains)
         xml_dom = policy.xml_dom
+
         self.assertEqual(len(xml_dom.documentElement.childNodes), 2)
         self.assertEqual(len(xml_dom.getElementsByTagName('allow-access-from')), 2)
-        domain_elems = xml_dom.getElementsByTagName('allow-access-from')
-        for i, domain in enumerate(domains):
-            self.assertEqual(domain,
-                             xml_dom.documentElement.getElementsByTagName('allow-access-from')[i].getAttribute('domain'))
 
-    def test_policy_str(self):
-        """
-        Test that ``str()`` on a policy returns the proper serialized
-        XML.
-        
-        """
-        xml_string = """<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE cross-domain-policy\n  SYSTEM 'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd'>\n<cross-domain-policy>\n\t<allow-access-from domain="media.example.com"/>\n\t<allow-access-from domain="api.example.com"/>\n</cross-domain-policy>\n"""
-        
-        domains = ['media.example.com', 'api.example.com']
-        policy = policies.Policy(*domains)
-        self.assertEqual(str(policy), xml_string)
+        domains_in_xml = [elem.getAttribute('domain') for elem in \
+                          xml_dom.getElementsByTagName('allow-access-from')]
+        for domain in domains_in_xml:
+            domains.remove(domain)

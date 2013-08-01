@@ -173,4 +173,4 @@ class Policy(object):
     xml_dom = property(_get_xml_dom)
 
     def __str__(self):
-        return self.xml_dom.toprettyxml(encoding="utf-8")
+        return self.xml_dom.toprettyxml()

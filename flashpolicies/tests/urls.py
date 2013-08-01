@@ -5,7 +5,8 @@ situation.
 
 """
 
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns
+from django.conf.urls import url
 
 from flashpolicies import policies
 

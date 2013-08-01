@@ -5,17 +5,19 @@ Installation guide
 ==================
 
 Before installing django-flashpolicies, you'll need to have a copy of
-`Django <http://www.djangoproject.com>`_ already installed. Django 1.0
-or later is required, and it's generally recommended that you use the
-latest stable release of Django. For information on obtaining and
-installing Django, consult the `Django download page
-<http://www.djangoproject.com/download/>`_, which offers convenient
-packaged downloads and installation instructions.
+`Django <http://www.djangoproject.com>`_ already installed. For
+information on obtaining and installing Django, consult the `Django
+download page <http://www.djangoproject.com/download/>`_, which offers
+convenient packaged downloads and installation instructions.
 
-Note that older versions of Django *may* work as well, but are not
-supported (and, due to the behavior of the ``APPEND_SLASH`` setting in
-older Django releases, may not be able to serve cross-domain policies
-from the proper URL).
+The |version| release of django-flashpolicies officially supports
+Django 1.4 and 1.5; older versions may work, but are not tested or
+supported. Python 2.6 and 2.7 are supported for Django 1.4 and 1.5.
+
+Additionally, on Django 1.5, django-flashpolicies |version| is tested
+and supported for Python 3.3. See :ref:`the
+django-flashpolicies FAQ <faq>` for additional notes on Django and
+Python version support.
 
 
 Installing django-flashpolicies
@@ -70,9 +72,9 @@ listing on the Python Package Index
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-flashpolicies-1.3.1.tar.gz`` at a command line on Linux, Mac OS
+django-flashpolicies-|version|.tar.gz`` at a command line on Linux, Mac OS
 X or other Unix-like systems). This will create the directory
-``django-flashpolicies-1.3.1``, which contains the ``setup.py``
+``django-flashpolicies-|version|``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
@@ -150,12 +152,5 @@ this is the case for any newly-created Django project), you will need
 to be careful in defining the URL patterns used for serving
 cross-domain policies. In particular, you'll want to use the regular
 expression ``^crossdomain.xml$`` -- *without* trailing slash -- for
-the URL. Django's ``CommonMiddleware`` (as of Django 1.0) will not
-attempt to append a slash when an existing URL pattern matches without
-the trailing slash.
-
-Note that the current behavior of ``APPEND_SLASH`` was new in Django
-1.0; previous releases of Django will always attempt to append a
-slash, regardless of whether an existing pattern matches without
-it. If you are using an older release of Django, this may pose
-problems when attempting to serve a master policy file.
+the URL. Django's ``CommonMiddleware`` will not attempt to append a
+slash when an existing URL pattern matches without the trailing slash.
