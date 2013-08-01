@@ -6,7 +6,7 @@
 django-flashpolicies |version|
 ==============================
 
-This application enables simple manamgement of Flash cross-domain
+This application enables simple management of Flash cross-domain
 policies, which are required for Flash content to access information
 across domains) for `Django <http://www.djangoproject.com/>`_-powered
 sites. Cross-domain policies are represented by an XML file format,
