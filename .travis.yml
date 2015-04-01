@@ -7,5 +7,5 @@ env:
  - DJANGO_VERSION=1.6.11
  - DJANGO_VERSION=1.7.7
 install:
- - pip install -q Django=$DJANGO_VERSION
+ - pip install -q Django==$DJANGO_VERSION
 script: python setup.py test
