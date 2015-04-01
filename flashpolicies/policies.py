@@ -8,6 +8,7 @@ import xml.dom
 
 minidom = xml.dom.getDOMImplementation('minidom')
 
+
 #
 # Acceptable values for the "permitted-cross-domain-policies"
 # attribute of "site-control" elements. See section 3(b)(i) of the
@@ -74,7 +75,10 @@ class Policy(object):
 
         """
         if self.site_control == SITE_CONTROL_NONE:
-            raise TypeError("Metapolicy currently forbids all access; to allow a domain, change the metapolicy.")
+            raise TypeError(
+                "Metapolicy currently forbids all access; "
+                "to allow a domain, change the metapolicy."
+            )
         self.domains[domain] = {'to_ports': to_ports,
                                 'secure': secure}
 
@@ -100,7 +104,11 @@ class Policy(object):
 
         """
         if permitted not in VALID_SITE_CONTROL:
-            raise TypeError('"%s" is not a valid value for the "permitted-cross-domain-policies" attribute of a site-control element' % permitted)
+            raise TypeError(
+                '"%s" is not a valid value for the '
+                '"permitted-cross-domain-policies" '
+                'attribute of a site-control element' % permitted
+            )
         if permitted == SITE_CONTROL_NONE:
             # Metapolicy 'none' means no access is permitted.
             self.domains = {}
@@ -126,7 +134,10 @@ class Policy(object):
 
         """
         if self.site_control == SITE_CONTROL_NONE:
-            raise TypeError("Metapolicy currently forbids all access; to allow headers from a domain, change the metapolicy.")
+            raise TypeError(
+                "Metapolicy currently forbids all access; "
+                "to allow headers from a domain, change the metapolicy."
+            )
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
 
@@ -141,27 +152,41 @@ class Policy(object):
         manipulating the returned ``Document``.
 
         """
-        policy_type = minidom.createDocumentType(qualifiedName='cross-domain-policy',
-                                                 publicId=None,
-                                                 systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
-        policy = minidom.createDocument(None, 'cross-domain-policy', policy_type)
+        policy_type = minidom.createDocumentType(
+            qualifiedName='cross-domain-policy',
+            publicId=None,
+            systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd'
+        )
+        policy = minidom.createDocument(
+            None,
+            'cross-domain-policy',
+            policy_type
+        )
 
         if self.site_control is not None:
             control_element = policy.createElement('site-control')
-            control_element.setAttribute('permitted-cross-domain-policies', self.site_control)
+            control_element.setAttribute(
+                'permitted-cross-domain-policies',
+                self.site_control
+            )
             policy.documentElement.appendChild(control_element)
 
         for domain, attrs in self.domains.items():
             domain_element = policy.createElement('allow-access-from')
             domain_element.setAttribute('domain', domain)
             if attrs['to_ports'] is not None:
-                domain_element.setAttribute('to-ports', ','.join(attrs['to_ports']))
+                domain_element.setAttribute(
+                    'to-ports',
+                    ','.join(attrs['to_ports'])
+                )
             if not attrs['secure']:
                 domain_element.setAttribute('secure', 'false')
             policy.documentElement.appendChild(domain_element)
 
         for domain, attrs in self.header_domains.items():
-            header_element = policy.createElement('allow-http-request-headers-from')
+            header_element = policy.createElement(
+                'allow-http-request-headers-from'
+            )
             header_element.setAttribute('domain', domain)
             header_element.setAttribute('headers', ','.join(attrs['headers']))
             if not attrs['secure']:

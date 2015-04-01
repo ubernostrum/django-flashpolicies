@@ -8,7 +8,7 @@ situation.
 from django.conf.urls import patterns
 from django.conf.urls import url
 
-from flashpolicies import policies
+from .. import policies
 
 
 def make_test_policy():
@@ -21,7 +21,7 @@ urlpatterns = patterns('',
                        url(r'^crossdomain1.xml$',
                            'flashpolicies.views.simple',
                            {'domains': ['media.example.com',
-                                         'api.example.com']}),
+                                        'api.example.com']}),
                        url(r'^crossdomain2.xml$',
                            'flashpolicies.views.no_access'),
                        url(r'^crossdomain3.xml$',

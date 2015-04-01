@@ -2,7 +2,7 @@ import xml.dom.minidom
 
 from django.test import TestCase
 
-from flashpolicies import policies
+from .. import policies
 
 
 class PolicyViewTests(TestCase):
@@ -25,8 +25,10 @@ class PolicyViewTests(TestCase):
         # Parse the returned policy and make sure it matches what was
         # passed in.
         policy = xml.dom.minidom.parseString(response.content)
-        self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 1)
-        self.assertEqual(len(policy.getElementsByTagName('allow-http-request-headers-from')), 1)
+        self.assertEqual(len(policy.getElementsByTagName(
+            'allow-access-from')), 1)
+        self.assertEqual(len(policy.getElementsByTagName(
+            'allow-http-request-headers-from')), 1)
 
     def test_simple(self):
         """
@@ -36,12 +38,13 @@ class PolicyViewTests(TestCase):
         """
         response = self.client.get('/crossdomain1.xml')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy; charset=utf-8')
+        self.assertEqual(response['Content-Type'],
+                         'text/x-cross-domain-policy; charset=utf-8')
         policy = xml.dom.minidom.parseString(response.content)
-        self.assertEqual(len(policy.getElementsByTagName('allow-access-from')), 2)
-        
+        self.assertEqual(len(policy.getElementsByTagName(
+            'allow-access-from')), 2)
         domains = ['media.example.com', 'api.example.com']
-        domains_in_xml = [elem.getAttribute('domain') for elem in \
+        domains_in_xml = [elem.getAttribute('domain') for elem in
                           policy.getElementsByTagName('allow-access-from')]
         for domain in domains_in_xml:
             domains.remove(domain)
@@ -54,11 +57,14 @@ class PolicyViewTests(TestCase):
         """
         response = self.client.get('/crossdomain2.xml')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy; charset=utf-8')
+        self.assertEqual(response['Content-Type'],
+                         'text/x-cross-domain-policy; charset=utf-8')
         policy = xml.dom.minidom.parseString(response.content)
         self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
-        self.assertEqual(policy.getElementsByTagName('site-control')[0].getAttribute('permitted-cross-domain-policies'),
-                         policies.SITE_CONTROL_NONE)
+        self.assertEqual(
+            policy.getElementsByTagName('site-control')[0].getAttribute(
+                'permitted-cross-domain-policies'),
+            policies.SITE_CONTROL_NONE)
 
     def test_metapolicy(self):
         """
@@ -68,8 +74,11 @@ class PolicyViewTests(TestCase):
         """
         response = self.client.get('/crossdomain3.xml')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['Content-Type'], 'text/x-cross-domain-policy; charset=utf-8')
+        self.assertEqual(response['Content-Type'],
+                         'text/x-cross-domain-policy; charset=utf-8')
         policy = xml.dom.minidom.parseString(response.content)
         self.assertEqual(len(policy.getElementsByTagName('site-control')), 1)
-        self.assertEqual(policy.getElementsByTagName('site-control')[0].getAttribute('permitted-cross-domain-policies'),
-                         policies.SITE_CONTROL_ALL)
+        self.assertEqual(
+            policy.getElementsByTagName('site-control')[0].getAttribute(
+                'permitted-cross-domain-policies'),
+            policies.SITE_CONTROL_ALL)

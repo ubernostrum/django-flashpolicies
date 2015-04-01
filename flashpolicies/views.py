@@ -5,7 +5,7 @@ Views for generating and serving policy files.
 
 from django.http import HttpResponse
 
-from flashpolicies import policies
+from . import policies
 
 
 def serve(request, policy):
@@ -25,7 +25,8 @@ def serve(request, policy):
 
     """
     return HttpResponse(str(policy),
-                        content_type='text/x-cross-domain-policy; charset=utf-8')
+                        content_type='text/x-cross-domain-policy; '
+                        'charset=utf-8')
 
 
 def simple(request, domains):

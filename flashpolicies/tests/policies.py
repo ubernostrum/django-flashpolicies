@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from flashpolicies import policies
+from .. import policies
 
 
 class PolicyGeneratorTests(TestCase):
@@ -14,8 +14,9 @@ class PolicyGeneratorTests(TestCase):
 
         """
         policy = policies.Policy().xml_dom
-        self.assertEqual(policy.doctype.systemId,
-                         'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
+        self.assertEqual(
+            policy.doctype.systemId,
+            'http://www.adobe.com/xml/dtds/cross-domain-policy.dtd')
         self.assertEqual(policy.doctype.name, 'cross-domain-policy')
         self.assertEqual(len(policy.childNodes), 2)
 
@@ -38,10 +39,13 @@ class PolicyGeneratorTests(TestCase):
         policy.allow_domain('media.example.com')
         xml_dom = policy.xml_dom
         self.assertEqual(len(xml_dom.documentElement.childNodes), 1)
-        self.assertEqual(len(xml_dom.getElementsByTagName('allow-access-from')), 1)
+        self.assertEqual(
+            len(xml_dom.getElementsByTagName(
+                'allow-access-from')), 1)
         access_elem = xml_dom.getElementsByTagName('allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 1)
-        self.assertEqual(access_elem.getAttribute('domain'), 'media.example.com')
+        self.assertEqual(access_elem.getAttribute('domain'),
+                         'media.example.com')
 
     def test_allow_access_ports(self):
         """
@@ -52,7 +56,8 @@ class PolicyGeneratorTests(TestCase):
         policy = policies.Policy()
         ports = ['80', '8080', '9000-1000']
         policy.allow_domain('media.example.com', to_ports=ports)
-        access_elem = policy.xml_dom.getElementsByTagName('allow-access-from')[0]
+        access_elem = policy.xml_dom.getElementsByTagName(
+            'allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 2)
         self.assertEqual(access_elem.getAttribute('to-ports'), ','.join(ports))
 
@@ -64,7 +69,8 @@ class PolicyGeneratorTests(TestCase):
         """
         policy = policies.Policy()
         policy.allow_domain('media.example.com', secure=False)
-        access_elem = policy.xml_dom.getElementsByTagName('allow-access-from')[0]
+        access_elem = policy.xml_dom.getElementsByTagName(
+            'allow-access-from')[0]
         self.assertEqual(len(access_elem.attributes), 2)
         self.assertEqual(access_elem.getAttribute('secure'), 'false')
 
@@ -79,10 +85,13 @@ class PolicyGeneratorTests(TestCase):
             policy.metapolicy(permitted)
             xml_dom = policy.xml_dom
             self.assertEqual(len(xml_dom.documentElement.childNodes), 1)
-            self.assertEqual(len(xml_dom.getElementsByTagName('site-control')), 1)
+            self.assertEqual(
+                len(xml_dom.getElementsByTagName(
+                    'site-control')), 1)
             control_elem = xml_dom.getElementsByTagName('site-control')[0]
             self.assertEqual(len(control_elem.attributes), 1)
-            self.assertEqual(control_elem.getAttribute('permitted-cross-domain-policies'), permitted)
+            self.assertEqual(control_elem.getAttribute(
+                'permitted-cross-domain-policies'), permitted)
 
     def test_bad_metapolicy(self):
         """
@@ -101,7 +110,8 @@ class PolicyGeneratorTests(TestCase):
         """
         policy = policies.Policy('media.example.com', 'api.example.com')
         policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-access-from')), 0)
+        self.assertEqual(len(
+            policy.xml_dom.getElementsByTagName('allow-access-from')), 0)
 
     def test_metapolicy_none_empty_headers(self):
         """
@@ -112,7 +122,9 @@ class PolicyGeneratorTests(TestCase):
         policy = policies.Policy()
         policy.allow_headers('media.example.com', ['SomeHeader'])
         policy.metapolicy(policies.SITE_CONTROL_NONE)
-        self.assertEqual(len(policy.xml_dom.getElementsByTagName('allow-http-request-headers-from')), 0)
+        self.assertEqual(len(
+            policy.xml_dom.getElementsByTagName(
+                'allow-http-request-headers-from')), 0)
 
     def test_metapolicy_none_disallow_domains(self):
         """
@@ -146,11 +158,16 @@ class PolicyGeneratorTests(TestCase):
         policy = policies.Policy()
         policy.allow_headers(domain, headers, secure=False)
         xml_dom = policy.xml_dom
-        self.assertEqual(len(xml_dom.getElementsByTagName('allow-http-request-headers-from')), 1)
-        header_elem = xml_dom.getElementsByTagName('allow-http-request-headers-from')[0]
+        self.assertEqual(len(
+            xml_dom.getElementsByTagName(
+                'allow-http-request-headers-from')), 1)
+        header_elem = xml_dom.getElementsByTagName(
+            'allow-http-request-headers-from')[0]
         self.assertEqual(len(header_elem.attributes), 3)
         self.assertEqual(header_elem.getAttribute('domain'), domain)
-        self.assertEqual(header_elem.getAttribute('headers'), ','.join(headers))
+        self.assertEqual(
+            header_elem.getAttribute('headers'),
+            ','.join(headers))
         self.assertEqual(header_elem.getAttribute('secure'), 'false')
 
     def test_allow_http_headers_secure(self):
@@ -164,7 +181,8 @@ class PolicyGeneratorTests(TestCase):
         policy = policies.Policy()
         policy.allow_headers(domain, headers, secure=False)
         xml_dom = policy.xml_dom
-        header_elem = xml_dom.getElementsByTagName('allow-http-request-headers-from')[0]
+        header_elem = xml_dom.getElementsByTagName(
+            'allow-http-request-headers-from')[0]
         self.assertEqual(len(header_elem.attributes), 3)
         self.assertEqual(header_elem.getAttribute('secure'), 'false')
 
@@ -179,9 +197,10 @@ class PolicyGeneratorTests(TestCase):
         xml_dom = policy.xml_dom
 
         self.assertEqual(len(xml_dom.documentElement.childNodes), 2)
-        self.assertEqual(len(xml_dom.getElementsByTagName('allow-access-from')), 2)
+        self.assertEqual(len(
+            xml_dom.getElementsByTagName('allow-access-from')), 2)
 
-        domains_in_xml = [elem.getAttribute('domain') for elem in \
+        domains_in_xml = [elem.getAttribute('domain') for elem in
                           xml_dom.getElementsByTagName('allow-access-from')]
         for domain in domains_in_xml:
             domains.remove(domain)

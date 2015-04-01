@@ -1,2 +1,2 @@
-from flashpolicies.tests.policies import *
-from flashpolicies.tests.views import *
+from .policies import *
+from .views import *
