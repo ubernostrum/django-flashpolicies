@@ -186,6 +186,32 @@ class PolicyGeneratorTests(TestCase):
         self.assertEqual(len(header_elem.attributes), 3)
         self.assertEqual(header_elem.getAttribute('secure'), 'false')
 
+    def test_allow_identity(self):
+        """
+        Test that allowing access from digitally-signed documents
+        inserts the proper elements and attributes.
+
+        """
+        dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
+        "01:23:45:67:89:ab:cd:ef:01:23:45:67"
+        policy = policies.Policy()
+        policy.allow_identity(dummy_fingerprint)
+        xml_dom = policy.xml_dom
+        identity_elem = xml_dom.getElementsByTagName(
+            'allow-access-from-identity')[0]
+        self.assertEqual(len(identity_elem.childNodes), 1)
+        signatory_elem = identity_elem.childNodes[0]
+        self.assertEqual('signatory', signatory_elem.tagName)
+        self.assertEqual(len(signatory_elem.childNodes), 1)
+        certificate_elem = signatory_elem.childNodes[0]
+        self.assertEqual('certificate', certificate_elem.tagName)
+        self.assertEqual(len(certificate_elem.attributes), 2)
+        self.assertEqual('sha-1',
+                         certificate_elem.getAttribute(
+                             'fingerprint-algorithm'))
+        self.assertEqual(dummy_fingerprint,
+                         certificate_elem.getAttribute('fingerprint'))
+
     def test_simple_policy(self):
         """
         Test that creating a simple policy with a list of domains

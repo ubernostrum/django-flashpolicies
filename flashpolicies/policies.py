@@ -53,6 +53,7 @@ class Policy(object):
         self.site_control = None
         self.domains = {}
         self.header_domains = {}
+        self.identities = []
         for domain in domains:
             self.allow_domain(domain)
 
@@ -141,6 +142,20 @@ class Policy(object):
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
 
+    def allow_identity(self, fingerprint):
+        """
+        Allow access from documents digitally signed by the key with
+        ``fingerprint``.
+
+        In theory, multiple algorithms can be added in the future for
+        calculating ``fingerprint`` from the signing key, but at this
+        time only one algorithm -- SHA-1 -- is supported by the
+        cross-domain policy specification.
+
+        """
+        if fingerprint not in self.identities:
+            self.identities.append(fingerprint)
+
     def _get_xml_dom(self):
         """
         Collect all options set so far, and produce and return an
@@ -192,6 +207,26 @@ class Policy(object):
             if not attrs['secure']:
                 header_element.setAttribute('secure', 'false')
             policy.documentElement.appendChild(header_element)
+
+        for fingerprint in self.identities:
+            identity_element = policy.createElement(
+                'allow-access-from-identity'
+            )
+            signatory_element = policy.createElement(
+                'signatory'
+            )
+            certificate_element = policy.createElement(
+                'certificate'
+            )
+            certificate_element.setAttribute(
+                'fingerprint',
+                fingerprint)
+            certificate_element.setAttribute(
+                'fingerprint-algorithm',
+                'sha-1')
+            signatory_element.appendChild(certificate_element)
+            identity_element.appendChild(signatory_element)
+            policy.documentElement.appendChild(identity_element)
 
         return policy
 
