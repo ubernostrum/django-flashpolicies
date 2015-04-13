@@ -12,15 +12,25 @@ class PolicyViewTests(TestCase):
     """
     urls = 'flashpolicies.tests.urls'
 
-    def test_serve(self):
+    def test_serve_response(self):
         """
-        Test the view which simply serves a policy.
+        Test that the serve() view returns a byte string response with
+        the correct content type and charset.
 
         """
-        response = self.client.get('/crossdomain4.xml')
+        response = self.client.get('/crossdomain-serve.xml')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.charset, 'utf-8')
+        self.assertEqual(bytes, type(response.content))
         self.assertEqual(response['Content-Type'],
                          'text/x-cross-domain-policy; charset=utf-8')
+
+    def test_serve(self):
+        """
+        Test that the serve() view serializes the policy as expected.
+        
+        """
+        response = self.client.get('/crossdomain-serve.xml')
 
         # Parse the returned policy and make sure it matches what was
         # passed in.
@@ -36,7 +46,7 @@ class PolicyViewTests(TestCase):
         policy.
 
         """
-        response = self.client.get('/crossdomain1.xml')
+        response = self.client.get('/crossdomain-simple.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'],
                          'text/x-cross-domain-policy; charset=utf-8')
@@ -55,7 +65,7 @@ class PolicyViewTests(TestCase):
         access.
 
         """
-        response = self.client.get('/crossdomain2.xml')
+        response = self.client.get('/crossdomain-no-access.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'],
                          'text/x-cross-domain-policy; charset=utf-8')
@@ -72,7 +82,7 @@ class PolicyViewTests(TestCase):
         policies on the same domain.
 
         """
-        response = self.client.get('/crossdomain3.xml')
+        response = self.client.get('/crossdomain-metapolicy.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'],
                          'text/x-cross-domain-policy; charset=utf-8')

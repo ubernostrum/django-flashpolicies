@@ -18,16 +18,16 @@ def make_test_policy():
     return policy
 
 urlpatterns = patterns('',
-                       url(r'^crossdomain1.xml$',
+                       url(r'^crossdomain-serve.xml$',
+                           'flashpolicies.views.serve',
+                           {'policy': make_test_policy()}),
+                       url(r'^crossdomain-simple.xml$',
                            'flashpolicies.views.simple',
                            {'domains': ['media.example.com',
                                         'api.example.com']}),
-                       url(r'^crossdomain2.xml$',
+                       url(r'^crossdomain-no-access.xml$',
                            'flashpolicies.views.no_access'),
-                       url(r'^crossdomain3.xml$',
+                       url(r'^crossdomain-metapolicy.xml$',
                            'flashpolicies.views.metapolicy',
                            {'permitted': policies.SITE_CONTROL_ALL}),
-                       url(r'^crossdomain4.xml$',
-                           'flashpolicies.views.serve',
-                           {'policy': make_test_policy()}),
                        )
