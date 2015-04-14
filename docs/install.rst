@@ -5,152 +5,60 @@ Installation guide
 ==================
 
 Before installing django-flashpolicies, you'll need to have a copy of
-`Django <http://www.djangoproject.com>`_ already installed. For
+`Django <https://www.djangoproject.com>`_ already installed. For
 information on obtaining and installing Django, consult the `Django
-download page <http://www.djangoproject.com/download/>`_, which offers
+download page <https://www.djangoproject.com/download/>`_, which offers
 convenient packaged downloads and installation instructions.
 
-The |version| release of django-flashpolicies officially supports
-Django 1.4 and 1.5; older versions may work, but are not tested or
-supported. Python 2.6 and 2.7 are supported for Django 1.4 and 1.5.
-
-Additionally, on Django 1.5, django-flashpolicies |version| is tested
-and supported for Python 3.3. See :ref:`the
-django-flashpolicies FAQ <faq>` for additional notes on Django and
-Python version support.
+The |version| release of django-flashpolicies supports Django 1.7 and
+1.8, on any of Python 2.7, 3.3 or 3.4. Older versions of Django and/or
+Python may work, but are not tested or officially supported.
 
 
-Installing django-flashpolicies
--------------------------------
+Normal installation
+-------------------
 
-There are several ways to install django-flashpolicies:
+The preferred method of installing django-flashpolicies is via
+``pip``, the standard Python package-installation tool. If you don't
+have ``pip``, instructions are available for `how to obtain and
+install it <https://pip.pypa.io/en/latest/installing.html>`_.
 
-* Automatically, via a Python package installer.
-
-* Manually, by downloading a copy of the release package and
-  installing it yourself.
-
-* Manually, by performing a Mercurial checkout of the latest code.
-
-It is also highly recommended that you learn to use `virtualenv
-<http://pypi.python.org/pypi/virtualenv>`_ for development and
-deployment of Python software; ``virtualenv`` provides isolated Python
-environments into which collections of software (e.g., a copy of
-Django, and the necessary settings and applications for deploying a
-site) can be installed, without conflicting with other installed
-software. This makes installation, testing, management and deployment
-far simpler than traditional site-wide installation of Python
-packages.
-
-
-Automatic installation via a package manager
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Several automatic package-installation tools are available for Python;
-the most popular are `easy_install
-<http://peak.telecommunity.com/DevCenter/EasyInstall>`_ and `pip
-<http://pip.openplans.org/>`_. Either can be used to install
-django-flashpolicies.
-
-Using ``easy_install``, type::
-
-    easy_install django-flashpolicies
-
-Using ``pip``, type::
+Once you have ``pip``, simply type::
 
     pip install django-flashpolicies
 
 
-Manual installation from a downloaded package
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Manual installation
+-------------------
 
-If you prefer not to use an automated package installer, you can
-download a copy of django-flashpolicies and install it manually. The
-latest release package can be downloaded from `django-flashpolicies'
-listing on the Python Package Index
-<http://pypi.python.org/pypi/django-flashpolicies/>`_.
-
-Once you've downloaded the package, unpack it (on most operating
-systems, simply double-click; alternately, type ``tar zxvf
-django-flashpolicies-|version|.tar.gz`` at a command line on Linux, Mac OS
-X or other Unix-like systems). This will create the directory
-``django-flashpolicies-|version|``, which contains the ``setup.py``
-installation script. From a command line in that directory, type::
+It's also possible to install django-flashpolicies manually. To do
+so, obtain the latest packaged version from `the listing on the Python
+Package Index
+<https://pypi.python.org/pypi/django-flashpolicies/>`_. Unpack the
+``.tar.gz`` file, and run::
 
     python setup.py install
 
-Note that on some systems you may need to execute this with
-administrative privileges (e.g., ``sudo python setup.py install``).
+Once you've installed django-flashpolicies, you can verify successful
+installation by opening a Python interpreter and typing ``import
+flashpolicies``.
+
+If the installation was successful, you'll simply get a fresh Python
+prompt. If you instead see an ``ImportError``, check the configuration
+of your install tools and your Python import path to ensure
+django-flashpolicies installed into a location Python can import from.
 
 
-Manual installation from a Mercurial checkout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installing from a source checkout
+---------------------------------
 
-If you'd like to try out the latest in-development code, you can
-obtain it from the django-flashpolicies repository, which is hosted at
-`Bitbucket <http://bitbucket.org/>`_ and uses `Mercurial
-<http://www.selenic.com/mercurial/wiki/>`_ for version control. To
-obtain the latest code and documentation, type::
+The development repository for ``django-flashpolicies`` is at
+<https://github.com/ubernostrum/django-flashpolicies>. Presuming you have `git
+<http://git-scm.com/>`_ installed, you can obtain a copy of the
+repository by typing::
 
-    hg clone http://bitbucket.org/ubernostrum/django-flashpolicies/
+    git clone https://github.com/ubernostrum/django-flashpolicies.git
 
-This will create a copy of the django-flashpolicies Mercurial
-repository on your computer; you can then the ``django-flashpolicies``
-directory inside the checkout your Python import path, or use the
-``setup.py`` script to perform a global installation from that code.
+From there, you can use normal git commands to check out the specific
+revision you want, and install it using ``python setup.py install``.
 
-
-Basic configuration and use
----------------------------
-
-Once installed, you can take advantage of django-flashpolicies on any
-Django-based site you're developing. Simply add ``flashpolicies`` to
-your ``INSTALLED_APPS`` setting (django-flashpolicies provides no
-models, so running ``manage.py syncdb`` is not required), and then
-configure one or more appropriate URL patterns to serve your
-cross-domain policy (or policies).
-
-For most cases, you'll simply need a single pattern, in your root
-URLconf, pointing the URL ``/crossdomain.xml`` (the standard location
-for a cross-domain policy) to the view
-:func:`flashpolicies.views.simple`, passing a list of domains from
-which you'd like to allow access. For example, to enable access for
-Flash content served from the domains ``media.example.com`` and
-``api.example.com``, the following URL pattern in your root URLconf
-would suffice:
-
-.. code-block:: python
-
-    url(r'^crossdomain.xml$',
-        'flashpolicies.views.simple',
-        {'domains': ['media.example.com', 'api.example.com']}),
-
-
-URL configuration and interaction with ``APPEND_SLASH``
--------------------------------------------------------
-
-Your master policy file -- the only policy file on your domain, in
-most cases -- **must** be served from exactly the URL
-``/crossdomain.xml``. So if your site is at ``example.com``, the
-master policy file must be served from
-``http://example.com/crossdomain.xml``.
-
-As such, the Django instance in which django-flashpolicies is used
-must be serving from the root of the domain. If this is not possible,
-you will need to find an alternate method of serving your domain's
-cross-domain policy; one option is to manually create a
-:class:`~flashpolicies.policies.Policy` instance, and serialize it
-(the simplest way is via ``str()``, though for more fine-grained
-control see the :attr:`~flashpolicies.policies.Policy.xml_dom`
-attribute), writing the result to a file which can be handled normally
-by your web server.
-
-If you are using Django with the `CommonMiddleware
-<http://docs.djangoproject.com/en/dev/ref/middleware/#module-django.middleware.common>`_
-enabled and the ``APPEND_SLASH`` setting set to ``True`` (by default,
-this is the case for any newly-created Django project), you will need
-to be careful in defining the URL patterns used for serving
-cross-domain policies. In particular, you'll want to use the regular
-expression ``^crossdomain.xml$`` -- *without* trailing slash -- for
-the URL. Django's ``CommonMiddleware`` will not attempt to append a
-slash when an existing URL pattern matches without the trailing slash.

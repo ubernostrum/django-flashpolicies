@@ -29,13 +29,12 @@ being placed on them).
 What versions of Django are supported?
 --------------------------------------
 
-As of django-flashpolicies |version|, Django 1.4 and 1.5 are
-supported. It is expected that django-flashpolicies |version| will
-also work unmodified with Django 1.6, once Django 1.6 is released.
+As of django-flashpolicies |version|, Django 1.7 and 1.8 are
+supported.
 
 Older versions of Django may work, but are not supported. In
-particular, the behavior of the ``APPEND_SLASH`` setting in old Django
-versions may be problematic: on some older versions of Django,
+particular, the behavior of the ``APPEND_SLASH`` setting in some old
+Django versions may be problematic: on very old versions of Django,
 ``APPEND_SLASH`` always adds a trailing slash even if the URL would
 match without it. This makes it impossible to serve a master policy
 file, which must have *exactly* the URL ``/crossdomain.xml``, with no
@@ -45,8 +44,8 @@ trailing slash.
 What versions of Python are supported?
 --------------------------------------
 
-On Django 1.4 and 1.5, django-flashpolicies |version| supports Python
-2.6 and 2.7. On Django 1.5, Python 3.3 is also supported.
+On Django 1.7 or Django 1.8, django-flashpolicies |version| supports
+Python 2.7, 3.3 or 3.4.
 
 
 Why are the elements in a different order each time I serialize my policy?
@@ -82,4 +81,26 @@ security gain that comes from explicitly specifying the permitted
 domains. Unless you can and do vigilantly control all possible
 domains/subdomains matching a wild-card entry, use of one will expose
 you to the possibility of loading malicious content.
+
+
+How am I allowed to use this module?
+------------------------------------
+
+django-flashpolicies is distributed under a `three-clause BSD license
+<http://opensource.org/licenses/BSD-3-Clause>`_. This is an
+open-source license which grants you broad freedom to use,
+redistribute, modify and distribute modified versions of
+django-flashpolicies. For details, see the file ``LICENSE`` in the
+source distribution of django-flashpolicies.
+
+.. _three-clause BSD license: http://opensource.org/licenses/BSD-3-Clause
+
+
+I found a bug or want to make an improvement!
+---------------------------------------------
+
+The canonical development repository for django-flashpolicies is
+online at
+<https://github.com/ubernostrum/django-flashpolicies>. Issues and pull
+requests can both be filed there.
 
