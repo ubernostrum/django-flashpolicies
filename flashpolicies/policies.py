@@ -234,3 +234,17 @@ class Policy(object):
 
     def __str__(self):
         return self.xml_dom.toprettyxml()
+
+    def serialize(self):
+        # This is similar to __str__() but with one important
+        # difference: on Python 3, __str__() is required to return a
+        # Unicode string, and so can't use the 'encoding'
+        # argument. This method has no such requirement. As a result,
+        # this method will return a UTF-8-encoded byte sequence (which
+        # is str on Python 2, but bytes on Python 3).
+        #
+        # In general, use str() if you just want to see what would be
+        # produced, and use serialize() if you want to pass the result
+        # to something that will serve the XML, or write to a file.
+        #
+        return self.xml_dom.toprettyxml(encoding='utf-8')

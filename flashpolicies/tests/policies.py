@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils import six
 
 from .. import policies
 
@@ -8,6 +9,31 @@ class PolicyGeneratorTests(TestCase):
     Tests for the policy-file generation utilities.
 
     """
+    def test_policy_str(self):
+        """
+        Test that str() on a Policy returns an object of type str with
+        no encoding declared.
+        
+        """
+        policy_str = str(policies.Policy())
+        self.assertTrue(isinstance(policy_str,
+                                   six.string_types))
+        self.assertTrue(policy_str.startswith(
+            '<?xml version="1.0" ?>'
+        ))
+
+    def test_policy_serialize(self):
+        """
+        Test that serialize() returns an object of type bytes, with a
+        declared encoding of UTF-8.
+        
+        """
+        policy_bytes = policies.Policy().serialize()
+        self.assertTrue(isinstance(policy_bytes, bytes))
+        self.assertTrue(policy_bytes.startswith(
+            b'<?xml version="1.0" encoding="utf-8"?>'
+        ))
+
     def test_policy_type(self):
         """
         Test that the correct ``DOCTYPE`` declaration is generated.
