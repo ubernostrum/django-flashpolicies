@@ -2,10 +2,27 @@ django-flashpolicies changelog
 ==============================
 
 Major/notable changes between released versions are listed below, in
-roughly chronological order. When applicable, revision
-numbers/changeset IDs in the repository (online at
-<http://bitbucket.org/ubernostrum/django-flashpolicies/src/>) are
-listed as well.
+roughly chronological order.
+
+
+Version 1.6, released April 15, 2015
+------------------------------------
+
+* Packaged from repository tag '1.6'.
+
+* Repository moved to GitHub.
+
+* Django 1.7/1.8 supported
+
+* Python 2.7/3.3/3.4 supported
+
+* Full automated testing on supported Django and Python versions
+	
+* Support for allow-access-from-identity element
+
+* New method on Policy, serialize(), guaranteed to produce a UTF-8
+  byte string (solves Python 2/3 string issues for serializing
+  policies)
 
 
 Version 1.5, released July 31, 2013
@@ -17,7 +34,7 @@ Version 1.5, released July 31, 2013
 
 * Updated documentation.
 
-	
+
 Version 1.4.1, released March 14, 2010
 --------------------------------------
 
