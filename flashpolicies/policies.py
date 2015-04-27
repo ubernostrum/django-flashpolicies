@@ -34,16 +34,18 @@ class Policy(object):
     policy.
 
     In the simplest case -- specifying one or more domains to allow
-    access from -- simply pass the domains to the constructor. For
+    access from -- simply pass the domains when initializing. For
     example::
 
         my_policy = Policy('media.example.com', 'api.example.com')
 
     The property ``xml_dom`` of the returned ``Policy`` object will be
     an ``xml.dom.minidom.Document`` representing the resulting policy,
-    and can be serialized for writing to a file or returning via
-    HTTP. For ease of use, ``__str__()`` is defined here and returns
-    the policy serialized to a UTF-8 bytestring.
+    and can be serialized for serving via HTTP or writing to a
+    file. For ease of use, ``__str__()`` is defined here and returns
+    the policy as a Unicode string for easy inspection;
+    ``serialize()`` will serialize to UTF-8 for serving or writing to
+    a file.
 
     Consult the documentation for the various methods of this class
     for more advanced uses.
@@ -85,7 +87,7 @@ class Policy(object):
 
     def metapolicy(self, permitted):
         """
-        Set meta-policy to ``permitted``. (only applicable to master
+        Set metapolicy to ``permitted``. (only applicable to master
         policy files). Acceptable values correspond to those listed in
         Section 3(b)(i) of the crossdomain.xml specification, and are
         also available as a set of constants defined in this module.
@@ -96,12 +98,13 @@ class Policy(object):
         typically is), this method does not need to be called.
 
         Note that a metapolicy of ``none`` forbids **all** access,
-        even if one or more domains have previously been specified as
-        allowed. As such, setting the metapolicy to ``none`` will
-        remove all access previously granted by ``allow_domain`` or
-        ``allow_headers``. Additionally, attempting to grant access
-        via ``allow_domain`` or ``allow_headers`` will, when the
-        metapolicy is ``none``, raise ``TypeError``.
+        even if one or more domains, headers or identities have
+        previously been specified as allowed. As such, setting the
+        metapolicy to ``none`` will remove all access previously
+        granted by ``allow_domain``, ``allow_headers`` or
+        ``allow_identity``. Additionally, attempting to grant access
+        via ``allow_domain``, ``allow_headers`` or ``allow_identity``
+        will, when the metapolicy is ``none``, raise ``TypeError``.
 
         """
         if permitted not in VALID_SITE_CONTROL:
@@ -114,6 +117,7 @@ class Policy(object):
             # Metapolicy 'none' means no access is permitted.
             self.domains = {}
             self.header_domains = {}
+            self.identities = []
         self.site_control = permitted
 
     def allow_headers(self, domain, headers, secure=True):
@@ -153,6 +157,12 @@ class Policy(object):
         cross-domain policy specification.
 
         """
+        if self.site_control == SITE_CONTROL_NONE:
+            raise TypeError(
+                "Metapolicy currently forbids all access; "
+                "to allow access from signed documents, change the "
+                "metapolicy."
+            )
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
 

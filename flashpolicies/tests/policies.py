@@ -9,6 +9,9 @@ class PolicyGeneratorTests(TestCase):
     Tests for the policy-file generation utilities.
 
     """
+    dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
+    "01:23:45:67:89:ab:cd:ef:01:23:45:67"
+    
     def test_policy_str(self):
         """
         Test that str() on a Policy returns an object of type str with
@@ -139,6 +142,19 @@ class PolicyGeneratorTests(TestCase):
         self.assertEqual(len(
             policy.xml_dom.getElementsByTagName('allow-access-from')), 0)
 
+    def test_metapolicy_none_empty_identities(self):
+        """
+        Test that setting the metapolicy to ``none`` clears the list
+        of permitted cryptographic identities.
+
+        """
+        policy = policies.Policy()
+        policy.allow_identity(self.dummy_fingerprint)
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertEqual(len(
+            policy.xml_dom.getElementsByTagName(
+                'allow-access-from-identity')), 0)
+
     def test_metapolicy_none_empty_headers(self):
         """
         Test that setting the metapolicy to ``non`` clears the list of
@@ -172,6 +188,17 @@ class PolicyGeneratorTests(TestCase):
         policy.metapolicy(policies.SITE_CONTROL_NONE)
         self.assertRaises(TypeError, policy.allow_headers,
                           'media.example.com', ['SomeHeader'])
+
+    def test_metapolicy_non_disallow_identities(self):
+        """
+        Test that attempting to allow access from signed documents,
+        when the metapolicy is ``none``, raises an exception.
+
+        """
+        policy = policies.Policy()
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        self.assertRaises(TypeError, policy.allow_identity,
+                          self.dummy_fingerprint)
 
     def test_allow_http_headers(self):
         """
@@ -218,10 +245,8 @@ class PolicyGeneratorTests(TestCase):
         inserts the proper elements and attributes.
 
         """
-        dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
-        "01:23:45:67:89:ab:cd:ef:01:23:45:67"
         policy = policies.Policy()
-        policy.allow_identity(dummy_fingerprint)
+        policy.allow_identity(self.dummy_fingerprint)
         xml_dom = policy.xml_dom
         identity_elem = xml_dom.getElementsByTagName(
             'allow-access-from-identity')[0]
@@ -235,7 +260,7 @@ class PolicyGeneratorTests(TestCase):
         self.assertEqual('sha-1',
                          certificate_elem.getAttribute(
                              'fingerprint-algorithm'))
-        self.assertEqual(dummy_fingerprint,
+        self.assertEqual(self.dummy_fingerprint,
                          certificate_elem.getAttribute('fingerprint'))
 
     def test_simple_policy(self):

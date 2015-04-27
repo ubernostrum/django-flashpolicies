@@ -175,12 +175,14 @@ API reference
       need to be called.
 
       Note that a metapolicy of ``"none"`` forbids **all** access,
-      even if one or more domains have previously been specified as
-      allowed. As such, setting the metapolicy to ``"none"`` will
-      remove all access previously granted by :meth:`allow_domain` or
+      even if one or more domains, headers or identities have
+      previously been specified as allowed. As such, setting the
+      metapolicy to ``"none"`` will remove all access previously
+      granted by :meth:`allow_domain`, :meth:`allow_identity` or
       :meth:`allow_headers`. Additionally, attempting to grant access
-      via :meth:`allow_domain` or :meth:`allow_headers` will, when the
-      metapolicy is ``"none"``, raise ``TypeError``.
+      via :meth:`allow_domain`, :meth:`allow_identity` or
+      :meth:`allow_headers` will, when the metapolicy is ``"none"``,
+      raise ``TypeError``.
 
 
 .. _metapolicy-constants:
