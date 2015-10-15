@@ -27,7 +27,7 @@ class PolicyViewTests(TestCase):
     def test_serve(self):
         """
         Test that the serve() view serializes the policy as expected.
-        
+
         """
         response = self.client.get('/crossdomain-serve.xml')
 

@@ -11,12 +11,12 @@ class PolicyGeneratorTests(TestCase):
     """
     dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
     "01:23:45:67:89:ab:cd:ef:01:23:45:67"
-    
+
     def test_policy_str(self):
         """
         Test that str() on a Policy returns an object of type str with
         no encoding declared.
-        
+
         """
         policy_str = str(policies.Policy())
         self.assertTrue(isinstance(policy_str,
@@ -29,7 +29,7 @@ class PolicyGeneratorTests(TestCase):
         """
         Test that serialize() returns an object of type bytes, with a
         declared encoding of UTF-8.
-        
+
         """
         policy_bytes = policies.Policy().serialize()
         self.assertTrue(isinstance(policy_bytes, bytes))
