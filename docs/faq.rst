@@ -29,7 +29,7 @@ being placed on them).
 What versions of Django are supported?
 --------------------------------------
 
-As of django-flashpolicies |version|, Django 1.7 and 1.8 are
+As of django-flashpolicies |version|, Django 1.8 and 1.9 are
 supported.
 
 Older versions of Django may work, but are not supported. In
@@ -44,8 +44,9 @@ trailing slash.
 What versions of Python are supported?
 --------------------------------------
 
-On Django 1.7 or Django 1.8, django-flashpolicies |version| supports
-Python 2.7, 3.3 or 3.4.
+On Django 1.8, django-flashpolicies |version| supports Python 2.7,
+3.2, 3.3, 3.4 and 3.5. On Django 1.9, it supports Python 2.7, 3.4 and
+3.5.
 
 
 Why are the elements in a different order each time I serialize my policy?
