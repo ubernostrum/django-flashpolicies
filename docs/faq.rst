@@ -46,7 +46,10 @@ What versions of Python are supported?
 
 On Django 1.8, django-flashpolicies |version| supports Python 2.7,
 3.2, 3.3, 3.4 and 3.5. On Django 1.9, it supports Python 2.7, 3.4 and
-3.5.
+3.5. Older versions of Python may work, if the Django version you're
+using is supported, but see the notes above about Django version
+compatibility prior to using django-flashpolicies with a version of
+Django older than 1.8.
 
 
 Why are the elements in a different order each time I serialize my policy?
