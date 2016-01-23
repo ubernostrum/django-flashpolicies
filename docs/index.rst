@@ -7,6 +7,9 @@ across domains) for `Django <https://www.djangoproject.com/>`_-powered
 sites. Cross-domain policies are represented by an XML file format,
 and this application generates and serves the appropriate XML.
 
+In many cases, the same policy file will also be understood by
+Microsoft's Silverlight browser plugin.
+
 In the simplest case, you'll just set up one URL pattern, pointing the
 URL ``/crossdomain.xml`` to the view
 :func:`flashpolicies.views.simple` and passing a list of domains from
