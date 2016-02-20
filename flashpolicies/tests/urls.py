@@ -5,7 +5,6 @@ situation.
 
 """
 
-from django.conf.urls import patterns
 from django.conf.urls import url
 
 from .. import policies
@@ -17,17 +16,18 @@ def make_test_policy():
     policy.allow_headers('media.example.com', ['SomeHeader'])
     return policy
 
-urlpatterns = patterns('',
-                       url(r'^crossdomain-serve.xml$',
-                           'flashpolicies.views.serve',
-                           {'policy': make_test_policy()}),
-                       url(r'^crossdomain-simple.xml$',
-                           'flashpolicies.views.simple',
-                           {'domains': ['media.example.com',
-                                        'api.example.com']}),
-                       url(r'^crossdomain-no-access.xml$',
-                           'flashpolicies.views.no_access'),
-                       url(r'^crossdomain-metapolicy.xml$',
-                           'flashpolicies.views.metapolicy',
-                           {'permitted': policies.SITE_CONTROL_ALL}),
-                       )
+
+urlpatterns = [
+    url(r'^crossdomain-serve.xml$',
+        'flashpolicies.views.serve',
+        {'policy': make_test_policy()}),
+    url(r'^crossdomain-simple.xml$',
+        'flashpolicies.views.simple',
+        {'domains': ['media.example.com',
+                     'api.example.com']}),
+    url(r'^crossdomain-no-access.xml$',
+        'flashpolicies.views.no_access'),
+    url(r'^crossdomain-metapolicy.xml$',
+        'flashpolicies.views.metapolicy',
+        {'permitted': policies.SITE_CONTROL_ALL}),
+]
