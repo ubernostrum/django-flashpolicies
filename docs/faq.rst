@@ -26,6 +26,26 @@ are under your control, and you can prevent malicious content from
 being placed on them).
 
 
+Why doesn't this application generate Silverlight's format?
+-----------------------------------------------------------
+
+The Microsoft Silverlight plugin has a same-origin sandbox like Flash,
+and its native format for cross-domain policies is a file called
+``clientaccesspolicy.xml``. However, if ``clientaccesspolicy.xml`` is
+not found on the target domain, or otherwise returns an error,
+Silverlight will fall back to requesting and obeying a Flash
+``crossdomain.xml`` file.
+
+This means that a single file -- ``crossdomain.xml`` in the Flash
+format -- suffices for both Flash and Silverlight. Additionally,
+Silverlight is no longer supported in current versions of Microsoft's
+own Edge browser, support for it is in the process of being
+dropped/disabled in other major browsers, and Microsoft has announced
+that Silverlight will reach end-of-life in 2021, meaning that the
+Silverlight-only format corresponds to an already-small and shrinking,
+and soon to be nonexistent, supported base.
+
+
 What versions of Django are supported?
 --------------------------------------
 
