@@ -15,11 +15,11 @@ minidom = xml.dom.getDOMImplementation('minidom')
 # Adobe crossdomain.xml spec.
 #
 
-SITE_CONTROL_ALL = "all"
-SITE_CONTROL_BY_CONTENT_TYPE = "by-content-type"
-SITE_CONTROL_BY_FTP_FILENAME = "by-ftp-filename"
-SITE_CONTROL_MASTER_ONLY = "master-only"
-SITE_CONTROL_NONE = "none"
+SITE_CONTROL_ALL = u"all"
+SITE_CONTROL_BY_CONTENT_TYPE = u"by-content-type"
+SITE_CONTROL_BY_FTP_FILENAME = u"by-ftp-filename"
+SITE_CONTROL_MASTER_ONLY = u"master-only"
+SITE_CONTROL_NONE = u"none"
 
 VALID_SITE_CONTROL = (SITE_CONTROL_ALL,
                       SITE_CONTROL_BY_CONTENT_TYPE,
@@ -79,8 +79,8 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                "Metapolicy currently forbids all access; "
-                "to allow a domain, change the metapolicy."
+                u"Metapolicy currently forbids all access; "
+                u"to allow a domain, change the metapolicy."
             )
         self.domains[domain] = {'to_ports': to_ports,
                                 'secure': secure}
@@ -109,9 +109,9 @@ class Policy(object):
         """
         if permitted not in VALID_SITE_CONTROL:
             raise TypeError(
-                '"%s" is not a valid value for the '
-                '"permitted-cross-domain-policies" '
-                'attribute of a site-control element' % permitted
+                u'"%s" is not a valid value for the '
+                u'"permitted-cross-domain-policies" '
+                u'attribute of a site-control element' % permitted
             )
         if permitted == SITE_CONTROL_NONE:
             # Metapolicy 'none' means no access is permitted.
@@ -140,8 +140,8 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                "Metapolicy currently forbids all access; "
-                "to allow headers from a domain, change the metapolicy."
+                u"Metapolicy currently forbids all access; "
+                u"to allow headers from a domain, change the metapolicy."
             )
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
@@ -159,9 +159,9 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                "Metapolicy currently forbids all access; "
-                "to allow access from signed documents, change the "
-                "metapolicy."
+                u"Metapolicy currently forbids all access; "
+                u"to allow access from signed documents, change the "
+                u"metapolicy."
             )
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
