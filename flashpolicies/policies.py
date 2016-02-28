@@ -166,6 +166,51 @@ class Policy(object):
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
 
+    def _add_domains_xml(self, document):
+        for domain, attrs in self.domains.items():
+            domain_element = document.createElement('allow-access-from')
+            domain_element.setAttribute('domain', domain)
+            if attrs['to_ports'] is not None:
+                domain_element.setAttribute(
+                    'to-ports',
+                    ','.join(attrs['to_ports'])
+                )
+            if not attrs['secure']:
+                domain_element.setAttribute('secure', 'false')
+            document.documentElement.appendChild(domain_element)
+
+    def _add_header_domains_xml(self, document):
+        for domain, attrs in self.header_domains.items():
+            header_element = document.createElement(
+                'allow-http-request-headers-from'
+            )
+            header_element.setAttribute('domain', domain)
+            header_element.setAttribute('headers', ','.join(attrs['headers']))
+            if not attrs['secure']:
+                header_element.setAttribute('secure', 'false')
+            document.documentElement.appendChild(header_element)
+
+    def _add_identities_xml(self, document):
+        for fingerprint in self.identities:
+            identity_element = document.createElement(
+                'allow-access-from-identity'
+            )
+            signatory_element = document.createElement(
+                'signatory'
+            )
+            certificate_element = document.createElement(
+                'certificate'
+            )
+            certificate_element.setAttribute(
+                'fingerprint',
+                fingerprint)
+            certificate_element.setAttribute(
+                'fingerprint-algorithm',
+                'sha-1')
+            signatory_element.appendChild(certificate_element)
+            identity_element.appendChild(signatory_element)
+            document.documentElement.appendChild(identity_element)
+
     def _get_xml_dom(self):
         """
         Collect all options set so far, and produce and return an
@@ -192,47 +237,8 @@ class Policy(object):
             )
             policy.documentElement.appendChild(control_element)
 
-        for domain, attrs in self.domains.items():
-            domain_element = policy.createElement('allow-access-from')
-            domain_element.setAttribute('domain', domain)
-            if attrs['to_ports'] is not None:
-                domain_element.setAttribute(
-                    'to-ports',
-                    ','.join(attrs['to_ports'])
-                )
-            if not attrs['secure']:
-                domain_element.setAttribute('secure', 'false')
-            policy.documentElement.appendChild(domain_element)
-
-        for domain, attrs in self.header_domains.items():
-            header_element = policy.createElement(
-                'allow-http-request-headers-from'
-            )
-            header_element.setAttribute('domain', domain)
-            header_element.setAttribute('headers', ','.join(attrs['headers']))
-            if not attrs['secure']:
-                header_element.setAttribute('secure', 'false')
-            policy.documentElement.appendChild(header_element)
-
-        for fingerprint in self.identities:
-            identity_element = policy.createElement(
-                'allow-access-from-identity'
-            )
-            signatory_element = policy.createElement(
-                'signatory'
-            )
-            certificate_element = policy.createElement(
-                'certificate'
-            )
-            certificate_element.setAttribute(
-                'fingerprint',
-                fingerprint)
-            certificate_element.setAttribute(
-                'fingerprint-algorithm',
-                'sha-1')
-            signatory_element.appendChild(certificate_element)
-            identity_element.appendChild(signatory_element)
-            policy.documentElement.appendChild(identity_element)
+        for elem_type in ('domains', 'header_domains', 'identities'):
+            getattr(self, '_add_%s_xml' % elem_type)(policy)
 
         return policy
 
