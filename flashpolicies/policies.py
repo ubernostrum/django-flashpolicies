@@ -9,6 +9,10 @@ import xml.dom
 minidom = xml.dom.getDOMImplementation('minidom')
 
 
+METAPOLICY_ERROR = u"Metapolicy currently forbids all access; "
+"to %s, change the metapolicy."
+
+
 #
 # Acceptable values for the "permitted-cross-domain-policies"
 # attribute of "site-control" elements. See section 3(b)(i) of the
@@ -79,8 +83,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                u"Metapolicy currently forbids all access; "
-                u"to allow a domain, change the metapolicy."
+                METAPOLICY_ERROR % "allow a domain"
             )
         self.domains[domain] = {'to_ports': to_ports,
                                 'secure': secure}
@@ -140,8 +143,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                u"Metapolicy currently forbids all access; "
-                u"to allow headers from a domain, change the metapolicy."
+                METAPOLICY_ERROR % "allow headers from a domain"
             )
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
@@ -159,9 +161,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                u"Metapolicy currently forbids all access; "
-                u"to allow access from signed documents, change the "
-                u"metapolicy."
+                METAPOLICY_ERROR % "allow access from signed documents"
             )
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
