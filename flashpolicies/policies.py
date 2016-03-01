@@ -218,6 +218,13 @@ class Policy(object):
         XML.
 
         """
+        if self.site_control == SITE_CONTROL_NONE and \
+           any((self.domains, self.header_domains, self.identities)):
+            raise TypeError(
+                "Cannot produce XML from invalid policy (metapolicy forbids "
+                "all access, but policy attempted to allow access anyway)."
+            )
+
         policy_type = minidom.createDocumentType(
             qualifiedName='cross-domain-policy',
             publicId=None,

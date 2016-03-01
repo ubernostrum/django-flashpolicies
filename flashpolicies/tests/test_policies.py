@@ -200,6 +200,20 @@ class PolicyGeneratorTests(TestCase):
         self.assertRaises(TypeError, policy.allow_identity,
                           self.dummy_fingerprint)
 
+    def test_metapolicy_manual_tinkering(self):
+        """
+        Test that setting metapolicy ``none``, then manually fiddling
+        with the internals to try to allow things, will fail when the
+        XML gets generated.
+
+        """
+        policy = policies.Policy()
+        policy.metapolicy(policies.SITE_CONTROL_NONE)
+        policy.domains['api.example.com'] = {'to_ports': None,
+                                             'secure': True}
+        with self.assertRaises(TypeError):
+            policy.xml_dom
+
     def test_allow_http_headers(self):
         """
         Test that allowing HTTP headers inserts the proper element and
