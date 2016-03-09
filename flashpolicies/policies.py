@@ -11,6 +11,10 @@ minidom = xml.dom.getDOMImplementation('minidom')
 
 METAPOLICY_ERROR = u"Metapolicy currently forbids all access; "
 "to %s, change the metapolicy."
+SITE_CONTROL_ERROR = u"'%s' is not a valid value for the "
+"'permitted-cross-domain-policies' attribute of a 'site-control' element."
+BAD_POLICY = "Cannot produce XML from invalid policy (metapolicy"
+"forbids all access, but policy attempted to allow access anyway)."
 
 
 #
@@ -111,11 +115,7 @@ class Policy(object):
 
         """
         if permitted not in VALID_SITE_CONTROL:
-            raise TypeError(
-                u'"%s" is not a valid value for the '
-                u'"permitted-cross-domain-policies" '
-                u'attribute of a site-control element' % permitted
-            )
+            raise TypeError(SITE_CONTROL_ERROR % permitted)
         if permitted == SITE_CONTROL_NONE:
             # Metapolicy 'none' means no access is permitted.
             self.domains = {}
@@ -220,10 +220,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE and \
            any((self.domains, self.header_domains, self.identities)):
-            raise TypeError(
-                "Cannot produce XML from invalid policy (metapolicy forbids "
-                "all access, but policy attempted to allow access anyway)."
-            )
+            raise TypeError(BAD_POLICY)
 
         policy_type = minidom.createDocumentType(
             qualifiedName='cross-domain-policy',
