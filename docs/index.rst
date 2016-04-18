@@ -8,7 +8,9 @@ sites. Cross-domain policies are represented by an XML file format,
 and this application generates and serves the appropriate XML.
 
 In many cases, the same policy file will also be understood by
-Microsoft's Silverlight browser plugin.
+Microsoft's Silverlight browser plugin, which supports the Adobe Flash
+format as a fallback in the absence of a file in its own native
+cross-domain policy format.
 
 In the simplest case, you'll just set up one URL pattern, pointing the
 URL ``/crossdomain.xml`` to the view
