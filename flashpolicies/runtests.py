@@ -14,8 +14,8 @@ import sys
 
 # Make sure django-flashpolicies is (at least temporarily) on the
 # import path.
-FLASHPOLICIES_DIR = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, FLASHPOLICIES_DIR)
+APP_DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, APP_DIR)
 
 
 # Technically, django-flashpolicies does not require any of these
@@ -32,7 +32,7 @@ SETTINGS_DICT = {
     'DATABASES': {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(FLASHPOLICIES_DIR, 'db.sqlite3'),
+            'NAME': os.path.join(APP_DIR, 'db.sqlite3'),
         },
     },
     'MIDDLEWARE_CLASSES': (
