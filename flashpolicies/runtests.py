@@ -12,8 +12,7 @@ import os
 import sys
 
 
-# Make sure django-flashpolicies is (at least temporarily) on the
-# import path.
+# Make sure the app is (at least temporarily) on the import path.
 APP_DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, APP_DIR)
 
