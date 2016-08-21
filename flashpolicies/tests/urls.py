@@ -8,6 +8,7 @@ situation.
 from django.conf.urls import url
 
 from .. import policies
+from .. import views
 
 
 def make_test_policy():
@@ -19,15 +20,15 @@ def make_test_policy():
 
 urlpatterns = [
     url(r'^crossdomain-serve.xml$',
-        'flashpolicies.views.serve',
+        views.serve,
         {'policy': make_test_policy()}),
     url(r'^crossdomain-simple.xml$',
-        'flashpolicies.views.simple',
+        views.simple,
         {'domains': ['media.example.com',
                      'api.example.com']}),
     url(r'^crossdomain-no-access.xml$',
-        'flashpolicies.views.no_access'),
+        views.no_access),
     url(r'^crossdomain-metapolicy.xml$',
-        'flashpolicies.views.metapolicy',
+        views.metapolicy,
         {'permitted': policies.SITE_CONTROL_ALL}),
 ]
