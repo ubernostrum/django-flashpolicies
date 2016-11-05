@@ -1,10 +1,10 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 from django.utils import six
 
 from .. import policies
 
 
-class PolicyGeneratorTests(TestCase):
+class PolicyGeneratorTests(SimpleTestCase):
     """
     Tests for the policy-file generation utilities.
 

@@ -1,11 +1,11 @@
 import xml.dom.minidom
 
-from django.test import TestCase
+from django.test import SimpleTestCase
 
 from .. import policies
 
 
-class PolicyViewTests(TestCase):
+class PolicyViewTests(SimpleTestCase):
     """
     Tests for the views which serve policy files.
 
