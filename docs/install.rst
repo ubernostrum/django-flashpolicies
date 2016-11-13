@@ -10,19 +10,24 @@ information on obtaining and installing Django, consult the `Django
 download page <https://www.djangoproject.com/download/>`_, which offers
 convenient packaged downloads and installation instructions.
 
-The |version| release of django-flashpolicies supports Django 1.8 and
-1.9, on any Python version supported by those versions of Django:
+The |version| release of django-flashpolicies supports Django 1.8,
+1.9, and 1.10, on the following Python versions:
 
 * Django 1.8 suports Python 2.7, 3.3, 3.4 and 3.5.
 
 * Django 1.9 supports Python 2.7, 3.4 and 3.5.
 
+* Django 1.10 supports Python 2.7, 3.4 and 3.5.
+
+It is expected that django-flashpolicies |version| will work
+without modification on Python 3.6 once it is released.
+
 .. important:: **Python 3.2**
 
    Although Django 1.8 supported Python 3.2 at the time of its
-   release, Python 3.2.7 (released in February 2016) marked the end of
-   life of the Python 3.2 series, and as a result support for Python
-   3.2 has been dropped from ``django-flashpolicies`` as of |version|.
+   release, the Python 3.2 series has reached end-of-life, and as a
+   result support for Python 3.2 has been dropped from
+   django-flashpolicies.
 
 
 Normal installation
@@ -31,7 +36,10 @@ Normal installation
 The preferred method of installing django-flashpolicies is via
 ``pip``, the standard Python package-installation tool. If you don't
 have ``pip``, instructions are available for `how to obtain and
-install it <https://pip.pypa.io/en/latest/installing.html>`_.
+install it <https://pip.pypa.io/en/latest/installing.html>`_. If
+you're using Python 2.7.9 or later (for Python 2) or Python 3.4 or
+later (for Python 3), ``pip`` came bundled with your installation of
+Python.
 
 Once you have ``pip``, simply type::
 
@@ -62,7 +70,7 @@ django-flashpolicies installed into a location Python can import from.
 Installing from a source checkout
 ---------------------------------
 
-The development repository for ``django-flashpolicies`` is at
+The development repository for django-flashpolicies is at
 <https://github.com/ubernostrum/django-flashpolicies>. Presuming you have `git
 <http://git-scm.com/>`_ installed, you can obtain a copy of the
 repository by typing::

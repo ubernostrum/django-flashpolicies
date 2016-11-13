@@ -64,10 +64,10 @@ trailing slash.
 What versions of Python are supported?
 --------------------------------------
 
-As of ``django-flashpolicies`` |version|, Django 1.8 and 1.9 are
+As of django-flashpolicies |version|, Django 1.8, 1.9, and 1.10 are
 supported, on Python 2.7, 3.3, 3.4 or 3.5. Although Django 1.8
 supported Python 3.2 at initial release, Python 3.2 is now at its
-end-of-life and ``django-flashpolicies`` no longer supports it.
+end-of-life and django-flashpolicies no longer supports it.
 
 
 Why are the elements in a different order each time I serialize my policy?
