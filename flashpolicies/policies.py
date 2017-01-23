@@ -9,12 +9,17 @@ import xml.dom
 minidom = xml.dom.getDOMImplementation('minidom')
 
 
-METAPOLICY_ERROR = u"Metapolicy currently forbids all access; " \
-"to %s, change the metapolicy."
-SITE_CONTROL_ERROR = u"'%s' is not a valid value for the " \
-"'permitted-cross-domain-policies' attribute of a 'site-control' element."
-BAD_POLICY = "Cannot produce XML from invalid policy (metapolicy " \
-"forbids all access, but policy attempted to allow access anyway)."
+METAPOLICY_ERROR = (
+    u"Metapolicy currently forbids all access; to %s, change the metapolicy."
+)
+SITE_CONTROL_ERROR = (
+    u"'%s' is not a valid value for the 'permitted-cross-domain-policies' "
+    "attribute of a 'site-control' element."
+)
+BAD_POLICY = (
+    "Cannot produce XML from invalid policy (metapolicy forbids all access, "
+    "but policy attempted to allow access anyway)."
+)
 
 
 #
