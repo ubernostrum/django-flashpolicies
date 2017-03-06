@@ -4,7 +4,7 @@ from setuptools import setup
 
 
 setup(name='django-flashpolicies',
-      version='1.8',
+      version='1.8.1',
       description='Flash cross-domain policies for Django sites',
       long_description=open(os.path.join(os.path.dirname(__file__),
                                          'README.rst')).read(),
