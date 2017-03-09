@@ -146,10 +146,8 @@ The full set of supported ``make`` targets is:
   install -e``), and runs the test suite and a coverage report, using
   configuration from django-flashpolicies' ``setup.cfg`` file.
 
-So a complete example of testing against an arbitrary Python and
-Django version, and then cleaning up, consists of:
+You can, as expected, combine targets in a single run, allowing a
+complete cycle of creating a virtual environment, running tests and
+tearing down the virtual environment in a single command::
 
-    make env PYTHON_VERSION=3.5.3
-    make lint
-    make test DJANGO_VERSION=1.9
-    make teardown
+    make venv test teardown
