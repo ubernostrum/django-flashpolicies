@@ -1,5 +1,5 @@
 PACKAGE_NAME=flashpolicies
-TESTING_VIRTUALENV_NAME=${PACKAGE_NAME}_test
+TESTING_VENV_NAME=${PACKAGE_NAME}_test
 
 ifndef PYTHON_VERSION
 PYTHON_VERSION=3.6.0
@@ -24,13 +24,15 @@ clean:
 
 .PHONY: venv
 venv:
-	[ -e ~/.pyenv/versions/${TESTING_VIRTUALENV_NAME} ] && echo "Skipping pyenv creation" || pyenv virtualenv ${PYTHON_VERSION} ${TESTING_VIRTUALENV_NAME}
-	pyenv local ${TESTING_VIRTUALENV_NAME}
+	[ -e ~/.pyenv/versions/${TESTING_VENV_NAME} ] && \
+	echo "\033[1;33mA ${TESTING_VENV_NAME} pyenv already exists. Skipping pyenv creation.\033[0m" || \
+	pyenv virtualenv ${PYTHON_VERSION} ${TESTING_VENV_NAME}
+	pyenv local ${TESTING_VENV_NAME}
 	pip install --upgrade pip setuptools
 
 .PHONY: teardown
 teardown: clean
-	pyenv uninstall -f ${TESTING_VIRTUALENV_NAME}
+	pyenv uninstall -f ${TESTING_VENV_NAME}
 	rm .python-version
 
 .PHONY: django
@@ -39,6 +41,9 @@ django:
 
 .PHONY: test_dependencies
 test_dependencies:
+	[ -e test_requirements.txt ] && \
+	pip install -r test_requirements.txt || \
+	echo "\033[1;33mNo test_requirements.txt found. Skipping install of test_requirements.txt.\033[0m"
 	pip install -r test_requirements.txt
 
 .PHONY: lint
@@ -47,6 +52,9 @@ lint: test_dependencies
 
 .PHONY: test
 test: django lint
+	[ -e requirements.txt ] \
+	&& pip install -r requirements.txt || \
+	echo "\033[1;33mNo requirements.txt found. Skipping install of requirements.txt.\033[0m"
 	pip install -e .
 	coverage run ${PACKAGE_NAME}/runtests.py
 	coverage report -m
