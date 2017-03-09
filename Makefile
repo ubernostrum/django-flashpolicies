@@ -27,7 +27,6 @@ env:
 	[ -e ~/.pyenv/versions/${TESTING_VIRTUALENV_NAME} ] && echo "Skipping pyenv creation" || pyenv virtualenv ${PYTHON_VERSION} ${TESTING_VIRTUALENV_NAME}
 	pyenv local ${TESTING_VIRTUALENV_NAME}
 	pip install --upgrade pip setuptools
-	pip install -e .
 
 .PHONY: teardown
 teardown: clean
@@ -48,5 +47,6 @@ lint: test_deps
 
 .PHONY: test
 test: django test_deps
+	pip install -e .
 	coverage run ${PACKAGE_NAME}/runtests.py
 	coverage report -m
