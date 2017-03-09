@@ -4,6 +4,7 @@ from setuptools import setup
 
 
 setup(name='django-flashpolicies',
+      zip_safe=False,  # eggs are the devil.
       version='1.8.1',
       description='Flash cross-domain policies for Django sites',
       long_description=open(os.path.join(os.path.dirname(__file__),
@@ -12,7 +13,6 @@ setup(name='django-flashpolicies',
       author_email='james@b-list.org',
       url='http://github.com/ubernostrum/django-flashpolicies/',
       packages=['flashpolicies', 'flashpolicies.tests'],
-      test_suite='flashpolicies.runtests.run_tests',
       classifiers=['Development Status :: 5 - Production/Stable',
                    'Environment :: Web Environment',
                    'Framework :: Django',

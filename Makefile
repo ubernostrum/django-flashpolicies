@@ -22,8 +22,8 @@ clean:
 	rm -rf coverage .coverage .coverage*
 	pip uninstall -y Django
 
-.PHONY: env
-env:
+.PHONY: venv
+venv:
 	[ -e ~/.pyenv/versions/${TESTING_VIRTUALENV_NAME} ] && echo "Skipping pyenv creation" || pyenv virtualenv ${PYTHON_VERSION} ${TESTING_VIRTUALENV_NAME}
 	pyenv local ${TESTING_VIRTUALENV_NAME}
 	pip install --upgrade pip setuptools
@@ -37,16 +37,16 @@ teardown: clean
 django:
 	pip install Django~=${DJANGO_VERSION}.0
 
-.PHONY: test_deps
-test_deps:
+.PHONY: test_dependencies
+test_dependencies:
 	pip install -r test_requirements.txt
 
 .PHONY: lint
-lint: test_deps
+lint: test_dependencies
 	flake8 ${PACKAGE_NAME}
 
 .PHONY: test
-test: django test_deps
+test: django lint
 	pip install -e .
 	coverage run ${PACKAGE_NAME}/runtests.py
 	coverage report -m

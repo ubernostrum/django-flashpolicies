@@ -80,3 +80,76 @@ repository by typing::
 From there, you can use normal git commands to check out the specific
 revision you want, and install it using ``python setup.py install``.
 
+
+Running tests
+-------------
+
+If you have django-flashpolicies installed already, you can add it to
+the ``INSTALLED_APPS` of a Django project and use ``manage.py test``
+as normal. However, some conveniences are provided for testing without
+a project. The simplest way, from an already-installed copy of
+django-flashpolicies, is (from the ``flashpolicies/`` directory) to
+run ``python runtests.py``, which will set up a minimal runtime
+configuration for Django and execute the tests.
+
+From a source checkout, you can also use the included
+``Makefile``. Executing ``make test`` will install Django (by default,
+the latest 1.10 release), [flake8](http://flake8.pycqa.org/), and
+[coverage.py](https://coverage.readthedocs.io/), fun flake8 on
+django-flashpolicies' source code, execute the test suite and print a
+coverage report. You can also select the Django release series to use
+by either setting the environment variable ``DJANGO_VERSION`` before
+running ``make test``, or by passing the variable on the command line
+when running tests. For example, to run the tests using Django 1.9::
+
+    make test DJANGO_VERSION=1.9
+
+If you have [pyenv](https://github.com/pyenv/pyenv) and
+[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv), the
+included ``Makefile`` supports creating and cleaning up a virtual
+environment. Run ``make venv`` to create and locally activate (via
+``pyenv local``) the virtual environment; by default this uses Python
+3.6.0 (and will *not* install a Python version you don't already
+have), but you can select a Python version by setting or passing the
+variable ``PYTHON_VERSION``. For example, to use Python 3.5.3::
+
+    make venv PYTHON_VERSION=3.5.3
+
+The virtual environment will be named ``flashpolicies_test``.
+
+The full set of supported ``make`` targets is:
+
+* ``clean`` -- Cleans the local directory and environment by running
+  ``python setup.py clean``, removing build and test artifacts and
+  ``.pyc`` files, and uninstalling Django. Useful for re-using a
+  virtual environment to test against multiple versions of Django.
+
+* ``django`` -- installs Django, defaulting to the latest 1.10 but
+  configurable via the variable ``DJANGO_VERSION``.
+
+* ``venv`` -- create and locally activate a a virtual environment,
+  defaulting to Python 3.6.0 but configurable via the variable
+  ``PYTHON_VERSION``.
+
+* ``lint`` -- runs flake8 over django-flashpolicies' source code,
+  using configuration specified in django-flashpolicies' ``setup.cfg``
+  file. Executes ``test_deps`` as a dependency.
+
+* ``teardown`` -- Executes ``clean``, and also deactivates and deletes
+  the virtual environment created by ``venv``.
+
+* ``test_dependencies`` -- installs dependencies for testing (coverage.py and
+  flake8).
+
+* ``test`` -- Executes ``django`` and ``lint`` as dependencies,
+  performs a local editable install of django-flashpolicies (via ``pip
+  install -e``), and runs the test suite and a coverage report, using
+  configuration from django-flashpolicies' ``setup.cfg`` file.
+
+So a complete example of testing against an arbitrary Python and
+Django version, and then cleaning up, consists of:
+
+    make env PYTHON_VERSION=3.5.3
+    make lint
+    make test DJANGO_VERSION=1.9
+    make teardown
