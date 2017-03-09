@@ -61,3 +61,7 @@ def run_tests():
     test_runner = TestRunner(verbosity=1, interactive=True)
     failures = test_runner.run_tests(['flashpolicies.tests'])
     sys.exit(bool(failures))
+
+
+if __name__ == '__main__':
+    run_tests()
