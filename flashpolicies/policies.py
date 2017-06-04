@@ -10,10 +10,10 @@ minidom = xml.dom.getDOMImplementation('minidom')
 
 
 METAPOLICY_ERROR = (
-    u"Metapolicy currently forbids all access; to %s, change the metapolicy."
+    u"Metapolicy currently forbids all access; to {}, change the metapolicy."
 )
 SITE_CONTROL_ERROR = (
-    u"'%s' is not a valid value for the 'permitted-cross-domain-policies' "
+    u"'{}' is not a valid value for the 'permitted-cross-domain-policies' "
     "attribute of a 'site-control' element."
 )
 BAD_POLICY = (
@@ -101,7 +101,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                METAPOLICY_ERROR % "allow a domain"
+                METAPOLICY_ERROR.format("allow a domain")
             )
         self.domains[domain] = {'to_ports': to_ports,
                                 'secure': secure}
@@ -129,7 +129,7 @@ class Policy(object):
 
         """
         if permitted not in VALID_SITE_CONTROL:
-            raise TypeError(SITE_CONTROL_ERROR % permitted)
+            raise TypeError(SITE_CONTROL_ERROR.format(permitted))
         if permitted == SITE_CONTROL_NONE:
             # Metapolicy 'none' means no access is permitted.
             self.domains = {}
@@ -157,7 +157,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                METAPOLICY_ERROR % "allow headers from a domain"
+                METAPOLICY_ERROR.format("allow headers from a domain")
             )
         self.header_domains[domain] = {'headers': headers,
                                        'secure': secure}
@@ -175,7 +175,7 @@ class Policy(object):
         """
         if self.site_control == SITE_CONTROL_NONE:
             raise TypeError(
-                METAPOLICY_ERROR % "allow access from signed documents"
+                METAPOLICY_ERROR.format("allow access from signed documents")
             )
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
@@ -268,7 +268,7 @@ class Policy(object):
             policy.documentElement.appendChild(control_element)
 
         for elem_type in ('domains', 'header_domains', 'identities'):
-            getattr(self, '_add_%s_xml' % elem_type)(policy)
+            getattr(self, '_add_{}_xml'.format(elem_type))(policy)
 
         return policy
 
@@ -287,7 +287,7 @@ class Policy(object):
         toprettyxml(). This method has no such requirement. As a
         result, this method will return a UTF-8-encoded byte sequence
         (which is str on Python 2, but bytes on Python 3).
-        
+
         In general, use str() if you just want to see what would be
         produced, and use serialize() if you want to pass the result
         to something that will serve the XML, or write to a file.
