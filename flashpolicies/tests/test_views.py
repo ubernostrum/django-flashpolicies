@@ -39,13 +39,30 @@ class PolicyViewTests(SimpleTestCase):
         self.assertEqual(len(policy.getElementsByTagName(
             'allow-http-request-headers-from')), 1)
 
-    def test_simple(self):
+    def test_allow_domains(self):
         """
-        Test the view which generates a simple (i.e., list of domains)
-        policy.
+        Test the allow_domains() view.
 
         """
-        response = self.client.get('/crossdomain-simple.xml')
+        response = self.client.get('/crossdomain-allow-domains.xml')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'],
+                         'text/x-cross-domain-policy; charset=utf-8')
+        policy = xml.dom.minidom.parseString(response.content)
+        self.assertEqual(len(policy.getElementsByTagName(
+            'allow-access-from')), 2)
+        domains = ['media.example.com', 'api.example.com']
+        domains_in_xml = [elem.getAttribute('domain') for elem in
+                          policy.getElementsByTagName('allow-access-from')]
+        for domain in domains_in_xml:
+            domains.remove(domain)
+
+    def test_allow_domains_alias(self):
+        """
+        Test the alias for the allow_domains() view.
+
+        """
+        response = self.client.get('/crossdomain-simple-alias.xml')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'],
                          'text/x-cross-domain-policy; charset=utf-8')
