@@ -42,6 +42,7 @@ Documentation contents
    install
    views
    policies
+   deprecations
    faq
 
 .. seealso::

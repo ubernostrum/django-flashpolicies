@@ -62,11 +62,3 @@ revision you want, and install it using ``pip install -e .`` (the
 ``-e`` flag specifies an "editable" install, allowing you to change
 code as you work on django-flashpolicies, and have your changes picked
 up automatically).
-
-
-Configuration and use
----------------------
-
-Once you have Django and django-flashpolicies installed, check out
-:ref:`the usage overview <overview>` to see how to start using
-messages on your site.
