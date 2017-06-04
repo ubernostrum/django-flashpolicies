@@ -26,4 +26,4 @@ cross-domain policies.
 
 Full documentation for all functionality is also included and
 `available online
-<http://django-flashpolicies.readthedocs.org/>`_.
+<http://django-flashpolicies.readthedocs.io/>`_.
