@@ -9,8 +9,9 @@ class PolicyGeneratorTests(SimpleTestCase):
     Tests the policy-file generation utilities.
 
     """
-    dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
-    "01:23:45:67:89:ab:cd:ef:01:23:45:67"
+    dummy_fingerprint = (
+        "01:23:45:67:89:ab:cd:ef:01:23:45:67:89:ab:cd:ef:01:23:45:67"
+    )
 
     def test_policy_str(self):
         """
