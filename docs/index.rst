@@ -14,18 +14,24 @@ cross-domain policy format.
 
 In the most common case, you'll just set up one URL pattern, pointing
 the URL ``/crossdomain.xml`` to the view
-:func:`flashpolicies.views.simple` and passing a list of domains from
-which you want to allow access. For example, to allow access from
-Flash content served from ``media.example.com``, you could place the
-following in the root URLconf of your Django site (along with the
-appropriate ``import`` statement to make :mod:`flashpolicies.views`
-available):
+:func:`flashpolicies.views.allow_domains` and passing a list of
+domains from which you want to allow access. For example, to allow
+access from Flash content served from ``media.example.com``, you could
+place the following in the root URLconf of your Django site:
 
 .. code-block:: python
 
-    url(r'^crossdomain.xml$',
-        flashpolicies.views.simple,
-        {'domains': ['media.example.com']}),
+    from django.conf.urls import url
+
+    from flashpolicies.views import allow_domains
+
+    urlpatterns = [
+        # ...your other URL patterns here...
+        url(r'^crossdomain.xml$',
+            allow_domains,
+            {'domains': ['media.example.com']}),
+    ]
+
 
 Documentation contents
 ----------------------

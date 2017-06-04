@@ -3,6 +3,8 @@ Views for generating and serving policy files.
 
 """
 
+import warnings
+
 from django.http import HttpResponse
 
 from . import policies
@@ -29,7 +31,7 @@ def serve(request, policy):
                         'charset=utf-8')
 
 
-def simple(request, domains):
+def allow_domains(request, domains):
     """
     A cross-domain access policy allowing a list of domains.
 
@@ -54,6 +56,21 @@ def simple(request, domains):
 
     """
     return serve(request, policies.Policy(*domains))
+
+
+def simple(request, domains):
+    """
+    Deprecated name for the ``allow_domains`` view.
+
+    """
+    warnings.warn(
+        'flashpolicies.views.simple has been renamed to '
+        'flashpolicies.views.allow_domains. Support for referring to it as '
+        'flashpolicies.views.simple is deprecated and will be removed in a '
+        'future release of django-flashpolicies.',
+        DeprecationWarning
+    )
+    return allow_domains(request, domains)
 
 
 def metapolicy(request, permitted, domains=None):

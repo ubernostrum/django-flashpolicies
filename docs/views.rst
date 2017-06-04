@@ -6,7 +6,7 @@ Views for serving cross-domain policies
 
 Included in django-flashpolicies are several views for generating and
 serving Flash cross-domain policies. Most sites will need no more than
-the :func:`~flashpolicies.views.simple` policy-serving view.
+the :func:`~flashpolicies.views.allow_domains` policy-serving view.
 
 Some of the other views here support more advanced use cases, but note
 that not all valid policy file options have direct support in these
@@ -25,7 +25,7 @@ allow use of any options policy files can support.
 
    :param policy: The :class:`~flashpolicies.policies.Policy` to serve.
 
-.. function:: simple(request, domains)
+.. function:: allow_domains(request, domains)
 
    A cross-domain access policy allowing a list of domains.
 
