@@ -28,10 +28,19 @@ BAD_POLICY = (
 # Adobe crossdomain.xml spec.
 #
 
+# All policy files are allowed:
 SITE_CONTROL_ALL = u"all"
+
+# Only files served as text/x-cross-domain-policy are allowed:
 SITE_CONTROL_BY_CONTENT_TYPE = u"by-content-type"
+
+# Only files named 'crossdomain.xml' are allowed:
 SITE_CONTROL_BY_FTP_FILENAME = u"by-ftp-filename"
+
+# Only the master policy file is allowed:
 SITE_CONTROL_MASTER_ONLY = u"master-only"
+
+# No policies are allowed, including the master policy:
 SITE_CONTROL_NONE = u"none"
 
 VALID_SITE_CONTROL = (SITE_CONTROL_ALL,
