@@ -172,6 +172,10 @@ class Policy(object):
             self.identities.append(fingerprint)
 
     def _add_domains_xml(self, document):
+        """
+        Generates the XML elements for allowed domains.
+
+        """
         for domain, attrs in self.domains.items():
             domain_element = document.createElement('allow-access-from')
             domain_element.setAttribute('domain', domain)
@@ -185,6 +189,10 @@ class Policy(object):
             document.documentElement.appendChild(domain_element)
 
     def _add_header_domains_xml(self, document):
+        """
+        Generates the XML elements for allowed header domains.
+
+        """
         for domain, attrs in self.header_domains.items():
             header_element = document.createElement(
                 'allow-http-request-headers-from'
@@ -196,6 +204,10 @@ class Policy(object):
             document.documentElement.appendChild(header_element)
 
     def _add_identities_xml(self, document):
+        """
+        Generates the XML elements for allowed digital signatures.
+
+        """
         for fingerprint in self.identities:
             identity_element = document.createElement(
                 'allow-access-from-identity'
@@ -257,15 +269,19 @@ class Policy(object):
         return self.xml_dom.toprettyxml()
 
     def serialize(self):
-        # This is similar to __str__() but with one important
-        # difference: on Python 3, __str__() is required to return a
-        # Unicode string, and so can't use the 'encoding'
-        # argument. This method has no such requirement. As a result,
-        # this method will return a UTF-8-encoded byte sequence (which
-        # is str on Python 2, but bytes on Python 3).
-        #
-        # In general, use str() if you just want to see what would be
-        # produced, and use serialize() if you want to pass the result
-        # to something that will serve the XML, or write to a file.
-        #
+        """
+        Serializes this policy to a UTF-8 byte sequence.
+
+        This is similar to __str__() but with one important
+        difference: on Python 3, __str__() is required to return a
+        Unicode string, and so can't use the 'encoding' argument of
+        toprettyxml(). This method has no such requirement. As a
+        result, this method will return a UTF-8-encoded byte sequence
+        (which is str on Python 2, but bytes on Python 3).
+        
+        In general, use str() if you just want to see what would be
+        produced, and use serialize() if you want to pass the result
+        to something that will serve the XML, or write to a file.
+
+        """
         return self.xml_dom.toprettyxml(encoding='utf-8')
