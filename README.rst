@@ -6,7 +6,9 @@
 This application enables Flash cross-domain access policies for
 `Django <https://www.djangoproject.com>`_ sites. For example, the
 following URL pattern is all you'd need to set up cross-domain access
-for Flash files served from your media server::
+for Flash files served from your media server:
+
+.. code-block:: python
 
     from django.conf.urls import url
 
@@ -26,4 +28,4 @@ cross-domain policies.
 
 Full documentation for all functionality is also included and
 `available online
-<http://django-flashpolicies.readthedocs.io/>`_.
+<https://django-flashpolicies.readthedocs.io/>`_.
