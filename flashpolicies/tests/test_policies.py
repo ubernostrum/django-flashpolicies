@@ -6,7 +6,7 @@ from .. import policies
 
 class PolicyGeneratorTests(SimpleTestCase):
     """
-    Tests for the policy-file generation utilities.
+    Tests the policy-file generation utilities.
 
     """
     dummy_fingerprint = "01:23:45:67:89:ab:cd:ef:"
@@ -14,7 +14,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_policy_str(self):
         """
-        Test that str() on a Policy returns an object of type str with
+        Tests that str() on a Policy returns an object of type str with
         no encoding declared.
 
         """
@@ -27,7 +27,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_policy_serialize(self):
         """
-        Test that serialize() returns an object of type bytes, with a
+        Tests that serialize() returns an object of type bytes, with a
         declared encoding of UTF-8.
 
         """
@@ -39,7 +39,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_policy_type(self):
         """
-        Test that the correct ``DOCTYPE`` declaration is generated.
+        Tests that the correct ``DOCTYPE`` declaration is generated.
 
         """
         policy = policies.Policy().xml_dom
@@ -51,7 +51,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_policy_root_element(self):
         """
-        Test that the correct root element is inserted.
+        Tests that the correct root element is inserted.
 
         """
         policy = policies.Policy().xml_dom
@@ -60,7 +60,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_access_domain(self):
         """
-        Test that adding access for a domain inserts the proper
+        Tests that adding access for a domain inserts the proper
         element and attribute.
 
         """
@@ -78,7 +78,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_access_ports(self):
         """
-        Test that adding port access for socket connections inserts
+        Tests that adding port access for socket connections inserts
         the proper attribute.
 
         """
@@ -92,7 +92,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_access_secure(self):
         """
-        Test that setting non-secure access for a domain inserts the
+        Tests that setting non-secure access for a domain inserts the
         proper attribute.
 
         """
@@ -105,7 +105,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy(self):
         """
-        Test that adding metapolicy information inserts the proper
+        Tests that adding metapolicy information inserts the proper
         element and attributes.
 
         """
@@ -124,7 +124,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_bad_metapolicy(self):
         """
-        Test that metapolicies are restricted to the values permitted
+        Tests that metapolicies are restricted to the values permitted
         by the specification.
 
         """
@@ -133,7 +133,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_none_empty_domains(self):
         """
-        Test that setting the metapolicy to ``none`` clears the list
+        Tests that setting the metapolicy to ``none`` clears the list
         of permitted domains.
 
         """
@@ -144,7 +144,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_none_empty_identities(self):
         """
-        Test that setting the metapolicy to ``none`` clears the list
+        Tests that setting the metapolicy to ``none`` clears the list
         of permitted cryptographic identities.
 
         """
@@ -157,7 +157,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_none_empty_headers(self):
         """
-        Test that setting the metapolicy to ``non`` clears the list of
+        Tests that setting the metapolicy to ``non`` clears the list of
         domains from which headers are permitted.
 
         """
@@ -170,7 +170,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_none_disallow_domains(self):
         """
-        Test that attempting to allow access from a domain, when the
+        Tests that attempting to allow access from a domain, when the
         metapolicy is ``none``, raises an exception.
 
         """
@@ -180,7 +180,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_none_disallow_headers(self):
         """
-        Test that attempting to allow headers from a domain, when the
+        Tests that attempting to allow headers from a domain, when the
         metapolicy is ``none``, raises an exception.
 
         """
@@ -191,7 +191,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_non_disallow_identities(self):
         """
-        Test that attempting to allow access from signed documents,
+        Tests that attempting to allow access from signed documents,
         when the metapolicy is ``none``, raises an exception.
 
         """
@@ -202,7 +202,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_metapolicy_manual_tinkering(self):
         """
-        Test that setting metapolicy ``none``, then manually fiddling
+        Tests that setting metapolicy ``none``, then manually fiddling
         with the internals to try to allow things, will fail when the
         XML gets generated.
 
@@ -216,7 +216,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_http_headers(self):
         """
-        Test that allowing HTTP headers inserts the proper element and
+        Tests that allowing HTTP headers inserts the proper element and
         attributes.
 
         """
@@ -239,7 +239,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_http_headers_secure(self):
         """
-        Test that setting non-secure access for HTTP headers from a
+        Tests that setting non-secure access for HTTP headers from a
         domain inserts the proper attribute.
 
         """
@@ -255,7 +255,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_allow_identity(self):
         """
-        Test that allowing access from digitally-signed documents
+        Tests that allowing access from digitally-signed documents
         inserts the proper elements and attributes.
 
         """
@@ -279,7 +279,7 @@ class PolicyGeneratorTests(SimpleTestCase):
 
     def test_simple_policy(self):
         """
-        Test that creating a simple policy with a list of domains
+        Tests that creating a simple policy with a list of domains
         returns a correct policy document.
 
         """

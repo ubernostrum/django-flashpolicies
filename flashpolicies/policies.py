@@ -74,7 +74,7 @@ class Policy(object):
 
     def allow_domain(self, domain, to_ports=None, secure=True):
         """
-        Allow access from ``domain``, which may be either a full
+        Allows access from ``domain``, which may be either a full
         domain name, or a wildcard (e.g., ``*.example.com``, or simply
         ``*``). Due to security concerns, it is strongly recommended
         that you use explicit domains rather than wildcards.
@@ -99,7 +99,7 @@ class Policy(object):
 
     def metapolicy(self, permitted):
         """
-        Set metapolicy to ``permitted``. (only applicable to master
+        Sets metapolicy to ``permitted``. (only applicable to master
         policy files). Acceptable values correspond to those listed in
         Section 3(b)(i) of the crossdomain.xml specification, and are
         also available as a set of constants defined in this module.
@@ -130,7 +130,7 @@ class Policy(object):
 
     def allow_headers(self, domain, headers, secure=True):
         """
-        Allow ``domain`` to push data via the HTTP headers named in
+        Allows ``domain`` to push data via the HTTP headers named in
         ``headers``.
 
         As with ``allow_domain``, ``domain`` may be either a full
@@ -155,7 +155,7 @@ class Policy(object):
 
     def allow_identity(self, fingerprint):
         """
-        Allow access from documents digitally signed by the key with
+        Allows access from documents digitally signed by the key with
         ``fingerprint``.
 
         In theory, multiple algorithms can be added in the future for
@@ -218,7 +218,7 @@ class Policy(object):
 
     def _get_xml_dom(self):
         """
-        Collect all options set so far, and produce and return an
+        Collects all options set so far, and produce and return an
         ``xml.dom.minidom.Document`` representing the corresponding
         XML.
 

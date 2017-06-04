@@ -7,14 +7,14 @@ from .. import policies
 
 class PolicyViewTests(SimpleTestCase):
     """
-    Tests for the views which serve policy files.
+    Tests the views which serve policy files.
 
     """
     urls = 'flashpolicies.tests.urls'
 
     def test_serve_response(self):
         """
-        Test that the serve() view returns a byte string response with
+        Tests that the serve() view returns a byte string response with
         the correct content type and charset.
 
         """
@@ -26,7 +26,7 @@ class PolicyViewTests(SimpleTestCase):
 
     def test_serve(self):
         """
-        Test that the serve() view serializes the policy as expected.
+        Tests that the serve() view serializes the policy as expected.
 
         """
         response = self.client.get('/crossdomain-serve.xml')
@@ -41,7 +41,7 @@ class PolicyViewTests(SimpleTestCase):
 
     def test_allow_domains(self):
         """
-        Test the allow_domains() view.
+        Tests the allow_domains() view.
 
         """
         response = self.client.get('/crossdomain-allow-domains.xml')
@@ -59,7 +59,7 @@ class PolicyViewTests(SimpleTestCase):
 
     def test_allow_domains_alias(self):
         """
-        Test the alias for the allow_domains() view.
+        Tests the alias for the allow_domains() view.
 
         """
         response = self.client.get('/crossdomain-simple-alias.xml')
@@ -77,7 +77,7 @@ class PolicyViewTests(SimpleTestCase):
 
     def test_no_access(self):
         """
-        Test the view which generates a policy that forbids all
+        Tests the view which generates a policy that forbids all
         access.
 
         """
@@ -94,7 +94,7 @@ class PolicyViewTests(SimpleTestCase):
 
     def test_metapolicy(self):
         """
-        Test the view which sets a meta-policy for allowing other
+        Tests the view which sets a meta-policy for allowing other
         policies on the same domain.
 
         """

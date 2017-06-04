@@ -12,9 +12,11 @@ from . import policies
 
 def serve(request, policy):
     """
-    Given a ``flashpolicies.policies.Policy`` instance, serialize it
-    to XML and serve it. Internally, this is used by all other views as
-    the mechanism which actually serves the policy file.
+    Given a ``flashpolicies.policies.Policy`` instance, serializes it
+    to XML and serve it.
+
+    Internally, this is used by all other views as the mechanism which
+    actually serves the policy file.
 
     **Required arguments:**
 
@@ -33,7 +35,7 @@ def serve(request, policy):
 
 def allow_domains(request, domains):
     """
-    A cross-domain access policy allowing a list of domains.
+    Serves a cross-domain access policy allowing a list of domains.
 
     Note that if this is returned from the URL ``/crossdomain.xml`` on
     a domain, it will act as a master policy and will not permit other
@@ -75,8 +77,8 @@ def simple(request, domains):
 
 def metapolicy(request, permitted, domains=None):
     """
-    A Flash cross-domain policy which allows other policies to exist
-    on the same domain.
+    Serves a cross-domain policy which can allow other policies
+    to exist on the same domain.
 
     Note that this view, if used, must be the master policy for the
     domain, and so must be served from the URL ``/crossdomain.xml`` on
@@ -110,7 +112,7 @@ def metapolicy(request, permitted, domains=None):
 
 def no_access(request):
     """
-    A Flash cross-domain access policy which permits no access of any
+    Serves a cross-domain access policy which permits no access of any
     kind, via a metapolicy declaration disallowing all policy files.
 
     Note that this view, if used, must be the master policy for the

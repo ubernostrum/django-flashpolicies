@@ -98,7 +98,7 @@ API reference
 
    .. method:: allow_domain(domain, to_ports=None, secure=True)
 
-      Allow access for Flash content served from a particular domain.
+      Allows access for Flash content served from a particular domain.
 
       :param domain: The domain from which to allow access. May be
          either a full domain name (e.g., ``"example.com"``) or a
@@ -120,7 +120,7 @@ API reference
 
    .. method:: allow_headers(domain, headers, secure=True)
 
-      Allow Flash content from a particular domain to push data via
+      Allows Flash content from a particular domain to push data via
       HTTP headers.
 
       :param domain: The domain from which to allow access. May be
@@ -140,7 +140,7 @@ API reference
 
    .. method:: allow_identity(fingerprint)
 
-      Allow access from digitally-signed documents.
+      Allows access from digitally-signed documents.
 
       :param fingerprint: The fingerprint of the signing key to allow.
 
@@ -157,7 +157,7 @@ API reference
 
    .. method:: metapolicy(permitted)
 
-      Set metapolicy information (only applicable to master policy
+      Sets metapolicy information (only applicable to master policy
       files), determining which other policy files may be used on the
       same domain.
 
