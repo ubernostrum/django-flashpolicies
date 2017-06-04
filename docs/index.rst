@@ -1,9 +1,9 @@
 django-flashpolicies |version|
 ==============================
 
-This application enables simple management of Flash cross-domain
-policies (which are required for Flash content to access information
-across domains) for `Django <https://www.djangoproject.com/>`_-powered
+This application provides management of Flash cross-domain policies
+(which are required for Flash content to access information across
+domains) for `Django <https://www.djangoproject.com/>`_-powered
 sites. Cross-domain policies are represented by an XML file format,
 and this application generates and serves the appropriate XML.
 
@@ -12,8 +12,8 @@ Microsoft's Silverlight browser plugin, which supports the Adobe Flash
 format as a fallback in the absence of a file in its own native
 cross-domain policy format.
 
-In the simplest case, you'll just set up one URL pattern, pointing the
-URL ``/crossdomain.xml`` to the view
+In the most common case, you'll just set up one URL pattern, pointing
+the URL ``/crossdomain.xml`` to the view
 :func:`flashpolicies.views.simple` and passing a list of domains from
 which you want to allow access. For example, to allow access from
 Flash content served from ``media.example.com``, you could place the

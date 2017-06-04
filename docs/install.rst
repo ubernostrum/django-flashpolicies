@@ -7,20 +7,18 @@ Installation guide
 Before installing django-flashpolicies, you'll need to have a copy of
 `Django <https://www.djangoproject.com>`_ already installed. For
 information on obtaining and installing Django, consult the `Django
-download page <https://www.djangoproject.com/download/>`_, which offers
-convenient packaged downloads and installation instructions.
+download page <https://www.djangoproject.com/download/>`_, which
+offers convenient packaged downloads and installation instructions.
 
 The |version| release of django-flashpolicies supports Django 1.8,
-1.9, and 1.10, on the following Python versions:
+1.10, and 1.11 on the following Python versions (matching the versions
+supported by Django itself):
 
-* Django 1.8 suports Python 2.7, 3.3, 3.4 and 3.5.
+* Django 1.8 suports Python 2.7, 3.3, 3.4, and 3.5.
 
-* Django 1.9 supports Python 2.7, 3.4 and 3.5.
+* Django 1.10 supports Python 2.7, 3.4, and 3.5.
 
-* Django 1.10 supports Python 2.7, 3.4 and 3.5.
-
-It is expected that django-flashpolicies |version| will work
-without modification on Python 3.6 once it is released.
+* Django 1.11 supports Python 2.7, 3.4, 3.5, and 3.6
 
 .. important:: **Python 3.2**
 
@@ -41,60 +39,34 @@ you're using Python 2.7.9 or later (for Python 2) or Python 3.4 or
 later (for Python 3), ``pip`` came bundled with your installation of
 Python.
 
-Once you have ``pip``, simply type::
+Once you have ``pip``, type::
 
     pip install django-flashpolicies
-
-
-Manual installation
--------------------
-
-It's also possible to install django-flashpolicies manually. To do
-so, obtain the latest packaged version from `the listing on the Python
-Package Index
-<https://pypi.python.org/pypi/django-flashpolicies/>`_. Unpack the
-``.tar.gz`` file, and run::
-
-    python setup.py install
-
-Once you've installed django-flashpolicies, you can verify successful
-installation by opening a Python interpreter and typing ``import
-flashpolicies``.
-
-If the installation was successful, you'll simply get a fresh Python
-prompt. If you instead see an ``ImportError``, check the configuration
-of your install tools and your Python import path to ensure
-django-flashpolicies installed into a location Python can import from.
 
 
 Installing from a source checkout
 ---------------------------------
 
+If you want to work on django-flashpolicies, you can obtain a source
+checkout.
+
 The development repository for django-flashpolicies is at
-<https://github.com/ubernostrum/django-flashpolicies>. Presuming you have `git
-<http://git-scm.com/>`_ installed, you can obtain a copy of the
+<https://github.com/ubernostrum/django-flashpolicies>. If you have
+`git <http://git-scm.com/>`_ installed, you can obtain a copy of the
 repository by typing::
 
     git clone https://github.com/ubernostrum/django-flashpolicies.git
 
 From there, you can use normal git commands to check out the specific
-revision you want, and install it using ``python setup.py install``.
+revision you want, and install it using ``pip install -e .`` (the
+``-e`` flag specifies an "editable" install, allowing you to change
+code as you work on django-flashpolicies, and have your changes picked
+up automatically).
 
 
-Running tests
--------------
+Configuration and use
+---------------------
 
-If you have django-flashpolicies installed already, you can add it to
-the ``INSTALLED_APPS` of a Django project and use ``manage.py test``
-as normal. However, some conveniences are provided for testing without
-a project. The simplest way, from an already-installed copy of
-django-flashpolicies, is (from the ``flashpolicies/`` directory) to
-run ``python runtests.py``, or ``python setup.py test`` (which will
-invoke ``runtests.py``) which will set up a minimal runtime
-configuration for Django and execute the tests.
-
-The source distribution of django-flashpolicies also includes a `tox
-<https://tox.readthedocs.io/en/latest/>`_ configuration file which can
-be invoked by running ``tox`` (if you have it installed), and will run
-the test suite on every combination of Python and Django versions
-django-flashpolicies supports.
+Once you have Django and django-flashpolicies installed, check out
+:ref:`the usage overview <overview>` to see how to start using
+messages on your site.

@@ -31,7 +31,7 @@ def serve(request, policy):
 
 def simple(request, domains):
     """
-    A simple Flash cross-domain access policy.
+    A cross-domain access policy allowing a list of domains.
 
     Note that if this is returned from the URL ``/crossdomain.xml`` on
     a domain, it will act as a master policy and will not permit other

@@ -27,7 +27,7 @@ allow use of any options policy files can support.
 
 .. function:: simple(request, domains)
 
-   A simple Flash cross-domain policy.
+   A cross-domain access policy allowing a list of domains.
 
    Note that if this is returned from the URL ``/crossdomain.xml`` on
    a domain, it will act as a master policy and will not permit other
@@ -72,6 +72,6 @@ allow use of any options policy files can support.
    the domain. Setting meta-policy information in other policy files is
    forbidden by the cross-domain policy specification.
 
-   Internally, this view simply calls the :func:`metapolicy` view,
-   passing :const:`~flashpolicies.policies.SITE_CONTROL_NONE` as the
+   Internally, this view calls the :func:`metapolicy` view, passing
+   :const:`~flashpolicies.policies.SITE_CONTROL_NONE` as the
    meta-policy.

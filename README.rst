@@ -3,7 +3,7 @@
 .. image:: https://travis-ci.org/ubernostrum/django-flashpolicies.svg?branch=master
     :target: https://travis-ci.org/ubernostrum/django-flashpolicies
 
-This application enables simple Flash cross-domain access policies for
+This application enables Flash cross-domain access policies for
 `Django <https://www.djangoproject.com>`_ sites. For example, the
 following URL pattern is all you'd need to set up cross-domain access
 for Flash files served from your media server::

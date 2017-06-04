@@ -15,11 +15,11 @@ cross-domain policy files; `Adobe's cross-domain policy specification
 is the canonical source for that information.
 
 
-Simple interaction with :class:`Policy` objects
------------------------------------------------
+Interaction with :class:`Policy` objects
+----------------------------------------
 
-For most cases, simply instantiating a :class:`Policy` object with one
-or more domains will accomplish the desired effect. The property
+For most cases, instantiating a :class:`Policy` object with one or
+more domains will accomplish the desired effect. The property
 :attr:`~Policy.xml_dom` will yield an ``xml.dom.minidom.Document``
 object representing the policy's XML; for information on working with
 these objects, consult the documentation for `the xml.dom.minidom
@@ -31,8 +31,7 @@ Serializing :class:`Policy` objects
 -----------------------------------
 
 There are two similar but different ways to serialize the underlying
-XML. One is simply to use ``str()`` on a :class:`Policy` instance,
-like so:
+XML. One is to use ``str()`` on a :class:`Policy` instance, like so:
 
 .. code-block:: pycon
 
@@ -78,8 +77,8 @@ API reference
    Wrapper object for creating and manipulating a Flash cross-domain
    policy.
 
-   In the simplest case -- specifying one or more domains from which
-   to allow access -- simply pass the domains when initializing. For
+   In the most common case -- specifying one or more domains from
+   which to allow access -- pass the domains when initializing. For
    example:
 
    .. code-block:: python
