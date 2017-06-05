@@ -5,10 +5,14 @@ from setuptools import setup
 
 setup(name='django-flashpolicies',
       zip_safe=False,  # eggs are the devil.
-      version='1.8.1',
+      version='1.9',
       description='Flash cross-domain policies for Django sites',
-      long_description=open(os.path.join(os.path.dirname(__file__),
-                                         'README.rst')).read(),
+      long_description=open(
+          os.path.join(
+              os.path.dirname(__file__),
+              'README.rst'
+          )
+      ).read(),
       author='James Bennett',
       author_email='james@b-list.org',
       url='http://github.com/ubernostrum/django-flashpolicies/',
