@@ -12,8 +12,8 @@ Microsoft's Silverlight browser plugin, which supports the Adobe Flash
 format as a fallback in the absence of a file in its own native
 cross-domain policy format.
 
-In the most common case, you'll just set up one URL pattern, pointing
-the URL ``/crossdomain.xml`` to the view
+In the most common case, you'll set up one URL pattern, pointing the
+URL ``/crossdomain.xml`` to the view
 :func:`flashpolicies.views.allow_domains` and passing a list of
 domains from which you want to allow access. For example, to allow
 access from Flash content served from ``media.example.com``, you could
