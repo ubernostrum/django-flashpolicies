@@ -8,7 +8,7 @@ This application enables Flash cross-domain access policies for
 following URL pattern is all you'd need to set up cross-domain access
 for Flash files served from your media server:
 
-.. code-block:: python
+.. code:: python
 
     from django.conf.urls import url
 
