@@ -5,6 +5,50 @@ Major/notable changes between released versions are listed below, in
 roughly chronological order.
 
 
+Version 1.9, IN PROGRESS
+------------------------
+
+* Django 1.8/1.10/1.11 supported.
+
+* Python 2.7/3.3/3.4/3.5/3.6 supported.
+
+* Deprecation: flashpolicies.views.simple() is renamed to
+  flashpolicies.views.allow_domains(). An alias is provided for
+  backwards compatibility, and will be removed in 2.0.
+
+* Deprecation announced: in 2.0, django-flashpolicies will split into
+  two packages: one providing only the Policy class (to allow use
+  independent of Django), and the other depending on it and providing
+  Django views.
+
+
+Version 1.8, released November 12, 2016
+---------------------------------------
+
+* Packaged from repository tag '1.8'.
+
+* Django 1.8/1.9/1.10 supported.
+
+* Python 2.7/3.3/3.4/3.5 supported.
+
+* Note: due to a version-number error, there was never a 1.7
+  release. Versions jump directly from 1.6.1 to 1.8.
+
+* Documentation of Silverlight policy files.
+
+* Refactoring of Policy class' XML generation internals to make code
+  more maintainable/readable.
+
+
+Version 1.6.1, released April 26, 2015
+--------------------------------------
+
+* Packaged from repository tag '1.6.1'.
+
+* Bugfix: Ensure allow_identity() correctly errors when metapolicy
+  disallows all access.
+
+
 Version 1.6, released April 15, 2015
 ------------------------------------
 
@@ -12,17 +56,17 @@ Version 1.6, released April 15, 2015
 
 * Repository moved to GitHub.
 
-* Django 1.7/1.8 supported
+* Django 1.7/1.8 supported.
 
-* Python 2.7/3.3/3.4 supported
+* Python 2.7/3.3/3.4 supported.
 
-* Full automated testing on supported Django and Python versions
-	
-* Support for allow-access-from-identity element
+* Full automated testing on supported Django and Python versions.
+
+* Support for allow-access-from-identity element.
 
 * New method on Policy, serialize(), guaranteed to produce a UTF-8
   byte string (solves Python 2/3 string issues for serializing
-  policies)
+  policies).
 
 
 Version 1.5, released July 31, 2013
