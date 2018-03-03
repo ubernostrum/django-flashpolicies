@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(name='django-flashpolicies',
       zip_safe=False,  # eggs are the devil.
-      version='1.9',
+      version='1.10',
       description='Flash cross-domain policies for Django sites',
       long_description=open(
           os.path.join(
@@ -21,9 +21,8 @@ setup(name='django-flashpolicies',
       classifiers=['Development Status :: 5 - Production/Stable',
                    'Environment :: Web Environment',
                    'Framework :: Django',
-                   'Framework :: Django :: 1.8',
-                   'Framework :: Django :: 1.10',
                    'Framework :: Django :: 1.11',
+                   'Framework :: Django :: 2.0',
                    'Intended Audience :: Developers',
                    'License :: OSI Approved :: BSD License',
                    'Operating System :: OS Independent',
@@ -31,13 +30,11 @@ setup(name='django-flashpolicies',
                    'Programming Language :: Python :: 2',
                    'Programming Language :: Python :: 2.7',
                    'Programming Language :: Python :: 3',
-                   'Programming Language :: Python :: 3.2',
-                   'Programming Language :: Python :: 3.3',
                    'Programming Language :: Python :: 3.4',
                    'Programming Language :: Python :: 3.5',
                    'Programming Language :: Python :: 3.6',
                    'Topic :: Utilities'],
       install_requires=[
-          'Django>=1.8,!=1.9.*',
+          'Django>=1.11',
       ],
 )

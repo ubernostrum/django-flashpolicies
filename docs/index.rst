@@ -33,6 +33,22 @@ place the following in the root URLconf of your Django site:
     ]
 
 
+Or, using Django 2.0 with the new ``path`` URL helper:
+
+.. code-block:: python
+
+    from django.conf.urls import path
+
+    from flashpolicies.views import allow_domains
+
+    urlpatterns = [
+        # ...your other URL patterns here...
+        path('crossdomain.xml',
+            allow_domains,
+            {'domains': ['media.example.com']}),
+    ]
+
+
 Documentation contents
 ----------------------
 

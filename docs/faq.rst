@@ -49,7 +49,7 @@ and soon to be nonexistent, supported base.
 What versions of Django are supported?
 --------------------------------------
 
-As of django-flashpolicies |version|, Django 1.8 and 1.9 are
+As of django-flashpolicies |version|, Django 1.11 and 2.0 are
 supported.
 
 Older versions of Django may work, but are not supported. In
@@ -64,10 +64,8 @@ trailing slash.
 What versions of Python are supported?
 --------------------------------------
 
-As of django-flashpolicies |version|, Django 1.8, 1.9, and 1.10 are
-supported, on Python 2.7, 3.3, 3.4 or 3.5. Although Django 1.8
-supported Python 3.2 at initial release, Python 3.2 is now at its
-end-of-life and django-flashpolicies no longer supports it.
+As of django-flashpolicies |version|, Python 2.7 (Django 1.11 only),
+3.4, 3.5, and 3.6 are supported.
 
 
 Why are the elements in a different order each time I serialize my policy?
@@ -105,8 +103,8 @@ domains/subdomains matching a wild-card entry, use of one will expose
 you to the possibility of loading malicious content.
 
 
-How am I allowed to use this module?
-------------------------------------
+How am I allowed to use this library?
+-------------------------------------
 
 django-flashpolicies is distributed under a `three-clause BSD license
 <http://opensource.org/licenses/BSD-3-Clause>`_. This is an
