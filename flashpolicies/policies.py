@@ -17,7 +17,7 @@ SITE_CONTROL_ERROR = (
     "attribute of a 'site-control' element."
 )
 BAD_POLICY = (
-    "Cannot produce XML from invalid policy (metapolicy forbids all access, "
+    u"Cannot produce XML from invalid policy (metapolicy forbids all access, "
     "but policy attempted to allow access anyway)."
 )
 
