@@ -1,7 +1,7 @@
 from django.test import SimpleTestCase
 from django.utils import six
 
-from .. import policies
+from flashpolicies import policies
 
 
 class PolicyGeneratorTests(SimpleTestCase):

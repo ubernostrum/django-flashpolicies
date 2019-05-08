@@ -7,8 +7,7 @@ situation.
 
 from django.conf.urls import url
 
-from .. import policies
-from .. import views
+from flashpolicies import policies, views
 
 
 def make_test_policy():

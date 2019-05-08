@@ -20,18 +20,18 @@ Interaction with :class:`Policy` objects
 
 For most cases, instantiating a :class:`Policy` object with one or
 more domains will accomplish the desired effect. The property
-:attr:`~Policy.xml_dom` will yield an ``xml.dom.minidom.Document``
-object representing the policy's XML; for information on working with
-these objects, consult the documentation for `the xml.dom.minidom
-module in the Python standard library
-<http://docs.python.org/library/xml.dom.minidom.html>`_.
+:attr:`~Policy.xml_dom` will yield a
+:class:`~xml.dom.minidom.Document` object representing the policy's
+XML; for information on working with these objects, consult the
+documentation for `the xml.dom.minidom module in the Python standard
+library <http://docs.python.org/library/xml.dom.minidom.html>`_.
 
 
 Serializing :class:`Policy` objects
 -----------------------------------
 
 There are two similar but different ways to serialize the underlying
-XML. One is to use ``str()`` on a :class:`Policy` instance, like so:
+XML. One is to use `str()` on a :class:`Policy` instance, like so:
 
 .. code-block:: pycon
 
@@ -49,18 +49,18 @@ XML. One is to use ``str()`` on a :class:`Policy` instance, like so:
 The other is to call the :meth:`~Policy.serialize` method. The
 difference between these options is:
 
-1. ``str()`` will, as is required by Python's semantics, produce a
-   result of type ``str``. Which, on Python 3, is a Unicode string;
-   this means the output is not in any particular encoding, and will
-   omit the ``encoding`` declaration of the XML prolog.
+1. `str()` will, as is required by Python's semantics, produce a
+   result of type :class:`str`. Which, on Python 3, is a Unicode
+   string; this means the output is not in any particular encoding,
+   and will omit the `encoding` declaration of the XML prolog.
 
 2. :meth:`~Policy.serialize` will, on the other hand, always return a
-   sequence of UTF-8-encoded bytes. This is the type ``str`` on Python
-   2, and the type ``bytes`` on Python 3. In accordance with this, the
-   output of :meth:`~Policy.serialize` *will* include an ``encoding``
-   declaration in its XML prolog.
+   sequence of UTF-8-encoded bytes. This is the type :class:`str` on
+   Python 2, and the type :class:`bytes` on Python 3. In accordance
+   with this, the output of :meth:`~Policy.serialize` *will* include
+   an `encoding` declaration in its XML prolog.
 
-In general, ``str()`` should be used to inspect a :class:`Policy` for
+In general, `str()` should be used to inspect a :class:`Policy` for
 debugging or educational purposes, while :meth:`~Policy.serialize`
 should be used any time the output will actually be treated as a
 policy file (i.e., if writing your own policy-serving view, or if
@@ -88,72 +88,81 @@ API reference
    .. attribute:: xml_dom
 
       A read-only property which returns an XML representation of this
-      policy, as an ``xml.dom.minidom.Document`` object.
+      policy, as a :class:`~xml.dom.minidom.Document` object.
 
    .. method:: serialize()
 
-      Serialize this policy to a UTF-8-encoded byte string (i.e.,
-      ``str`` on Python 2, ``bytes`` on Python 3), suitable for
-      serving over HTTP or writing to a file.
+      Serialize this policy to UTF-8-encoded bytes (i.e., :class:`str`
+      on Python 2, :class:`bytes` on Python 3), suitable for serving
+      over HTTP or writing to a file.
+
+      :rtype: :class:`bytes`
 
    .. method:: allow_domain(domain, to_ports=None, secure=True)
 
       Allows access for Flash content served from a particular domain.
 
-      :param domain: The domain from which to allow access. May be
-         either a full domain name (e.g., ``"example.com"``) or a
-         wildcard (e.g., ``"example.com"``). Due to serious potential
-         security concerns, it is strongly recommended that you avoid
-         wildcard domain values.
-      :param to_ports: (only for socket policy files) A list of ports
-         the domain will be permitted to access. Each value in the
-         list may be either a port number (e.g., ``"80"``), a range of
-         ports (e.g., ``"80-120"``) or the wildcard value ``"*"``,
-         which will permit all ports.
-      :param secure: If ``True``, will require the security level of
-         the HTTP protocol for Flash content to match that of this
-         policy file; for example, if the policy file was retrieved
-         via HTTPS, Flash content from ``domain`` must also be
-         retrieved via HTTPS. If ``False``, this matching of security
-         levels will be disabled. It is strongly recommended that you
-         not disable the matching of security levels.
+      :param domain: A :class:`str` indicating the domain from which
+         to allow access. May be either a full domain name (e.g.,
+         `"example.com"`) or a wildcard (e.g., `"example.com"`). Due
+         to serious potential security concerns, it is strongly
+         recommended that you avoid wildcard domain values.
+      :param to_ports: (only for socket policy files) An
+         :class:`~typing.Iterable` of ports (as :class:`str`) the
+         domain will be permitted to access. Each post may be either a
+         port number (e.g., `"80"`), a range of ports (e.g.,
+         `"80-120"`) or the wildcard value `"*"`, which will permit
+         all ports.
+      :param secure: A :class:`bool`; if :data:`True`, will require
+         the security level of the HTTP protocol for Flash content to
+         match that of this policy file; for example, if the policy
+         file was retrieved via HTTPS, Flash content from `domain`
+         must also be retrieved via HTTPS. If :data:`False`, this
+         matching of security levels will be disabled. It is strongly
+         recommended that you not disable the matching of security
+         levels.
+      :rtype: :data:`None`
 
    .. method:: allow_headers(domain, headers, secure=True)
 
       Allows Flash content from a particular domain to push data via
       HTTP headers.
 
-      :param domain: The domain from which to allow access. May be
-         either a full domain name (e.g., ``"example.com"``) or a
-         wildcard (e.g., ``"example.com"``). Due to serious potential
-         security concerns, it is strongly recommended that you avoid
-         wildcard domain values.
-      :param headers: A list of HTTP header names in which data may be
-         submitted.
-      :param secure: If ``True``, will require the security level of
-         the HTTP protocol for Flash content to match that of this
-         policy file; for example, if the policy file was retrieved
-         via HTTPS, Flash content from ``domain`` must also be
-         retrieved via HTTPS. If ``False``, this matching of security
-         levels will be disabled. It is strongly recommended that you
-         not disable the matching of security levels.
+      :param domain: A :class:`str` indicating a domain from which to
+         allow access. May be either a full domain name (e.g.,
+         `"example.com"`) or a wildcard (e.g., `"example.com"`). Due
+         to serious potential security concerns, it is strongly
+         recommended that you avoid wildcard domain values.
+      :param headers: An :class:`~typing.Iterable` of HTTP header
+         names (as :class:`str`) in which data may be submitted.
+      :param secure: A :class:`bool`; if :data:`True`, will require
+         the security level of the HTTP protocol for Flash content to
+         match that of this policy file; for example, if the policy
+         file was retrieved via HTTPS, Flash content from `domain`
+         must also be retrieved via HTTPS. If :data:`False`, this
+         matching of security levels will be disabled. It is strongly
+         recommended that you not disable the matching of security
+         levels.
+      :rtype: :data:`None`
 
    .. method:: allow_identity(fingerprint)
 
       Allows access from digitally-signed documents.
 
-      :param fingerprint: The fingerprint of the signing key to allow.
-
       The XML resulting from use of this method will include both the
       key fingerprint and the name of an algorithm used to calculate
-      the fingerprint. At the moment, ``"sha-1"`` is the only value
+      the fingerprint. At the moment, `"sha-1"` is the only value
       defined in the cross-domain policy specification for the
-      ``fingerprint-algorithm`` attribute of the ``certificate``
+      `fingerprint-algorithm` attribute of the `certificate`
       element (which is the element produced by this method), and so
       an argument for this is omitted; if additional algorithms are
       added to the specification, support will be added in a
       backwards-compatible fashion (likely through an argument
       defaulting to SHA-1).
+
+      :param fingerprint: The fingerprint (:class:`str`) of the
+         signing key to allow.
+      :rtype: :data:`None`
 
    .. method:: metapolicy(permitted)
 
@@ -161,27 +170,29 @@ API reference
       files), determining which other policy files may be used on the
       same domain.
 
-      :param permitted: The metapolicy to use. Acceptable values are
-         those listed in the cross-domain policy specification, and
-         are also available as :ref:`a set of constants defined in
-         this module <metapolicy-constants>`. Passing an invalid value
-         will raise ``TypeError``.
-
       By default, Flash assumes a default metapolicy of
-      ``"master-only"`` (except for socket policies, which assume a
-      default of ``"all"``), so if this is the desired metapolicy
+      `"master-only"` (except for socket policies, which assume a
+      default of `"all"`), so if this is the desired metapolicy
       (and, for security reasons, it often is), this method does not
       need to be called.
 
-      Note that a metapolicy of ``"none"`` forbids **all** access,
+      Note that a metapolicy of `"none"` forbids **all** access,
       even if one or more domains, headers or identities have
       previously been specified as allowed. As such, setting the
-      metapolicy to ``"none"`` will remove all access previously
+      metapolicy to `"none"` will remove all access previously
       granted by :meth:`allow_domain`, :meth:`allow_identity` or
       :meth:`allow_headers`. Additionally, attempting to grant access
       via :meth:`allow_domain`, :meth:`allow_identity` or
-      :meth:`allow_headers` will, when the metapolicy is ``"none"``,
-      raise ``TypeError``.
+      :meth:`allow_headers` will, when the metapolicy is `"none"`,
+      raise `TypeError`.
+      
+      :param permitted: A :class:`str` indicating the metapolicy to
+         use. Acceptable values are those listed in the cross-domain
+         policy specification, and are also available as :ref:`a set
+         of constants defined in this module
+         <metapolicy-constants>`. Passing an invalid value will raise
+         :exc:`TypeError`.
+      :rtype: :data:`None`
 
 
 .. _metapolicy-constants:
@@ -197,30 +208,30 @@ defined in the cross-domain policy specification
 .. data:: SITE_CONTROL_ALL
 
    All policy files available on the current domain are
-   permitted. Actual value is the string ``"all"``.
+   permitted. Actual value is the string `"all"`.
 
 .. data:: SITE_CONTROL_BY_CONTENT_TYPE
 
    Only policy files served from the current domain with an HTTP
-   ``Content-Type`` of ``text/x-cross-domain-policy`` are
-   permitted. Actual value is the string ``"by-content-type"``.
+   `Content-Type` of `text/x-cross-domain-policy` are
+   permitted. Actual value is the string `"by-content-type"`.
 
 .. data:: SITE_CONTROL_BY_FTP_FILENAME
 
    Only policy files served from the current domain as files named
-   ``crossdomain.xml`` are permitted. Actual value is the string
-   ``"by-ftp-filename"``.
+   `crossdomain.xml` are permitted. Actual value is the string
+   `"by-ftp-filename"`.
 
 .. data:: SITE_CONTROL_MASTER_ONLY
 
    Only the master policy file for this domain -- the policy served
-   from the URL ``/crossdomain.xml`` -- is permitted. Actual value is
-   the string ``"master-only"``.
+   from the URL `/crossdomain.xml` -- is permitted. Actual value is
+   the string `"master-only"`.
 
 .. data:: SITE_CONTROL_NONE
 
    No policy files are permitted, including the master policy
-   file. Actual value is the string ``"none"``.
+   file. Actual value is the string `"none"`.
 
 .. data:: VALID_SITE_CONTROL
 

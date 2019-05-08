@@ -2,7 +2,7 @@ import xml.dom.minidom
 
 from django.test import SimpleTestCase
 
-from .. import policies
+from flashpolicies import policies
 
 
 class PolicyViewTests(SimpleTestCase):

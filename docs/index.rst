@@ -13,11 +13,27 @@ format as a fallback in the absence of a file in its own native
 cross-domain policy format.
 
 In the most common case, you'll set up one URL pattern, pointing the
-URL ``/crossdomain.xml`` to the view
+URL `/crossdomain.xml` to the view
 :func:`flashpolicies.views.allow_domains` and passing a list of
 domains from which you want to allow access. For example, to allow
-access from Flash content served from ``media.example.com``, you could
+access from Flash content served from `media.example.com`, you could
 place the following in the root URLconf of your Django site:
+
+.. code-block:: python
+
+    from django.urls import path
+
+    from flashpolicies.views import allow_domains
+
+    urlpatterns = [
+        # ...your other URL patterns here...
+        path('crossdomain.xml',
+            allow_domains,
+            {'domains': ['media.example.com']}),
+    ]
+
+Or if you're using Django 1.11 (which doesn't have the
+:func:`~django.urls.path` URL helper):
 
 .. code-block:: python
 
@@ -28,22 +44,6 @@ place the following in the root URLconf of your Django site:
     urlpatterns = [
         # ...your other URL patterns here...
         url(r'^crossdomain.xml$',
-            allow_domains,
-            {'domains': ['media.example.com']}),
-    ]
-
-
-Or, using Django 2.0 with the new ``path`` URL helper:
-
-.. code-block:: python
-
-    from django.conf.urls import path
-
-    from flashpolicies.views import allow_domains
-
-    urlpatterns = [
-        # ...your other URL patterns here...
-        path('crossdomain.xml',
             allow_domains,
             {'domains': ['media.example.com']}),
     ]
