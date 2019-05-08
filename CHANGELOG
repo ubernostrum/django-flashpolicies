@@ -4,7 +4,25 @@ django-flashpolicies changelog
 Major/notable changes between released versions are listed below, in
 roughly chronological order.
 
+Version 1.11, released May 8, 2019
+----------------------------------
 
+* No new features or bug fixes
+
+* Repository reorganization
+
+* Django 1.11/2.0/2.1/2.2 supported, on all versions of Python those
+  Django versions support.
+
+
+Version 1.10, released March 8, 2018
+------------------------------------
+
+* No new features or bug fixes
+
+* Django 2.0 compatibility.
+	
+	
 Version 1.9, released June 4, 2017
 ----------------------------------
 

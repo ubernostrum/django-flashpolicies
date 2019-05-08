@@ -1,7 +1,8 @@
-include INSTALL
 include LICENSE
 include MANIFEST.in
-include README
-include CHANGELOG
-include Makefile
+include AUTHORS
 recursive-include docs *
+include tox.ini
+include runtests.py
+graft src
+graft tests
