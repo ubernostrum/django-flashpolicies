@@ -6,7 +6,7 @@ Utilities for generating Flash cross-domain policy files.
 import xml.dom
 
 
-minidom = xml.dom.getDOMImplementation('minidom')
+minidom = xml.dom.getDOMImplementation("minidom")
 
 
 METAPOLICY_ERROR = (
@@ -43,11 +43,13 @@ SITE_CONTROL_MASTER_ONLY = u"master-only"
 # No policies are allowed, including the master policy:
 SITE_CONTROL_NONE = u"none"
 
-VALID_SITE_CONTROL = (SITE_CONTROL_ALL,
-                      SITE_CONTROL_BY_CONTENT_TYPE,
-                      SITE_CONTROL_BY_FTP_FILENAME,
-                      SITE_CONTROL_MASTER_ONLY,
-                      SITE_CONTROL_NONE)
+VALID_SITE_CONTROL = (
+    SITE_CONTROL_ALL,
+    SITE_CONTROL_BY_CONTENT_TYPE,
+    SITE_CONTROL_BY_FTP_FILENAME,
+    SITE_CONTROL_MASTER_ONLY,
+    SITE_CONTROL_NONE,
+)
 
 
 class Policy(object):
@@ -73,6 +75,7 @@ class Policy(object):
     for more advanced uses.
 
     """
+
     def __init__(self, *domains):
         self.site_control = None
         self.domains = {}
@@ -100,11 +103,8 @@ class Policy(object):
 
         """
         if self.site_control == SITE_CONTROL_NONE:
-            raise TypeError(
-                METAPOLICY_ERROR.format("allow a domain")
-            )
-        self.domains[domain] = {'to_ports': to_ports,
-                                'secure': secure}
+            raise TypeError(METAPOLICY_ERROR.format("allow a domain"))
+        self.domains[domain] = {"to_ports": to_ports, "secure": secure}
 
     def metapolicy(self, permitted):
         """
@@ -156,11 +156,8 @@ class Policy(object):
 
         """
         if self.site_control == SITE_CONTROL_NONE:
-            raise TypeError(
-                METAPOLICY_ERROR.format("allow headers from a domain")
-            )
-        self.header_domains[domain] = {'headers': headers,
-                                       'secure': secure}
+            raise TypeError(METAPOLICY_ERROR.format("allow headers from a domain"))
+        self.header_domains[domain] = {"headers": headers, "secure": secure}
 
     def allow_identity(self, fingerprint):
         """
@@ -186,15 +183,12 @@ class Policy(object):
 
         """
         for domain, attrs in self.domains.items():
-            domain_element = document.createElement('allow-access-from')
-            domain_element.setAttribute('domain', domain)
-            if attrs['to_ports'] is not None:
-                domain_element.setAttribute(
-                    'to-ports',
-                    ','.join(attrs['to_ports'])
-                )
-            if not attrs['secure']:
-                domain_element.setAttribute('secure', 'false')
+            domain_element = document.createElement("allow-access-from")
+            domain_element.setAttribute("domain", domain)
+            if attrs["to_ports"] is not None:
+                domain_element.setAttribute("to-ports", ",".join(attrs["to_ports"]))
+            if not attrs["secure"]:
+                domain_element.setAttribute("secure", "false")
             document.documentElement.appendChild(domain_element)
 
     def _add_header_domains_xml(self, document):
@@ -203,13 +197,11 @@ class Policy(object):
 
         """
         for domain, attrs in self.header_domains.items():
-            header_element = document.createElement(
-                'allow-http-request-headers-from'
-            )
-            header_element.setAttribute('domain', domain)
-            header_element.setAttribute('headers', ','.join(attrs['headers']))
-            if not attrs['secure']:
-                header_element.setAttribute('secure', 'false')
+            header_element = document.createElement("allow-http-request-headers-from")
+            header_element.setAttribute("domain", domain)
+            header_element.setAttribute("headers", ",".join(attrs["headers"]))
+            if not attrs["secure"]:
+                header_element.setAttribute("secure", "false")
             document.documentElement.appendChild(header_element)
 
     def _add_identities_xml(self, document):
@@ -218,21 +210,11 @@ class Policy(object):
 
         """
         for fingerprint in self.identities:
-            identity_element = document.createElement(
-                'allow-access-from-identity'
-            )
-            signatory_element = document.createElement(
-                'signatory'
-            )
-            certificate_element = document.createElement(
-                'certificate'
-            )
-            certificate_element.setAttribute(
-                'fingerprint',
-                fingerprint)
-            certificate_element.setAttribute(
-                'fingerprint-algorithm',
-                'sha-1')
+            identity_element = document.createElement("allow-access-from-identity")
+            signatory_element = document.createElement("signatory")
+            certificate_element = document.createElement("certificate")
+            certificate_element.setAttribute("fingerprint", fingerprint)
+            certificate_element.setAttribute("fingerprint-algorithm", "sha-1")
             signatory_element.appendChild(certificate_element)
             identity_element.appendChild(signatory_element)
             document.documentElement.appendChild(identity_element)
@@ -244,31 +226,27 @@ class Policy(object):
         XML.
 
         """
-        if self.site_control == SITE_CONTROL_NONE and \
-           any((self.domains, self.header_domains, self.identities)):
+        if self.site_control == SITE_CONTROL_NONE and any(
+            (self.domains, self.header_domains, self.identities)
+        ):
             raise TypeError(BAD_POLICY)
 
         policy_type = minidom.createDocumentType(
-            qualifiedName='cross-domain-policy',
+            qualifiedName="cross-domain-policy",
             publicId=None,
-            systemId='http://www.adobe.com/xml/dtds/cross-domain-policy.dtd'
+            systemId="http://www.adobe.com/xml/dtds/cross-domain-policy.dtd",
         )
-        policy = minidom.createDocument(
-            None,
-            'cross-domain-policy',
-            policy_type
-        )
+        policy = minidom.createDocument(None, "cross-domain-policy", policy_type)
 
         if self.site_control is not None:
-            control_element = policy.createElement('site-control')
+            control_element = policy.createElement("site-control")
             control_element.setAttribute(
-                'permitted-cross-domain-policies',
-                self.site_control
+                "permitted-cross-domain-policies", self.site_control
             )
             policy.documentElement.appendChild(control_element)
 
-        for elem_type in ('domains', 'header_domains', 'identities'):
-            getattr(self, '_add_{}_xml'.format(elem_type))(policy)
+        for elem_type in ("domains", "header_domains", "identities"):
+            getattr(self, "_add_{}_xml".format(elem_type))(policy)
 
         return policy
 
@@ -293,4 +271,4 @@ class Policy(object):
         to something that will serve the XML, or write to a file.
 
         """
-        return self.xml_dom.toprettyxml(encoding='utf-8')
+        return self.xml_dom.toprettyxml(encoding="utf-8")

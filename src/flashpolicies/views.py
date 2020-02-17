@@ -28,9 +28,9 @@ def serve(request, policy):
     None.
 
     """
-    return HttpResponse(policy.serialize(),
-                        content_type='text/x-cross-domain-policy; '
-                        'charset=utf-8')
+    return HttpResponse(
+        policy.serialize(), content_type="text/x-cross-domain-policy; " "charset=utf-8"
+    )
 
 
 def allow_domains(request, domains):
@@ -66,11 +66,11 @@ def simple(request, domains):
 
     """
     warnings.warn(
-        'flashpolicies.views.simple has been renamed to '
-        'flashpolicies.views.allow_domains. Support for referring to it as '
-        'flashpolicies.views.simple is deprecated and will be removed in a '
-        'future release of django-flashpolicies.',
-        DeprecationWarning
+        "flashpolicies.views.simple has been renamed to "
+        "flashpolicies.views.allow_domains. Support for referring to it as "
+        "flashpolicies.views.simple is deprecated and will be removed in a "
+        "future release of django-flashpolicies.",
+        DeprecationWarning,
     )
     return allow_domains(request, domains)
 
@@ -129,5 +129,4 @@ def no_access(request):
     None.
 
     """
-    return metapolicy(request,
-                      permitted=policies.SITE_CONTROL_NONE)
+    return metapolicy(request, permitted=policies.SITE_CONTROL_NONE)
