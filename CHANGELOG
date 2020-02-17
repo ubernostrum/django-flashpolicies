@@ -4,6 +4,19 @@ django-flashpolicies changelog
 Major/notable changes between released versions are listed below, in
 roughly chronological order.
 
+
+Version 1.12, released February 17, 2020
+----------------------------------------
+
+* No new features or bugfixes
+
+* Django 2.2 and 3.0 supported, on all versions of Python those Django
+  versions support.
+
+* Note: above implies end of Python 2 support (Python 2 reached EOL on
+  2020-01-01).
+
+
 Version 1.11, released May 8, 2019
 ----------------------------------
 
