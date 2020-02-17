@@ -7,8 +7,8 @@ extensions = ["sphinx.ext.intersphinx"]
 templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"
-project = u"django-flashpolicies"
-copyright = u"2009-2020, James Bennett"
+project = "django-flashpolicies"
+copyright = "2009-2020, James Bennett"
 version = "1.12"
 release = "1.12a1"
 exclude_trees = ["_build"]
@@ -19,8 +19,8 @@ latex_documents = [
     (
         "index",
         "django-flashpolicies.tex",
-        u"django-flashpolicies Documentation",
-        u"James Bennett",
+        "django-flashpolicies Documentation",
+        "James Bennett",
         "manual",
     ),
 ]

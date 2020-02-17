@@ -4,20 +4,21 @@ Utilities for generating Flash cross-domain policy files.
 """
 
 import xml.dom
+from typing import Dict, List, Optional
 
 
 minidom = xml.dom.getDOMImplementation("minidom")
 
 
 METAPOLICY_ERROR = (
-    u"Metapolicy currently forbids all access; to {}, change the metapolicy."
+    "Metapolicy currently forbids all access; to {}, change the metapolicy."
 )
 SITE_CONTROL_ERROR = (
-    u"'{}' is not a valid value for the 'permitted-cross-domain-policies' "
+    "'{}' is not a valid value for the 'permitted-cross-domain-policies' "
     "attribute of a 'site-control' element."
 )
 BAD_POLICY = (
-    u"Cannot produce XML from invalid policy (metapolicy forbids all access, "
+    "Cannot produce XML from invalid policy (metapolicy forbids all access, "
     "but policy attempted to allow access anyway)."
 )
 
@@ -29,19 +30,19 @@ BAD_POLICY = (
 #
 
 # All policy files are allowed:
-SITE_CONTROL_ALL = u"all"
+SITE_CONTROL_ALL = "all"
 
 # Only files served as text/x-cross-domain-policy are allowed:
-SITE_CONTROL_BY_CONTENT_TYPE = u"by-content-type"
+SITE_CONTROL_BY_CONTENT_TYPE = "by-content-type"
 
 # Only files named 'crossdomain.xml' are allowed:
-SITE_CONTROL_BY_FTP_FILENAME = u"by-ftp-filename"
+SITE_CONTROL_BY_FTP_FILENAME = "by-ftp-filename"
 
 # Only the master policy file is allowed:
-SITE_CONTROL_MASTER_ONLY = u"master-only"
+SITE_CONTROL_MASTER_ONLY = "master-only"
 
 # No policies are allowed, including the master policy:
-SITE_CONTROL_NONE = u"none"
+SITE_CONTROL_NONE = "none"
 
 VALID_SITE_CONTROL = (
     SITE_CONTROL_ALL,
@@ -52,7 +53,7 @@ VALID_SITE_CONTROL = (
 )
 
 
-class Policy(object):
+class Policy:
     """
     Wrapper object for creating and manipulating a Flash cross-domain
     policy.
@@ -76,15 +77,17 @@ class Policy(object):
 
     """
 
-    def __init__(self, *domains):
-        self.site_control = None
-        self.domains = {}
-        self.header_domains = {}
-        self.identities = []
+    def __init__(self, *domains: str):
+        self.site_control = None  # type: Optional[str]
+        self.domains = {}  # type: Dict[str, dict]
+        self.header_domains = {}  # type: Dict[str, dict]
+        self.identities = []  # type: List[str]
         for domain in domains:
             self.allow_domain(domain)
 
-    def allow_domain(self, domain, to_ports=None, secure=True):
+    def allow_domain(
+        self, domain: str, to_ports: Optional[str] = None, secure: bool = True
+    ):
         """
         Allows access from ``domain``, which may be either a full
         domain name, or a wildcard (e.g., ``*.example.com``, or simply
@@ -106,7 +109,7 @@ class Policy(object):
             raise TypeError(METAPOLICY_ERROR.format("allow a domain"))
         self.domains[domain] = {"to_ports": to_ports, "secure": secure}
 
-    def metapolicy(self, permitted):
+    def metapolicy(self, permitted: str):
         """
         Sets metapolicy to ``permitted``. (only applicable to master
         policy files). Acceptable values correspond to those listed in
@@ -137,7 +140,7 @@ class Policy(object):
             self.identities = []
         self.site_control = permitted
 
-    def allow_headers(self, domain, headers, secure=True):
+    def allow_headers(self, domain: str, headers: dict, secure: bool = True):
         """
         Allows ``domain`` to push data via the HTTP headers named in
         ``headers``.
@@ -159,7 +162,7 @@ class Policy(object):
             raise TypeError(METAPOLICY_ERROR.format("allow headers from a domain"))
         self.header_domains[domain] = {"headers": headers, "secure": secure}
 
-    def allow_identity(self, fingerprint):
+    def allow_identity(self, fingerprint: str):
         """
         Allows access from documents digitally signed by the key with
         ``fingerprint``.
@@ -177,7 +180,7 @@ class Policy(object):
         if fingerprint not in self.identities:
             self.identities.append(fingerprint)
 
-    def _add_domains_xml(self, document):
+    def _add_domains_xml(self, document: xml.dom.minidom.Document):
         """
         Generates the XML elements for allowed domains.
 
@@ -191,7 +194,7 @@ class Policy(object):
                 domain_element.setAttribute("secure", "false")
             document.documentElement.appendChild(domain_element)
 
-    def _add_header_domains_xml(self, document):
+    def _add_header_domains_xml(self, document: xml.dom.minidom.Document):
         """
         Generates the XML elements for allowed header domains.
 
@@ -204,7 +207,7 @@ class Policy(object):
                 header_element.setAttribute("secure", "false")
             document.documentElement.appendChild(header_element)
 
-    def _add_identities_xml(self, document):
+    def _add_identities_xml(self, document: xml.dom.minidom.Document):
         """
         Generates the XML elements for allowed digital signatures.
 
@@ -219,7 +222,7 @@ class Policy(object):
             identity_element.appendChild(signatory_element)
             document.documentElement.appendChild(identity_element)
 
-    def _get_xml_dom(self):
+    def _get_xml_dom(self) -> xml.dom.minidom.Document:
         """
         Collects all options set so far, and produce and return an
         ``xml.dom.minidom.Document`` representing the corresponding
@@ -252,10 +255,10 @@ class Policy(object):
 
     xml_dom = property(_get_xml_dom)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.xml_dom.toprettyxml()
 
-    def serialize(self):
+    def serialize(self) -> bytes:
         """
         Serializes this policy to a UTF-8 byte sequence.
 

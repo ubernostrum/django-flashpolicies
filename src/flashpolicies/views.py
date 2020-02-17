@@ -4,13 +4,14 @@ Views for generating and serving policy files.
 """
 
 import warnings
+from typing import List, Optional
 
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 
 from . import policies
 
 
-def serve(request, policy):
+def serve(request: HttpRequest, policy: policies.Policy) -> HttpResponse:
     """
     Given a ``flashpolicies.policies.Policy`` instance, serializes it
     to XML and serve it.
@@ -33,7 +34,7 @@ def serve(request, policy):
     )
 
 
-def allow_domains(request, domains):
+def allow_domains(request: HttpRequest, domains: List[str]) -> HttpResponse:
     """
     Serves a cross-domain access policy allowing a list of domains.
 
@@ -60,7 +61,7 @@ def allow_domains(request, domains):
     return serve(request, policies.Policy(*domains))
 
 
-def simple(request, domains):
+def simple(request: HttpRequest, domains: List[str]) -> HttpResponse:
     """
     Deprecated name for the ``allow_domains`` view.
 
@@ -75,7 +76,9 @@ def simple(request, domains):
     return allow_domains(request, domains)
 
 
-def metapolicy(request, permitted, domains=None):
+def metapolicy(
+    request: HttpRequest, permitted: str, domains: Optional[List[str]] = None
+) -> HttpResponse:
     """
     Serves a cross-domain policy which can allow other policies
     to exist on the same domain.
@@ -110,7 +113,7 @@ def metapolicy(request, permitted, domains=None):
     return serve(request, policy)
 
 
-def no_access(request):
+def no_access(request: HttpRequest) -> HttpResponse:
     """
     Serves a cross-domain access policy which permits no access of any
     kind, via a metapolicy declaration disallowing all policy files.

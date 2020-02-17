@@ -5,7 +5,7 @@ situation.
 
 """
 
-from django.conf.urls import url
+from django.urls import path
 
 from flashpolicies import policies, views
 
@@ -18,20 +18,20 @@ def make_test_policy():
 
 
 urlpatterns = [
-    url(r"^crossdomain-serve.xml$", views.serve, {"policy": make_test_policy()}),
-    url(
-        r"^crossdomain-allow-domains.xml$",
+    path("crossdomain-serve.xml", views.serve, {"policy": make_test_policy()}),
+    path(
+        "crossdomain-allow-domains.xml",
         views.allow_domains,
         {"domains": ["media.example.com", "api.example.com"]},
     ),
-    url(
-        r"^crossdomain-simple-alias.xml$",
+    path(
+        "crossdomain-simple-alias.xml",
         views.simple,
         {"domains": ["media.example.com", "api.example.com"]},
     ),
-    url(r"^crossdomain-no-access.xml$", views.no_access),
-    url(
-        r"^crossdomain-metapolicy.xml$",
+    path("crossdomain-no-access.xml", views.no_access),
+    path(
+        "crossdomain-metapolicy.xml",
         views.metapolicy,
         {"permitted": policies.SITE_CONTROL_ALL},
     ),
