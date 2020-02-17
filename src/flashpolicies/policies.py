@@ -4,7 +4,7 @@ Utilities for generating Flash cross-domain policy files.
 """
 
 import xml.dom
-from typing import Dict, List, Optional
+from typing import Dict, Iterable, List, Optional
 
 
 minidom = xml.dom.getDOMImplementation("minidom")
@@ -86,7 +86,7 @@ class Policy:
             self.allow_domain(domain)
 
     def allow_domain(
-        self, domain: str, to_ports: Optional[str] = None, secure: bool = True
+        self, domain: str, to_ports: Optional[Iterable[str]] = None, secure: bool = True
     ):
         """
         Allows access from ``domain``, which may be either a full
@@ -140,7 +140,7 @@ class Policy:
             self.identities = []
         self.site_control = permitted
 
-    def allow_headers(self, domain: str, headers: dict, secure: bool = True):
+    def allow_headers(self, domain: str, headers: Iterable[str], secure: bool = True):
         """
         Allows ``domain`` to push data via the HTTP headers named in
         ``headers``.

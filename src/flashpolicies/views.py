@@ -4,7 +4,7 @@ Views for generating and serving policy files.
 """
 
 import warnings
-from typing import List, Optional
+from typing import Iterable, Optional
 
 from django.http import HttpRequest, HttpResponse
 
@@ -34,7 +34,7 @@ def serve(request: HttpRequest, policy: policies.Policy) -> HttpResponse:
     )
 
 
-def allow_domains(request: HttpRequest, domains: List[str]) -> HttpResponse:
+def allow_domains(request: HttpRequest, domains: Iterable[str]) -> HttpResponse:
     """
     Serves a cross-domain access policy allowing a list of domains.
 
@@ -61,7 +61,7 @@ def allow_domains(request: HttpRequest, domains: List[str]) -> HttpResponse:
     return serve(request, policies.Policy(*domains))
 
 
-def simple(request: HttpRequest, domains: List[str]) -> HttpResponse:
+def simple(request: HttpRequest, domains: Iterable[str]) -> HttpResponse:
     """
     Deprecated name for the ``allow_domains`` view.
 
@@ -77,7 +77,7 @@ def simple(request: HttpRequest, domains: List[str]) -> HttpResponse:
 
 
 def metapolicy(
-    request: HttpRequest, permitted: str, domains: Optional[List[str]] = None
+    request: HttpRequest, permitted: str, domains: Optional[Iterable[str]] = None
 ) -> HttpResponse:
     """
     Serves a cross-domain policy which can allow other policies
