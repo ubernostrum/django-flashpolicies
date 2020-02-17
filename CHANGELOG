@@ -5,6 +5,12 @@ Major/notable changes between released versions are listed below, in
 roughly chronological order.
 
 
+Version 1.12.1, released February 17, 2020
+------------------------------------------
+
+* Corrected URL configuration example in README.
+
+
 Version 1.12, released February 17, 2020
 ----------------------------------------
 
