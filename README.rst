@@ -10,15 +10,17 @@ cross-domain access for Flash files served from your media server:
 
 .. code:: python
 
-    from django.conf.urls import url
+    from django.urls import path
 
     from flashpolicies.views import allow_domains
 
     urlpatterns = [
         # ...your other URL patterns here...
-        url(r'^crossdomain.xml$',
+        path(
+            'crossdomain.xml',
             allow_domains,
-            {'domains': ['media.yoursite.com']}),
+            {'domains': ['media.example.com']}
+        ),
     ]
 
 
