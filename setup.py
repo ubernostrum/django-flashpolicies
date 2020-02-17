@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 setup(
     name="django-flashpolicies",
     zip_safe=False,  # eggs are the devil.
-    version="1.12a1",
+    version="1.12",
     description="Flash cross-domain policies for Django sites",
     long_description=open(os.path.join(os.path.dirname(__file__), "README.rst")).read(),
     author="James Bennett",
