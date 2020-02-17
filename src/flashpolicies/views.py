@@ -30,7 +30,7 @@ def serve(request: HttpRequest, policy: policies.Policy) -> HttpResponse:
 
     """
     return HttpResponse(
-        policy.serialize(), content_type="text/x-cross-domain-policy; " "charset=utf-8"
+        policy.serialize(), content_type="text/x-cross-domain-policy; charset=utf-8"
     )
 
 
