@@ -62,8 +62,8 @@ you're using. This also does not affect the well-formedness or
 validity of the resulting XML document.
 
 
-Why shouldn't I use wild-card (i.e., '*') domains in my policy?
----------------------------------------------------------------
+Why shouldn't I use wild-card ('*') domains in my policy?
+---------------------------------------------------------
 
 Use of wild-card entries in a policy effectively negates much of the
 security gain that comes from explicitly specifying the permitted
@@ -88,9 +88,8 @@ source distribution of django-flashpolicies.
 What versions of Django and Python are supported?
 -------------------------------------------------
 
-As of django-flashpolicies |release|, Django 1.11, 2.0, 2.1, and 2.2
-are supported, on Python 2.7 (Django 1.11 only), 3.4 (Django 1.11 and
-2.0 only), 3.5, 3.6 and 3.7 (Django 2.0, 2.1, and 2.2 only).
+As of django-flashpolicies |release|, Django 2.2 and 3.0 are
+supported, on Python 3.5 (Django 2.2 only), 3.6, 3.7, and 3.8.
 
 
 I found a bug or want to make an improvement!

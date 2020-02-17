@@ -1,4 +1,4 @@
-django-flashpolicies |version|
+django-flashpolicies |release|
 ==============================
 
 This application provides management of Flash cross-domain policies
@@ -27,25 +27,11 @@ place the following in the root URLconf of your Django site:
 
     urlpatterns = [
         # ...your other URL patterns here...
-        path('crossdomain.xml',
+        path(
+            'crossdomain.xml',
             allow_domains,
-            {'domains': ['media.example.com']}),
-    ]
-
-Or if you're using Django 1.11 (which doesn't have the
-:func:`~django.urls.path` URL helper):
-
-.. code-block:: python
-
-    from django.conf.urls import url
-
-    from flashpolicies.views import allow_domains
-
-    urlpatterns = [
-        # ...your other URL patterns here...
-        url(r'^crossdomain.xml$',
-            allow_domains,
-            {'domains': ['media.example.com']}),
+            {'domains': ['media.example.com']}
+        ),
     ]
 
 

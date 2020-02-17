@@ -1,3 +1,4 @@
+.. _views:
 .. module:: flashpolicies.views
 
 
@@ -19,15 +20,16 @@ allow use of any options policy files can support.
 .. function:: serve(request, policy)
 
    Given a :class:`~flashpolicies.policies.Policy` instance,
-   serializes it to UTF-8 and serve it.
+   serializes it to UTF-8 and serves it.
 
    Internally, this is used by all other included views as the
    mechanism which actually serves the policy file.
 
-   :param request: The incoming Django
-     :class:`~django.http.HttpRequest`.
-   :param policy: The :class:`~flashpolicies.policies.Policy` to serve.
-   :rtype: :class:`~django.http.HttpResponse`
+   :param request: The incoming HTTP request.
+   :type request: django.http.HttpRequest
+   :param policy: The policy to serve.
+   :type policy: flashpolicies.policies.Policy
+   :rtype: django.http.HttpResponse
 
 .. function:: allow_domains(request, domains)
 
@@ -40,14 +42,15 @@ allow use of any options policy files can support.
    :func:`~flashpolicies.views.metapolicy` view for the master policy
    instead.
 
-   :param request: The incoming Django
-     :class:`~django.http.HttpRequest`.
-   :param domains: An :class:`~typing.Iterable` of domains from which
-      to allow access. Each value may be either a domain name (e.g.,
-      `"example.com"`) or a wildcard (e.g., `"*.example.com"`). Due to
-      serious potential security issues, it is strongly recommended
-      that you not use wildcard domain values.
-   :rtype: :class:`~django.http.HttpResponse`
+   :param request: The incoming HTTP request.
+   :type request: django.http.HttpRequest
+   :param domains: The domains from which to allow access. Each value
+      may be either a domain name (e.g., `"example.com"`) or a
+      wildcard (e.g., `"*.example.com"`). Due to serious potential
+      security issues, it is strongly recommended that you not use
+      wildcard domain values.
+   :type domains: typing.Iterable
+   :rtype: django.http.HttpResponse
 
 .. function:: metapolicy(request, permitted, domains=None)
 
@@ -59,18 +62,19 @@ allow use of any options policy files can support.
    the domain: setting meta-policy information in other policy files
    is forbidden by the cross-domain policy specification.
 
-   :param request: The incoming Django
-     :class:`~django.http.HttpRequest`.
-   :param permitted: A :class:`str` indicating the extent to which
-      other policies are permitted. :ref:`A set of constants is
-      available, defining acceptable values for this argument
-      <metapolicy-constants>`.
-   :param domains: An :class:`~typing.Iterable` of domains from which
-      to allow access. Each value may be either a domain name (e.g.,
-      `"example.com"`) or a wildcard (e.g., `"*.example.com"`). Due to
-      serious potential security issues, it is strongly recommended
-      that you not use wildcard domain values.
-   :rtype: :class:`~django.http.HttpResponse`
+   :param request: The incoming HTTP request.
+   :type request: django.http.HttpRequest
+   :param permitted: The metapolicy value to use. :ref:`A set of
+      constants is available, defining acceptable values for this
+      argument <metapolicy-constants>`.
+   :type permitted: str
+   :param domains: The domains from which to allow access. Each value
+      may be either a domain name (e.g., `"example.com"`) or a
+      wildcard (e.g., `"*.example.com"`). Due to serious potential
+      security issues, it is strongly recommended that you not use
+      wildcard domain values.
+   :type domains: typing.Iterable
+   :rtype: django.http.HttpResponse
 
 .. function:: no_access(request)
 
@@ -86,6 +90,6 @@ allow use of any options policy files can support.
    :const:`~flashpolicies.policies.SITE_CONTROL_NONE` as the
    meta-policy.
 
-   :param request: The incoming Django
-     :class:`~django.http.HttpRequest`.
-   :rtype: :class:`~django.http.HttpResponse`
+   :param request: The incoming HTTP request.
+   :type request: django.http.HttpRequest
+   :rtype: django.http.HttpResponse

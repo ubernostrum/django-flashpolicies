@@ -31,7 +31,7 @@ Serializing :class:`Policy` objects
 -----------------------------------
 
 There are two similar but different ways to serialize the underlying
-XML. One is to use `str()` on a :class:`Policy` instance, like so:
+XML. One is to use :func:`str` on a :class:`Policy` instance, like so:
 
 .. code-block:: pycon
 
@@ -49,19 +49,18 @@ XML. One is to use `str()` on a :class:`Policy` instance, like so:
 The other is to call the :meth:`~Policy.serialize` method. The
 difference between these options is:
 
-1. `str()` will, as is required by Python's semantics, produce a
-   result of type :class:`str`. Which, on Python 3, is a Unicode
-   string; this means the output is not in any particular encoding,
-   and will omit the `encoding` declaration of the XML prolog.
+1. :func:`str` will, as is required by Python's semantics, produce a
+   result of type :class:`str`, which is a Unicode string; this means
+   the output is not in any particular encoding, and will omit the
+   `encoding` declaration of the XML prolog.
 
 2. :meth:`~Policy.serialize` will, on the other hand, always return a
-   sequence of UTF-8-encoded bytes. This is the type :class:`str` on
-   Python 2, and the type :class:`bytes` on Python 3. In accordance
-   with this, the output of :meth:`~Policy.serialize` *will* include
-   an `encoding` declaration in its XML prolog.
+   UTF-8-encoded :class:`bytes` object, so the output of
+   :meth:`~Policy.serialize` *will* include an `encoding` declaration
+   in its XML prolog.
 
-In general, `str()` should be used to inspect a :class:`Policy` for
-debugging or educational purposes, while :meth:`~Policy.serialize`
+In general, :func:`str` should be used to inspect a :class:`Policy`
+for debugging or educational purposes, while :meth:`~Policy.serialize`
 should be used any time the output will actually be treated as a
 policy file (i.e., if writing your own policy-serving view, or if
 serializing the policy to a file). The built-in
@@ -88,13 +87,12 @@ API reference
    .. attribute:: xml_dom
 
       A read-only property which returns an XML representation of this
-      policy, as a :class:`~xml.dom.minidom.Document` object.
+      policy, as an :class:`xml.dom.minidom.Document` object.
 
    .. method:: serialize()
 
-      Serialize this policy to UTF-8-encoded bytes (i.e., :class:`str`
-      on Python 2, :class:`bytes` on Python 3), suitable for serving
-      over HTTP or writing to a file.
+      Serialize this policy to UTF-8-encoded bytes suitable for
+      serving over HTTP or writing to a file.
 
       :rtype: :class:`bytes`
 
@@ -102,48 +100,54 @@ API reference
 
       Allows access for Flash content served from a particular domain.
 
-      :param domain: A :class:`str` indicating the domain from which
-         to allow access. May be either a full domain name (e.g.,
-         `"example.com"`) or a wildcard (e.g., `"example.com"`). Due
-         to serious potential security concerns, it is strongly
-         recommended that you avoid wildcard domain values.
-      :param to_ports: (only for socket policy files) An
-         :class:`~typing.Iterable` of ports (as :class:`str`) the
-         domain will be permitted to access. Each post may be either a
-         port number (e.g., `"80"`), a range of ports (e.g.,
-         `"80-120"`) or the wildcard value `"*"`, which will permit
-         all ports.
-      :param secure: A :class:`bool`; if :data:`True`, will require
-         the security level of the HTTP protocol for Flash content to
-         match that of this policy file; for example, if the policy
-         file was retrieved via HTTPS, Flash content from `domain`
-         must also be retrieved via HTTPS. If :data:`False`, this
-         matching of security levels will be disabled. It is strongly
-         recommended that you not disable the matching of security
-         levels.
+      :param domain: The domain from which to allow access. May be
+         either a full domain name (e.g., `"example.com"`) or a
+         wildcard (e.g., `"example.com"`). Due to serious potential
+         security concerns, it is strongly recommended that you avoid
+         wildcard domain values.
+      :type domain: str
+      :param to_ports: (only for socket policy files) The ports (as
+         :class:`str`) the domain will be permitted to access. Each
+         port may be either a port number (e.g., `"80"`), a range of
+         ports (e.g., `"80-120"`) or the wildcard value `"*"`, which
+         will permit all ports.
+      :type to_ports: typing.Iterable
+      :param bool secure: If :data:`True`, will require the security
+         level of the HTTP protocol for Flash content to match that of
+         this policy file; for example, if the policy file was
+         retrieved via HTTPS, Flash content from `domain` must also be
+         retrieved via HTTPS. If :data:`False`, this matching of
+         security levels will be disabled. It is strongly recommended
+         that you not disable the matching of security levels.
       :rtype: :data:`None`
+      :raises TypeError: if the current metapolicy is
+         :data:`SITE_CONTROL_NONE`. See :meth:`metapolicy` for
+         details.
 
    .. method:: allow_headers(domain, headers, secure=True)
 
       Allows Flash content from a particular domain to push data via
       HTTP headers.
 
-      :param domain: A :class:`str` indicating a domain from which to
-         allow access. May be either a full domain name (e.g.,
-         `"example.com"`) or a wildcard (e.g., `"example.com"`). Due
-         to serious potential security concerns, it is strongly
-         recommended that you avoid wildcard domain values.
-      :param headers: An :class:`~typing.Iterable` of HTTP header
-         names (as :class:`str`) in which data may be submitted.
-      :param secure: A :class:`bool`; if :data:`True`, will require
-         the security level of the HTTP protocol for Flash content to
-         match that of this policy file; for example, if the policy
-         file was retrieved via HTTPS, Flash content from `domain`
-         must also be retrieved via HTTPS. If :data:`False`, this
-         matching of security levels will be disabled. It is strongly
-         recommended that you not disable the matching of security
-         levels.
+      :param str domain: The domain from which to allow access. May be
+         either a full domain name (e.g., `"example.com"`) or a
+         wildcard (e.g., `"*.example.com"`). Due to serious potential
+         security concerns, it is strongly recommended that you avoid
+         wildcard domain values.
+      :param headers: The HTTP header names (as :class:`str`) in which
+         data may be submitted.
+      :type headers: typing.Iterable
+      :param bool secure: If :data:`True`, will require the security
+         level of the HTTP protocol for Flash content to match that of
+         this policy file; for example, if the policy file was
+         retrieved via HTTPS, Flash content from `domain` must also be
+         retrieved via HTTPS. If :data:`False`, this matching of
+         security levels will be disabled. It is strongly recommended
+         that you not disable the matching of security levels.
       :rtype: :data:`None`
+      :raises TypeError: if the current metapolicy is
+         :data:`SITE_CONTROL_NONE`. See :meth:`metapolicy` for
+         details.
 
    .. method:: allow_identity(fingerprint)
 
@@ -160,9 +164,12 @@ API reference
       backwards-compatible fashion (likely through an argument
       defaulting to SHA-1).
 
-      :param fingerprint: The fingerprint (:class:`str`) of the
-         signing key to allow.
+      :param str fingerprint: The fingerprint of the signing key to
+         allow.
       :rtype: :data:`None`
+      :raises TypeError: if the current metapolicy is
+         :data:`SITE_CONTROL_NONE`. See :meth:`metapolicy` for
+         details.
 
    .. method:: metapolicy(permitted)
 
@@ -176,23 +183,24 @@ API reference
       (and, for security reasons, it often is), this method does not
       need to be called.
 
-      Note that a metapolicy of `"none"` forbids **all** access,
-      even if one or more domains, headers or identities have
-      previously been specified as allowed. As such, setting the
-      metapolicy to `"none"` will remove all access previously
-      granted by :meth:`allow_domain`, :meth:`allow_identity` or
-      :meth:`allow_headers`. Additionally, attempting to grant access
-      via :meth:`allow_domain`, :meth:`allow_identity` or
-      :meth:`allow_headers` will, when the metapolicy is `"none"`,
-      raise `TypeError`.
+      Note that a metapolicy of `"none"` forbids **all** access, even
+      if one or more domains, headers or identities have previously
+      been specified as allowed. As such, setting the metapolicy to
+      `"none"` will remove all access previously granted by
+      :meth:`allow_domain`, :meth:`allow_headers` or
+      :meth:`allow_identity`. Additionally, attempting to grant access
+      via :meth:`allow_domain`, :meth:`allow_headers` or
+      :meth:`allow_identity` will, when the metapolicy is `"none"`,
+      raise :exc:`TypeError`.
       
-      :param permitted: A :class:`str` indicating the metapolicy to
-         use. Acceptable values are those listed in the cross-domain
-         policy specification, and are also available as :ref:`a set
-         of constants defined in this module
-         <metapolicy-constants>`. Passing an invalid value will raise
-         :exc:`TypeError`.
+      :param str permitted: The metapolicy to use. Acceptable values
+         are those listed in the cross-domain policy specification,
+         and are also available as :ref:`a set of constants defined in
+         this module <metapolicy-constants>`.
       :rtype: :data:`None`
+      :raises TypeError: when `permitted` is not one of the
+         accceptable metapolicy values from the Adobe cross-domain
+         policy specification.
 
 
 .. _metapolicy-constants:
@@ -213,7 +221,7 @@ defined in the cross-domain policy specification
 .. data:: SITE_CONTROL_BY_CONTENT_TYPE
 
    Only policy files served from the current domain with an HTTP
-   `Content-Type` of `text/x-cross-domain-policy` are
+   `Content-Type` of "text/x-cross-domain-policy" are
    permitted. Actual value is the string `"by-content-type"`.
 
 .. data:: SITE_CONTROL_BY_FTP_FILENAME
