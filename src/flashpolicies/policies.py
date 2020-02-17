@@ -263,11 +263,11 @@ class Policy:
         Serializes this policy to a UTF-8 byte sequence.
 
         This is similar to __str__() but with one important
-        difference: on Python 3, __str__() is required to return a
-        Unicode string, and so can't use the 'encoding' argument of
-        toprettyxml(). This method has no such requirement. As a
-        result, this method will return a UTF-8-encoded byte sequence
-        (which is str on Python 2, but bytes on Python 3).
+        difference: __str__() is required to return a Unicode string,
+        and so can't use the 'encoding' argument of
+        toprettyxml(). This method can return a bytes object, and will
+        return a UTF-8-encoded byte sequence with appropriate encoding
+        declaration in its XML prolog..
 
         In general, use str() if you just want to see what would be
         produced, and use serialize() if you want to pass the result
