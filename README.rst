@@ -2,7 +2,7 @@
 
 .. image:: https://github.com/ubernostrum/django-flashpolicies/workflows/CI/badge.svg
    :alt: CI status image
-   :target: https://github.com/ubernostrum/django-flaskpolicies/actions?query=workflow%3ACI
+   :target: https://github.com/ubernostrum/django-flashpolicies/actions?query=workflow%3ACI
 
 This application provides management of Flash cross-domain access
 policies for `Django <https://www.djangoproject.com>`_ sites. For
