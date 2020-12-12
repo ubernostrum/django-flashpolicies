@@ -1,6 +1,6 @@
 .. -*-restructuredtext-*-
 
-.. image:: https://github.com/ubernostrum/django-registration/workflows/CI/badge.svg
+.. image:: https://github.com/ubernostrum/django-flashpolicies/workflows/CI/badge.svg
    :alt: CI status image
    :target: https://github.com/ubernostrum/django-flaskpolicies/actions?query=workflow%3ACI
 
