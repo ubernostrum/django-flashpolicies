@@ -10,5 +10,6 @@ plugin
 prolog
 Silverlight
 subdomains
+untrusted
 UTF
 wildcard

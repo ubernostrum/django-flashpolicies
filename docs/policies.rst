@@ -199,7 +199,7 @@ API reference
          this module <metapolicy-constants>`.
       :rtype: :data:`None`
       :raises TypeError: when `permitted` is not one of the
-         accceptable metapolicy values from the Adobe cross-domain
+         acceptable metapolicy values from the Adobe cross-domain
          policy specification.
 
 

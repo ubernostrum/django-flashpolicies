@@ -1,7 +1,7 @@
 .. -*-restructuredtext-*-
 
-.. image:: https://travis-ci.org/ubernostrum/django-flashpolicies.svg?branch=master
-    :target: https://travis-ci.org/ubernostrum/django-flashpolicies
+.. image:: https://github.com/ubernostrum/django-registration/workflows/CI/badge.svg
+   :alt: CI status image
 
 This application provides management of Flash cross-domain access
 policies for `Django <https://www.djangoproject.com>`_ sites. For

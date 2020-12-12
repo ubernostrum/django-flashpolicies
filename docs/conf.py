@@ -1,6 +1,7 @@
 import os
 import sys
 
+
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
 extensions = ["sphinx.ext.intersphinx"]
@@ -13,7 +14,6 @@ version = "1.12"
 release = "1.12.2"
 exclude_trees = ["_build"]
 pygments_style = "sphinx"
-html_static_path = ["_static"]
 htmlhelp_basename = "django-flashpoliciesdoc"
 latex_documents = [
     (
